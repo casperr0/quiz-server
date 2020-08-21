@@ -1,7 +1,15 @@
 version: "3"
 
 services:
-    quiz-server:
-        image: ccns/quiz-server:latest
+    # quiz-server:
+    #     image: ccns/quiz-server:latest
+    #     ports:
+    #         - "8080:8080"
+    postgres:
+        image: "postgres"
         ports:
-            - "8080:8080"
+            - "5432:5432"
+        environment:
+            - POSTGRES_DB=${PG_DBNAME}
+            - POSTGRES_USER=${PG_USERNAME}
+            - POSTGRES_PASSWORD=${PG_PASSWORD}
