@@ -6,12 +6,31 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func init() {
-
-	loadConfig()
+// OfficerConfig contains all officer-related configs.
+type OfficerConfig struct {
+	DefaultRoles []string
 }
 
-func loadConfig() {
+// UsingConfig intergrate all config group.
+type UsingConfig struct {
+	Officer OfficerConfig
+}
+
+var (
+	// Config act as a uniform interface.
+	Config = UsingConfig{
+		Officer: OfficerConfig{
+			DefaultRoles: []string{"Admin", "Maintainer", "Guest"},
+		},
+	}
+)
+
+func init() {
+
+	loadEnv()
+}
+
+func loadEnv() {
 
 	err := godotenv.Load()
 	if err != nil {

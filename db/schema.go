@@ -8,6 +8,9 @@ import (
 	// posetgreSQL databse driver required by sqlx
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/jmoiron/sqlx"
+
+	// load config for environment setup
+	"github.com/ccns/quiz-server/config"
 )
 
 // Officer describe the schema of event staff.
@@ -20,7 +23,7 @@ type Officer struct {
 // Role describe the schema of role with different permissions.
 type Role struct {
 	ID   int    `db:"id"`
-	name string `db:"name"`
+	Name string `db:"name"`
 }
 
 // Player describe the schema of quiz player.
@@ -33,7 +36,7 @@ type Player struct {
 // Quiz describe the schema of quiz content.
 type Quiz struct {
 	ID          int    `db:"id"`
-	Author      string `db:"author"`
+	Author      int    `db:"author_id"`
 	Description string `db:"description"`
 	Score       int    `db:"score"`
 	OprionA     string `db:"option_a"`
@@ -81,11 +84,11 @@ const drop = `
 DROP TABLE IF EXISTS officer_to_role;
 DROP TABLE IF EXISTS player_to_quiz;
 DROP TABLE IF EXISTS quiz_to_tag;
-DROP TABLE IF EXISTS officer;
+DROP TABLE IF EXISTS tag;
+DROP TABLE IF EXISTS quiz;
 DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS player;
-DROP TABLE IF EXISTS quiz;
-DROP TABLE IF EXISTS tag;
+DROP TABLE IF EXISTS officer;
 `
 
 const schema = `
@@ -108,29 +111,36 @@ CREATE TABLE IF NOT EXISTS player (
 );
 CREATE TABLE IF NOT EXISTS quiz (
 	id INT GENERATED ALWAYS AS IDENTITY,
-	author VARCHAR(255) NOT NULL,
+	author_id INT NOT NULL,
 	description VARCHAR(2048) NOT NULL,
-	score INT NOTNULL,
+	score INT NOT NULL,
 	option_a VARCHAR(255) NOT NULL,
 	option_b VARCHAR(255) NOT NULL,
 	option_c VARCHAR(255) NOT NULL,
 	option_d VARCHAR(255) NOT NULL,
-	answer VARCHAR(255) NOTNULL,
-	PRIMARY KEY(id)
+	answer VARCHAR(255) NOT NULL,
+	PRIMARY KEY(id),
+	CONSTRAINT fk_author
+		FOREIGN KEY(author_id)
+			REFERENCES officer(id)
+			ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS tag (
 	id INT GENERATED ALWAYS AS IDENTITY,
-	name VARCHAR(255) NOT NULL
+	name VARCHAR(255) NOT NULL,
+	PRIMARY KEY(id)
 );
 CREATE TABLE IF NOT EXISTS reply (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	correct BOOLEAN NOT NULL,
-	message VARCHAR(255) NOT NULL
+	message VARCHAR(255) NOT NULL,
+	PRIMARY KEY(id)
 );
 CREATE TABLE IF NOT EXISTS officer_to_role (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	officer_id INT NOT NULL,
 	role_id INT NOT NULL,
+	PRIMARY KEY(id),
 	CONSTRAINT fk_officer
 		FOREIGN KEY(officer_id)
 			REFERENCES officer(id)
@@ -144,6 +154,7 @@ CREATE TABLE IF NOT EXISTS player_to_quiz (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	player_id INT NOT NULL,
 	quiz_id INT NOT NULL,
+	PRIMARY KEY(id),
 	CONSTRAINT fk_player
 		FOREIGN KEY(player_id)
 			REFERENCES player(id)
@@ -157,6 +168,7 @@ CREATE TABLE IF NOT EXISTS quiz_to_tag (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	quiz_id INT NOT NULL,
 	tag_id INT NOT NULL,
+	PRIMARY KEY(id),
 	CONSTRAINT fk_quiz
 		FOREIGN KEY(quiz_id)
 			REFERENCES quiz(id)
@@ -175,6 +187,9 @@ var (
 
 func init() {
 	connectDatabase()
+	for _, r := range config.Config.Officer.DefaultRoles {
+		CreateRole(r)
+	}
 }
 
 // connectDatabse build the connection with database.
