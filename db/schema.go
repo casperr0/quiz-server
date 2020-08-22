@@ -28,9 +28,8 @@ type Role struct {
 
 // Player describe the schema of quiz player.
 type Player struct {
-	ID    int    `db:"id"`
-	Name  string `db:"name"`
-	Score int    `db:"score"`
+	ID   int    `db:"id"`
+	Name string `db:"name"`
 }
 
 // Quiz describe the schema of quiz content.
@@ -67,9 +66,10 @@ type OfficerToRole struct {
 
 // PlayerToQuiz describe the many-to-many relationships between players and quizes.
 type PlayerToQuiz struct {
-	ID       int `db:"id"`
-	PlayerID int `db:"player_id"`
-	QuizID   int `db:"quiz_id"`
+	ID       int  `db:"id"`
+	PlayerID int  `db:"player_id"`
+	QuizID   int  `db:"quiz_id"`
+	Correct  bool `db:"correct"`
 }
 
 // QuizToTag describe the many-to-many relationships between quizes and tags.
@@ -105,7 +105,6 @@ CREATE TABLE IF NOT EXISTS role (
 CREATE TABLE IF NOT EXISTS player (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	name VARCHAR(255) NOT NULL,
-	score INT NOT NULL,
 	PRIMARY KEY(id)
 );
 CREATE TABLE IF NOT EXISTS quiz (
@@ -148,6 +147,7 @@ CREATE TABLE IF NOT EXISTS player_to_quiz (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	player_id INT NOT NULL,
 	quiz_id INT NOT NULL,
+	correct BOOLEAN NOT NULL,
 	PRIMARY KEY(id),
 	CONSTRAINT fk_player
 		FOREIGN KEY(player_id)

@@ -42,16 +42,7 @@ var (
 	}
 )
 
-func TestCreateQuiz(t *testing.T) {
-
-	for _, q := range quizes {
-		err := CreateQuiz(q)
-		assert.Nil(t, err)
-		result, err := GetQuiz(q.ID)
-		assert.Nil(t, err)
-		assert.Equal(t, *result, q)
-	}
-}
+// TestCreateQuiz already be put in player_test.go
 
 func TestGetQuiz(t *testing.T) {
 
@@ -139,4 +130,14 @@ func TestDeregisterTag(t *testing.T) {
 	for i, tag := range tags[1:3] {
 		assert.Equal(t, tag, resultTags[i].Name)
 	}
+}
+
+func TestDeleteQuiz(t *testing.T) {
+
+	for _, q := range quizes {
+		DeleteQuiz(q.ID)
+	}
+	resultQuizes, err := ListQuizes()
+	assert.Nil(t, err)
+	assert.Equal(t, len(resultQuizes), 0)
 }

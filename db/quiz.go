@@ -70,8 +70,8 @@ func QueryQuizes(tagName string) ([]Quiz, error) {
 	return quizes, nil
 }
 
-// DeleteQuizes will delete quiz with specified ID.
-func DeleteQuizes(quizID int) {
+// DeleteQuiz will delete quiz with specified ID.
+func DeleteQuiz(quizID int) {
 
 	deleteSQL := "DELETE FROM quiz WHERE id=$1"
 	tx := database.MustBegin()
