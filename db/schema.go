@@ -36,13 +36,12 @@ type Player struct {
 // Quiz describe the schema of quiz content.
 type Quiz struct {
 	ID          int    `db:"id"`
-	Author      int    `db:"author_id"`
 	Description string `db:"description"`
 	Score       int    `db:"score"`
-	OprionA     string `db:"option_a"`
-	OprionB     string `db:"option_b"`
-	OprionC     string `db:"option_c"`
-	OprionD     string `db:"option_d"`
+	OptionA     string `db:"option_a"`
+	OptionB     string `db:"option_b"`
+	OptionC     string `db:"option_c"`
+	OptionD     string `db:"option_d"`
 	Answer      string `db:"answer"`
 }
 
@@ -111,7 +110,6 @@ CREATE TABLE IF NOT EXISTS player (
 );
 CREATE TABLE IF NOT EXISTS quiz (
 	id INT GENERATED ALWAYS AS IDENTITY,
-	author_id INT NOT NULL,
 	description VARCHAR(2048) NOT NULL,
 	score INT NOT NULL,
 	option_a VARCHAR(255) NOT NULL,
@@ -119,11 +117,7 @@ CREATE TABLE IF NOT EXISTS quiz (
 	option_c VARCHAR(255) NOT NULL,
 	option_d VARCHAR(255) NOT NULL,
 	answer VARCHAR(255) NOT NULL,
-	PRIMARY KEY(id),
-	CONSTRAINT fk_author
-		FOREIGN KEY(author_id)
-			REFERENCES officer(id)
-			ON DELETE CASCADE
+	PRIMARY KEY(id)
 );
 CREATE TABLE IF NOT EXISTS tag (
 	id INT GENERATED ALWAYS AS IDENTITY,
@@ -189,6 +183,9 @@ func init() {
 	connectDatabase()
 	for _, r := range config.Config.Officer.DefaultRoles {
 		CreateRole(r)
+	}
+	for _, t := range config.Config.Quiz.DefaultTags {
+		CreateTag(t)
 	}
 }
 

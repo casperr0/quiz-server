@@ -102,15 +102,15 @@ func CreateRole(name string) {
 }
 
 // GetRole will get the role with specified name.
-func GetRole(name string) (*Role, error) {
+func GetRole(roleName string) (*Role, error) {
 
 	getSQL := "SELECT * FROM role WHERE name=$1"
 	role := Role{}
-	err := database.Get(&role, getSQL, name)
+	err := database.Get(&role, getSQL, roleName)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
 			tpl := "role %s not found"
-			return nil, fmt.Errorf(tpl, name)
+			return nil, fmt.Errorf(tpl, roleName)
 		}
 		return nil, err
 	}
@@ -179,7 +179,7 @@ func RegisterRole(officerName, roleName string) error {
 	roleFound, err := GetRole(roleName)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
-			tpl := "team %s not found"
+			tpl := "role %s not found"
 			return fmt.Errorf(tpl, roleName)
 		}
 		return err
@@ -187,6 +187,37 @@ func RegisterRole(officerName, roleName string) error {
 	roleID := roleFound.ID
 	tx := database.MustBegin()
 	tx.MustExec(registerSQL, officerID, roleID)
+	tx.Commit()
+	return nil
+}
+
+// DeregisterRole will deregister an officer with an access role.
+func DeregisterRole(officerName, roleName string) error {
+
+	deregisterSQL := `
+	DELETE FROM officer_to_role
+	WHERE officer_id = $1 AND role_id = $2;
+	`
+	officerFound, err := GetOfficer(officerName)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			tpl := "officer %s not found"
+			return fmt.Errorf(tpl, officerName)
+		}
+		return err
+	}
+	officerID := officerFound.ID
+	roleFound, err := GetRole(roleName)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			tpl := "role %s not found"
+			return fmt.Errorf(tpl, roleName)
+		}
+		return err
+	}
+	roleID := roleFound.ID
+	tx := database.MustBegin()
+	tx.MustExec(deregisterSQL, officerID, roleID)
 	tx.Commit()
 	return nil
 }

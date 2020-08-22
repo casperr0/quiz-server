@@ -92,3 +92,25 @@ func TestRegisterRole(t *testing.T) {
 		assert.Equal(t, roles[i], r.Name)
 	}
 }
+
+func TestDeregisterRole(t *testing.T) {
+
+	roles := config.Config.Officer.DefaultRoles
+	DeregisterRole(officers[0].Username, roles[1])
+	DeregisterRole(officers[1].Username, roles[0])
+
+	expectOfficers := officers[:1]
+	resultOfficers, err := QueryOfficers(roles[0])
+	assert.Nil(t, err)
+	for i, o := range resultOfficers {
+		assert.Equal(t, expectOfficers[i].Username, o.Username)
+		assert.Equal(t, expectOfficers[i].Password, o.Password)
+	}
+
+	expectRoles := roles[:1]
+	resultRoles, err := QueryRoles(officers[0].Username)
+	assert.Nil(t, err)
+	for i, r := range resultRoles {
+		assert.Equal(t, expectRoles[i], r.Name)
+	}
+}
