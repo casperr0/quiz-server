@@ -1,13 +1,16 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+
+	_ "github.com/ccns/quiz-server/config"
+	"github.com/ccns/quiz-server/db"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run()
+
+	db.CreateOfficer("rain", "0114")
+	db.CreateOfficer("rain2", "0114")
+	db.CreateOfficer("rain3", "0114")
+	fmt.Println(db.ListOfficers())
 }
