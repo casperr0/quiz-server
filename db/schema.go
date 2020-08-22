@@ -47,8 +47,8 @@ type Quiz struct {
 
 // Tag describe the schema of category tags.
 type Tag struct {
-	ID   int `db:"id"`
-	Name int `db:"name"`
+	ID   int    `db:"id"`
+	Name string `db:"name"`
 }
 
 // Reply describe the schema of reply mesaage.

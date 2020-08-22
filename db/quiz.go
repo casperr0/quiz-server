@@ -7,7 +7,7 @@ func CreateQuiz(quiz Quiz) error {
 
 	createSQL := `
 	INSERT INTO quiz (description, score, option_a, option_b, option_c, option_d, answer)
-	SELECT $1::VARCHAR, $2::INT, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCGAR
+	SELECT $1::VARCHAR, $2::INT, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR
 	`
 	tx := database.MustBegin()
 	tx.MustExec(
@@ -56,7 +56,7 @@ func ListQuizes() ([]Quiz, error) {
 func QueryQuizes(tagName string) ([]Quiz, error) {
 
 	querySQL := `
-	SELECT *
+	SELECT q.id, q.description, q.score, q.option_a, q.option_b, q.option_c, q.option_d, q.answer
 	FROM   quiz q
 	JOIN quiz_to_tag q_t ON q.id = q_t.quiz_id
 	JOIN tag t ON t.id = q_t.tag_id
@@ -86,7 +86,7 @@ func CreateTag(tagName string) error {
 	INSERT INTO tag (name)
 	SELECT $1::VARCHAR
 	WHERE NOT EXISTS (
-		SELECT 1 FROM tag
+		SELECT * FROM tag
 		WHERE tag.name = $1
 	);
 	`
@@ -125,10 +125,10 @@ func ListTags() ([]Tag, error) {
 }
 
 // QueryTags query all tags of an quiz.
-func QueryTags(quizID Tag) ([]Tag, error) {
+func QueryTags(quizID int) ([]Tag, error) {
 
 	querySQL := `
-	SELECT *
+	SELECT t.id, t.name
 	FROM   tag t
 	JOIN quiz_to_tag q_t ON t.id = q_t.tag_id
 	JOIN quiz q ON q.id = q_t.quiz_id
@@ -158,7 +158,7 @@ func RegisterTag(quizID int, tagName string) error {
 	INSERT INTO quiz_to_tag (quiz_id, tag_id)
 	SELECT $1::INT, $2::INT
 	WHERE NOT EXISTS(
-		SELECT 1 FROM quiz_to_tag
+		SELECT * FROM quiz_to_tag
 		WHERE quiz_id = $1 AND tag_id = $2
 	);
 	`
