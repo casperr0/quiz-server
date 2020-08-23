@@ -51,8 +51,8 @@ type Tag struct {
 	Name string `db:"name" json:"name"`
 }
 
-// Reply describe the schema of reply mesaage.
-type Reply struct {
+// Provoke describe the schema of provoke mesaage.
+type Provoke struct {
 	ID      int    `db:"id"`
 	Correct bool   `db:"correct"`
 	Message string `db:"message"`
@@ -84,10 +84,10 @@ const drop = `
 DROP TABLE IF EXISTS officer_to_role;
 DROP TABLE IF EXISTS player_to_quiz;
 DROP TABLE IF EXISTS quiz_to_tag;
+DROP TABLE IF EXISTS provoke;
 DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS quiz;
 DROP TABLE IF EXISTS role;
-DROP TABLE IF EXISTS reply;
 DROP TABLE IF EXISTS player;
 DROP TABLE IF EXISTS officer;
 `
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS tag (
 	name VARCHAR(255) NOT NULL,
 	PRIMARY KEY(id)
 );
-CREATE TABLE IF NOT EXISTS reply (
+CREATE TABLE IF NOT EXISTS provoke (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	correct BOOLEAN NOT NULL,
 	message VARCHAR(255) NOT NULL,
