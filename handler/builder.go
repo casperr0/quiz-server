@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // HATEOAS describe the restful response structure
@@ -40,22 +39,22 @@ func BuildHATEOAS(links map[string]LinkDetail, status Status, data interface{}, 
 	return string(result), nil
 }
 
-func init() {
+// func init() {
 
-	link0 := LinkDetail{
-		Href: "google.com",
-		Rel:  "home",
-	}
-	link1 := LinkDetail{
-		Href: "facebook.com",
-		Rel:  "fb",
-	}
-	links := map[string]LinkDetail{"google": link0, "facebook": link1}
-	status := Status{
-		Code:    200,
-		Message: "list all bookmarks.",
-	}
+// 	link0 := LinkDetail{
+// 		Href: "google.com",
+// 		Rel:  "home",
+// 	}
+// 	link1 := LinkDetail{
+// 		Href: "facebook.com",
+// 		Rel:  "fb",
+// 	}
+// 	links := map[string]LinkDetail{"google": link0, "facebook": link1}
+// 	status := Status{
+// 		Code:    200,
+// 		Message: "list all bookmarks.",
+// 	}
 
-	content, _ := BuildHATEOAS(links, status, nil, nil)
-	fmt.Print(content)
-}
+// 	content, _ := BuildHATEOAS(links, status, nil, nil)
+// 	fmt.Print(content)
+// }

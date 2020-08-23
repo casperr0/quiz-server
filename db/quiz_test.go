@@ -8,9 +8,10 @@ import (
 )
 
 var (
-	quizes []Quiz = []Quiz{
+	quizzes []Quiz = []Quiz{
 		Quiz{
 			ID:          1,
+			Number:      1,
 			Description: "quiz 1 description",
 			Score:       1,
 			OptionA:     "A",
@@ -21,6 +22,7 @@ var (
 		},
 		Quiz{
 			ID:          2,
+			Number:      2,
 			Description: "OI!HONLQ!)@()!*&",
 			Score:       -1,
 			OptionA:     ")!(H)",
@@ -31,6 +33,7 @@ var (
 		},
 		Quiz{
 			ID:          3,
+			Number:      3,
 			Description: "",
 			Score:       999,
 			OptionA:     "",
@@ -46,19 +49,19 @@ var (
 
 func TestGetQuiz(t *testing.T) {
 
-	for _, q := range quizes {
-		result, err := GetQuiz(q.ID)
+	for _, q := range quizzes {
+		result, err := GetQuiz(q.Number)
 		assert.Nil(t, err)
 		assert.Equal(t, *result, q)
 	}
 }
 
-func TestListQuizes(t *testing.T) {
+func TestListQuizzes(t *testing.T) {
 
-	result, err := ListQuizes()
+	result, err := ListQuizzes()
 	assert.Nil(t, err)
 	for i, r := range result {
-		assert.Equal(t, quizes[i], r, "Quiz not match.")
+		assert.Equal(t, quizzes[i], r, "Quiz not match.")
 	}
 }
 
@@ -84,20 +87,20 @@ func TestListTags(t *testing.T) {
 func TestRegisterTag(t *testing.T) {
 
 	tags := config.Config.Quiz.DefaultTags
-	for _, q := range quizes {
-		RegisterTag(q.ID, tags[0])
+	for _, q := range quizzes {
+		RegisterTag(q.Number, tags[0])
 	}
 	for _, tag := range tags {
-		RegisterTag(quizes[0].ID, tag)
+		RegisterTag(quizzes[0].Number, tag)
 	}
 
-	resultQuizes, err := QueryQuizes(tags[0])
+	resultQuizes, err := QueryQuizzes(tags[0])
 	assert.Nil(t, err)
 	for i, q := range resultQuizes {
-		assert.Equal(t, quizes[i], q)
+		assert.Equal(t, quizzes[i], q)
 	}
 
-	resultTags, err := QueryTags(quizes[0].ID)
+	resultTags, err := QueryTags(quizzes[0].Number)
 	assert.Nil(t, err)
 	for i, tag := range resultTags {
 		assert.Equal(t, tags[i], tag.Name)
@@ -108,12 +111,12 @@ func TestDeregisterTag(t *testing.T) {
 
 	// deregister the tag with id 0 from all quizes
 	tags := config.Config.Quiz.DefaultTags
-	for _, q := range quizes {
-		DeregisterTag(q.ID, tags[0])
+	for _, q := range quizzes {
+		DeregisterTag(q.Number, tags[0])
 	}
 
 	// check the first quiz has all tags exclude the tag with id 0
-	resultTags, err := QueryTags(quizes[0].ID)
+	resultTags, err := QueryTags(quizzes[0].Number)
 	assert.Nil(t, err)
 	for i, tag := range resultTags {
 		assert.Equal(t, tags[i+1], tag.Name)
@@ -121,11 +124,11 @@ func TestDeregisterTag(t *testing.T) {
 
 	// deregister all tags with ID greater then 3 from the first quiz
 	for _, tag := range tags[3:] {
-		DeregisterTag(quizes[0].ID, tag)
+		DeregisterTag(quizzes[0].Number, tag)
 	}
 
 	// check the first quiz has only two tags with id 1 and 2
-	resultTags, err = QueryTags(quizes[0].ID)
+	resultTags, err = QueryTags(quizzes[0].Number)
 	assert.Nil(t, err)
 	for i, tag := range tags[1:3] {
 		assert.Equal(t, tag, resultTags[i].Name)
@@ -134,10 +137,10 @@ func TestDeregisterTag(t *testing.T) {
 
 func TestDeleteQuiz(t *testing.T) {
 
-	for _, q := range quizes {
-		DeleteQuiz(q.ID)
+	for _, q := range quizzes {
+		DeleteQuiz(q.Number)
 	}
-	resultQuizes, err := ListQuizes()
+	resultQuizes, err := ListQuizzes()
 	assert.Nil(t, err)
 	assert.Equal(t, len(resultQuizes), 0)
 }
