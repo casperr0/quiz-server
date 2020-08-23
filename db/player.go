@@ -54,7 +54,7 @@ func GetPlayer(playerName string) (*Player, error) {
 }
 
 // RegisterAnswer will records whether the player's answer is correct or not.
-func RegisterAnswer(playerName string, quizID int, correct bool) error {
+func RegisterAnswer(playerName string, quizNumber int, correct bool) error {
 
 	registerSQL := `
 	INSERT INTO player_to_quiz (player_id, quiz_id, correct)
@@ -64,6 +64,15 @@ func RegisterAnswer(playerName string, quizID int, correct bool) error {
 		WHERE player_to_quiz.player_id = $1 AND player_to_quiz.quiz_id = $2
 	);
 	`
+	quizFound, err := GetQuiz(quizNumber)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			tpl := "quiz number %d not found"
+			return fmt.Errorf(tpl, quizNumber)
+		}
+		return err
+	}
+	quizID := quizFound.ID
 	playerFound, err := GetPlayer(playerName)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
@@ -99,16 +108,50 @@ func ListPlayersOrderByScore() ([]PlayerScore, error) {
 	return playerScores, nil
 }
 
-// QueryPlayerAnswersByQuiz  query all players have answered the specified quiz.
-func QueryPlayerAnswersByQuiz(quizID int) ([]PlayerToQuiz, error) {
+// DeletePlayer will delete player with specified name.
+func DeletePlayer(playerName string) {
+
+	deleteSQL := "DELETE FROM player WHERE name=$1"
+	tx := database.MustBegin()
+	tx.MustExec(deleteSQL, playerName)
+	tx.Commit()
+}
+
+// ListAnswers will list all answers from all players to all quizzes.
+func ListAnswers() ([]PlayerToQuiz, error) {
+
+	listSQL := `
+	SELECT p_q.player_id, p_q.quiz_id, p_q.correct
+	FROM player_to_quiz p_q
+	`
+	var answers []PlayerToQuiz
+	err := database.Select(&answers, listSQL)
+	if err != nil {
+		return nil, err
+	}
+	return answers, nil
+}
+
+// QueryPlayerAnswersByQuiz query all players have answered the specified quiz.
+func QueryPlayerAnswersByQuiz(quizNumber int) ([]PlayerToQuiz, error) {
 
 	querySQL := `
 	SELECT p_q.player_id, p_q.correct
 	FROM player_to_quiz p_q
 	WHERE p_q.quiz_id = $1
 	`
+	quizFound, err := GetQuiz(quizNumber)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			tpl := "quiz number %d not found"
+			return nil, fmt.Errorf(tpl, quizNumber)
+		}
+		return nil, err
+	}
+	quizID := quizFound.ID
+
 	var playerToQuizes []PlayerToQuiz
-	err := database.Select(&playerToQuizes, querySQL, quizID)
+	err = database.Select(&playerToQuizes, querySQL, quizID)
 	if err != nil {
 		return nil, err
 	}

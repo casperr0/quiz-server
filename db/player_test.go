@@ -40,7 +40,7 @@ func TestCreateQuiz(t *testing.T) {
 	}
 
 	err := CreateQuiz(quizzes[0])
-	tpl := "quiz with number %s already exists"
+	tpl := "quiz number %d already exists"
 	assert.Equal(t, err, fmt.Errorf(tpl, quizzes[0].Number))
 }
 
