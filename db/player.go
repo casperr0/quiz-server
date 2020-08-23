@@ -64,15 +64,6 @@ func RegisterAnswer(playerName string, quizNumber int, correct bool) error {
 		WHERE player_to_quiz.player_id = $1 AND player_to_quiz.quiz_id = $2
 	);
 	`
-	quizFound, err := GetQuiz(quizNumber)
-	if err != nil {
-		if err.Error() == "sql: no rows in result set" {
-			tpl := "quiz number %d not found"
-			return fmt.Errorf(tpl, quizNumber)
-		}
-		return err
-	}
-	quizID := quizFound.ID
 	playerFound, err := GetPlayer(playerName)
 	if err != nil {
 		if err.Error() == "sql: no rows in result set" {
@@ -82,6 +73,15 @@ func RegisterAnswer(playerName string, quizNumber int, correct bool) error {
 		return err
 	}
 	playerID := playerFound.ID
+	quizFound, err := GetQuiz(quizNumber)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			tpl := "quiz number %d not found"
+			return fmt.Errorf(tpl, quizNumber)
+		}
+		return err
+	}
+	quizID := quizFound.ID
 	tx := database.MustBegin()
 	tx.MustExec(registerSQL, playerID, quizID, correct)
 	tx.Commit()
@@ -115,6 +115,43 @@ func DeletePlayer(playerName string) {
 	tx := database.MustBegin()
 	tx.MustExec(deleteSQL, playerName)
 	tx.Commit()
+}
+
+// GetAnswer will get answer by playerName and quizNumber.
+func GetAnswer(playerName string, quizNumber int) (*PlayerToQuiz, error) {
+
+	getSQL := `
+	SELECT p_q.player_id, p_q.quiz_id, p_q.correct
+	FROM player_to_quiz p_q
+	WHERE p_q.player_id = $1 and p_q.quiz_id = $2
+	`
+	playerFound, err := GetPlayer(playerName)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			tpl := "player %s not found"
+			return nil, fmt.Errorf(tpl, playerName)
+		}
+		return nil, err
+	}
+	playerID := playerFound.ID
+	quizFound, err := GetQuiz(quizNumber)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			tpl := "quiz number %d not found"
+			return nil, fmt.Errorf(tpl, quizNumber)
+		}
+		return nil, err
+	}
+	quizID := quizFound.ID
+	var answer PlayerToQuiz
+	err = database.Get(&answer, getSQL, playerID, quizID)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			return nil, fmt.Errorf("answer not found")
+		}
+		return nil, err
+	}
+	return &answer, nil
 }
 
 // ListAnswers will list all answers from all players to all quizzes.

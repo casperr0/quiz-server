@@ -20,6 +20,27 @@ func GetAnswersHandler(ctx *gin.Context) {
 	playerName := ctx.DefaultQuery("player", "")
 	quizNumber := ctx.DefaultQuery("quiz", "")
 
+	if playerName != "" && quizNumber != "" {
+
+		quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
+		if err != nil {
+			resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+			ctx.String(400, resp)
+			return
+		}
+
+		data, err := db.GetAnswer(playerName, quizNumber)
+		if err != nil {
+			resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, nil, nil)
+			ctx.String(500, resp)
+			return
+		}
+
+		status := Status{200, "answers listed successfully."}
+		resp, _ := BuildHATEOAS(nil, status, data, nil)
+		ctx.String(200, resp)
+	}
+
 	if playerName != "" {
 
 		data, err := db.QueryQuizAnswersByPlayer(playerName)
