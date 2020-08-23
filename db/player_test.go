@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -30,13 +31,17 @@ var (
 // Put the TestCreateQuiz here because test cases for player answer needs initial quizes.
 func TestCreateQuiz(t *testing.T) {
 
-	for _, q := range quizes {
+	for _, q := range quizzes {
 		err := CreateQuiz(q)
 		assert.Nil(t, err)
-		result, err := GetQuiz(q.ID)
+		result, err := GetQuiz(q.Number)
 		assert.Nil(t, err)
 		assert.Equal(t, *result, q)
 	}
+
+	err := CreateQuiz(quizzes[0])
+	tpl := "quiz number %d already exists"
+	assert.Equal(t, err, fmt.Errorf(tpl, quizzes[0].Number))
 }
 
 func TestCreatePlayer(t *testing.T) {
@@ -61,7 +66,7 @@ func TestGetPlayer(t *testing.T) {
 
 func TestRegisterAnswer(t *testing.T) {
 
-	for iq, q := range quizes {
+	for iq, q := range quizzes {
 		for ip, p := range players {
 			err := RegisterAnswer(p.Name, q.ID, ip > iq)
 			assert.Nil(t, err)
@@ -82,7 +87,7 @@ func TestListPlayersOrderByScore(t *testing.T) {
 
 func TestQueryPlayerAnswersByQuiz(t *testing.T) {
 
-	for iq, q := range quizes {
+	for iq, q := range quizzes {
 		result, err := QueryPlayerAnswersByQuiz(q.ID)
 		assert.Nil(t, err)
 		for ir, r := range result {

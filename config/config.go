@@ -31,7 +31,7 @@ var (
 		Quiz: QuizConfig{
 			DefaultTags: []string{
 				"Network", "Language", "Security", "Hardware", "Animation",
-				"Game", "SysAdmin", "School", "Club", "Engineering", "Math",
+				"Game", "SysAdmin", "School", "CCNS", "Engineering", "Math",
 				"Others",
 			},
 		},

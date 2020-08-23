@@ -35,6 +35,7 @@ type Player struct {
 // Quiz describe the schema of quiz content.
 type Quiz struct {
 	ID          int    `db:"id"`
+	Number      int    `db:"number"`
 	Description string `db:"description"`
 	Score       int    `db:"score"`
 	OptionA     string `db:"option_a"`
@@ -46,8 +47,8 @@ type Quiz struct {
 
 // Tag describe the schema of category tags.
 type Tag struct {
-	ID   int    `db:"id"`
-	Name string `db:"name"`
+	ID   int    `db:"id" json:"id"`
+	Name string `db:"name" json:"name"`
 }
 
 // Reply describe the schema of reply mesaage.
@@ -86,6 +87,7 @@ DROP TABLE IF EXISTS quiz_to_tag;
 DROP TABLE IF EXISTS tag;
 DROP TABLE IF EXISTS quiz;
 DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS reply;
 DROP TABLE IF EXISTS player;
 DROP TABLE IF EXISTS officer;
 `
@@ -109,6 +111,7 @@ CREATE TABLE IF NOT EXISTS player (
 );
 CREATE TABLE IF NOT EXISTS quiz (
 	id INT GENERATED ALWAYS AS IDENTITY,
+	number INT NOT NULL,
 	description VARCHAR(2048) NOT NULL,
 	score INT NOT NULL,
 	option_a VARCHAR(255) NOT NULL,
