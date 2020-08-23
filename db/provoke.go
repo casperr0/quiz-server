@@ -13,6 +13,21 @@ func CreateProvoke(correct bool, message string) error {
 	return nil
 }
 
+// ListProvokes list all provokes.
+func ListProvokes() ([]Provoke, error) {
+
+	listSQL := `
+	SELECT p.id, p.correct, p.message
+	FROM provoke p
+	`
+	var provokes []Provoke
+	err := database.Select(&provokes, listSQL)
+	if err != nil {
+		return nil, err
+	}
+	return provokes, nil
+}
+
 // QueryProvokes query all provokes with the correctness.
 func QueryProvokes(correct bool) ([]Provoke, error) {
 

@@ -8,27 +8,23 @@ Backend server for quiz contest.
 
 # RESTful API endpoints
 ```
-GET     /officers
-POST    /officers
-UPDATE  /officers/<officer_name>
-DELETE  /officers/<officer_name>
+GET     /v1/players
+POST    /v1/players
+DELETE  /v1/players/:player_name
 
-GET     /officers/<officer_name>/roles
-POST    /officers/<officer_name>/roles
-DELETE  /officers/<officer_name>/roles/<role_name>
+GET     /v1/quizzes?tag=<tag_name>
+POST    /v1/quizzes
+DELETE  /v1/quizzes/:quiz_id
 
-GET     /players
-POST    /players
-DELETE  /players/<player_name>
+GET     /v1/quizzes/:quiz_id/tags
+POST    /v1/quizzes/:quiz_id/tags
+DELETE  /v1/quizzes/:quiz_id/tags/:tag_name
 
-GET     /quizzes
-POST    /quizzes
-UPDATE  /quizzes/<quiz_id>
-DELETE  /quizzes/<quiz_id>
+GET     /v1/answers?player=<player_name>&quiz=<quiz_number>
+POST    /v1/answers
 
-GET     /quizzes/<quiz_id>/tags
-POST    /quizzes/<quiz_id>/tags
-DELETE  /quizzes/<quiz_id>/tags/<tag_name>
+GET     /v1/provokes?correct=<correctness>
+POST    /v1/provokes
 ```
 
 # Getting Started

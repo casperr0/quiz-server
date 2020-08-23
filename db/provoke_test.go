@@ -51,6 +51,13 @@ func TestCreateProvoke(t *testing.T) {
 
 func TestListProvokes(t *testing.T) {
 
+	result, err := ListProvokes()
+	assert.Nil(t, err)
+	assert.Equal(t, provokes, result)
+}
+
+func TestQueryProvokes(t *testing.T) {
+
 	result, err := QueryProvokes(true)
 	assert.Nil(t, err)
 	assert.Equal(t, provokes[:3], result)
