@@ -21,6 +21,7 @@ func main() {
 
 		v1.GET("/quizzes", handler.GetQuizzesHandler)
 		v1.POST("/quizzes", handler.PostQuizzesHandler)
+		v1.GET("/quizzes/:quiz_number", handler.GetQuizHandler)
 		v1.DELETE("/quizzes/:quiz_number", handler.DeleteQuizHandler)
 
 		v1.GET("/quizzes/:quiz_number/tags", handler.GetQuizTagsHandler)

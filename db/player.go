@@ -158,7 +158,7 @@ func GetAnswer(playerName string, quizNumber int) (*PlayerToQuiz, error) {
 func ListAnswers() ([]PlayerToQuiz, error) {
 
 	listSQL := `
-	SELECT p_q.player_id, p_q.quiz_id, p_q.correct
+	SELECT p_q.id, p_q.player_id, p_q.quiz_id, p_q.correct
 	FROM player_to_quiz p_q
 	`
 	var answers []PlayerToQuiz
@@ -173,7 +173,7 @@ func ListAnswers() ([]PlayerToQuiz, error) {
 func QueryPlayerAnswersByQuiz(quizNumber int) ([]PlayerToQuiz, error) {
 
 	querySQL := `
-	SELECT p_q.player_id, p_q.correct
+	SELECT p_q.id, p_q.player_id, p_q.correct
 	FROM player_to_quiz p_q
 	WHERE p_q.quiz_id = $1
 	`
@@ -199,7 +199,7 @@ func QueryPlayerAnswersByQuiz(quizNumber int) ([]PlayerToQuiz, error) {
 func QueryQuizAnswersByPlayer(playerName string) ([]PlayerToQuiz, error) {
 
 	querySQL := `
-	SELECT p_q.quiz_id, p_q.correct
+	SELECT p_q.id, p_q.quiz_id, p_q.correct
 	FROM player_to_quiz p_q
 	WHERE p_q.player_id = $1
 	`

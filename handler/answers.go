@@ -22,7 +22,7 @@ func GetAnswersHandler(ctx *gin.Context) {
 
 	if playerName != "" && quizNumber != "" {
 
-		quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
+		quizNumber, err := strconv.Atoi(quizNumber)
 		if err != nil {
 			resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
 			ctx.String(400, resp)
@@ -39,6 +39,7 @@ func GetAnswersHandler(ctx *gin.Context) {
 		status := Status{200, "answers listed successfully."}
 		resp, _ := BuildHATEOAS(nil, status, data, nil)
 		ctx.String(200, resp)
+		return
 	}
 
 	if playerName != "" {
@@ -54,10 +55,11 @@ func GetAnswersHandler(ctx *gin.Context) {
 		status := Status{200, "answers listed successfully."}
 		resp, _ := BuildHATEOAS(nil, status, data, nil)
 		ctx.String(200, resp)
+		return
 
 	} else if quizNumber != "" {
 
-		quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
+		quizNumber, err := strconv.Atoi(quizNumber)
 		if err != nil {
 			resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
 			ctx.String(400, resp)
@@ -74,6 +76,7 @@ func GetAnswersHandler(ctx *gin.Context) {
 		status := Status{200, "answers listed successfully."}
 		resp, _ := BuildHATEOAS(nil, status, data, nil)
 		ctx.String(200, resp)
+		return
 	}
 
 	data, err := db.ListAnswers()

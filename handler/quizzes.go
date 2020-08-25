@@ -11,6 +11,22 @@ import (
 // GetQuizzesHandler handles get requests on route /quizzes.
 func GetQuizzesHandler(ctx *gin.Context) {
 
+	tagName := ctx.DefaultQuery("tag", "")
+
+	if tagName != "" {
+
+		data, err := db.QueryQuizzes(tagName)
+		if err != nil {
+			resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, nil, nil)
+			ctx.String(500, resp)
+			return
+		}
+
+		resp, _ := BuildHATEOAS(nil, Status{200, "quizzes listed successfully."}, data, nil)
+		ctx.String(200, resp)
+		return
+	}
+
 	data, err := db.ListQuizzes()
 	if err != nil {
 		resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, nil, nil)
@@ -18,8 +34,7 @@ func GetQuizzesHandler(ctx *gin.Context) {
 		return
 	}
 
-	status := Status{200, "quizzes listed successfully."}
-	resp, _ := BuildHATEOAS(nil, status, data, nil)
+	resp, _ := BuildHATEOAS(nil, Status{200, "quizzes listed successfully."}, data, nil)
 	ctx.String(200, resp)
 }
 
@@ -46,10 +61,32 @@ func PostQuizzesHandler(ctx *gin.Context) {
 	ctx.String(201, resp)
 }
 
-// UpdateQuizHandler handles update requests on route /quizzes/<quiz_number>.
+// GetQuizHandler handles get requests on route /quizzes/:quiz_number.
+func GetQuizHandler(ctx *gin.Context) {
+
+	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
+	if err != nil {
+		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		ctx.String(400, resp)
+		return
+	}
+
+	data, err := db.GetQuiz(quizNumber)
+	if err != nil {
+		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		ctx.String(400, resp)
+		return
+	}
+
+	status := Status{200, fmt.Sprintf("quiz number %d accessed successfully.", quizNumber)}
+	resp, _ := BuildHATEOAS(nil, status, data, nil)
+	ctx.String(200, resp)
+}
+
+// UpdateQuizHandler handles update requests on route /quizzes/:quiz_number.
 func UpdateQuizHandler(ctx *gin.Context) {}
 
-// DeleteQuizHandler handles delete requests on route /quizzes/<quiz_number>.
+// DeleteQuizHandler handles delete requests on route /quizzes/:quiz_number.
 func DeleteQuizHandler(ctx *gin.Context) {
 
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
@@ -71,7 +108,7 @@ func DeleteQuizHandler(ctx *gin.Context) {
 	ctx.String(200, resp)
 }
 
-// GetQuizTagsHandler handles get requests on route /quizzes/<quiz_number>/tags.
+// GetQuizTagsHandler handles get requests on route /quizzes/:quiz_number/tags.
 func GetQuizTagsHandler(ctx *gin.Context) {
 
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
@@ -94,7 +131,7 @@ func GetQuizTagsHandler(ctx *gin.Context) {
 	ctx.String(200, resp)
 }
 
-// PostQuizTagsHandler handles post requests on route /quizzes/<quiz_number>/tags.
+// PostQuizTagsHandler handles post requests on route /quizzes/:quiz_number/tags.
 func PostQuizTagsHandler(ctx *gin.Context) {
 
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
@@ -119,7 +156,7 @@ func PostQuizTagsHandler(ctx *gin.Context) {
 	ctx.String(200, resp)
 }
 
-// DeleteQuizTagHandler handles delete requests on route /quizzes/<quiz_number>/tags/<tag_name>.
+// DeleteQuizTagHandler handles delete requests on route /quizzes/:quiz_number/tags/:tag_name.
 func DeleteQuizTagHandler(ctx *gin.Context) {
 
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
