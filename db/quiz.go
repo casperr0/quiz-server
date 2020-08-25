@@ -9,7 +9,7 @@ func CreateQuiz(quiz Quiz) error {
 
 	quizFound, _ := GetQuiz(quiz.Number)
 	if quizFound != nil {
-		tpl := "quiz number %d already exists"
+		tpl := "quiz number %d already existed"
 		return fmt.Errorf(tpl, quiz.Number)
 	}
 

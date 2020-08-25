@@ -27,8 +27,12 @@ func main() {
 
 func runFVT() {
 
-	fvt.VerifyGetPlayers()
+	// fvt.VerifyGetPlayers()
+	// fvt.VerifyPostPlayers()
+	// fvt.VerifyDeletePlayer()
+
 	fvt.VerifyGetQuizzes()
+	fvt.VerifyPostQuizzes()
 }
 
 func runService() {

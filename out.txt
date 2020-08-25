@@ -1,0 +1,62 @@
+
+
+====================[ VerifyPostPlayers ]====================
+
+---------------[ New User ]---------------
+$ http://0.0.0.0:8080/v1/players
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "player test player created successfully."
+  },
+  "data": {
+    "ID": 0,
+    "Name": "test player"
+  },
+  "_embedded": null
+}
+
+---------------[ Duplicate User ]---------------
+$ http://0.0.0.0:8080/v1/players
+{
+  "_links": null,
+  "status": {
+    "status_code": 409,
+    "message": "player test player already existed"
+  },
+  "data": {
+    "ID": 0,
+    "Name": "test player"
+  },
+  "_embedded": null
+}
+
+====================[ VerifyPostPlayers ]====================
+
+---------------[ Existed User ]---------------
+$ http://0.0.0.0:8080/v1/players/test player
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "player test player deleted successfully."
+  },
+  "data": {
+    "ID": 5,
+    "Name": "test player"
+  },
+  "_embedded": null
+}
+
+---------------[ Non-existed User ]---------------
+$ http://0.0.0.0:8080/v1/players/test player
+{
+  "_links": null,
+  "status": {
+    "status_code": 400,
+    "message": "player test player not found"
+  },
+  "data": null,
+  "_embedded": null
+}

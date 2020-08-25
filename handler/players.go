@@ -38,11 +38,12 @@ func PostPlayersHandler(ctx *gin.Context) {
 
 	err = db.CreatePlayer(player.Name)
 	if err != nil {
-		status := Status{500, err.Error()}
-		if err == fmt.Errorf("player %s already existed", player.Name) {
-			status = Status{409, err.Error()}
+		if err.Error() == fmt.Sprintf("player %s already existed", player.Name) {
+			resp, _ := BuildHATEOAS(nil, Status{409, err.Error()}, player, nil)
+			ctx.String(409, resp)
+			return
 		}
-		resp, _ := BuildHATEOAS(nil, status, player, nil)
+		resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, player, nil)
 		ctx.String(500, resp)
 		return
 	}

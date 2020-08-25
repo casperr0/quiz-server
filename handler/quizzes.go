@@ -51,6 +51,11 @@ func PostQuizzesHandler(ctx *gin.Context) {
 
 	err = db.CreateQuiz(quiz)
 	if err != nil {
+		if err.Error() == fmt.Sprintf("quiz number %d already existed", quiz.Number) {
+			resp, _ := BuildHATEOAS(nil, Status{409, err.Error()}, quiz, nil)
+			ctx.String(409, resp)
+			return
+		}
 		resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, quiz, nil)
 		ctx.String(500, resp)
 		return
