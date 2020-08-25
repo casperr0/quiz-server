@@ -16,10 +16,17 @@ type QuizConfig struct {
 	DefaultTags []string
 }
 
+// FVTConfig contains all functional verification test config.
+type FVTConfig struct {
+	Topic   string
+	Section string
+}
+
 // UsingConfig intergrate all config group.
 type UsingConfig struct {
 	Officer OfficerConfig
 	Quiz    QuizConfig
+	FVT     FVTConfig
 }
 
 var (
@@ -34,6 +41,10 @@ var (
 				"Game", "SysAdmin", "School", "CCNS", "Engineering", "Math",
 				"Others",
 			},
+		},
+		FVT: FVTConfig{
+			Topic:   "\n\n====================[ %s ]====================\n\n",
+			Section: "\n---------------[ %s ]---------------\n",
 		},
 	}
 )

@@ -1,19 +1,40 @@
 package main
 
 import (
+	"flag"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/gin-gonic/gin"
 
+	_ "github.com/ccns/quiz-server/config"
 	_ "github.com/ccns/quiz-server/db"
+	"github.com/ccns/quiz-server/fvt"
 	"github.com/ccns/quiz-server/handler"
 	_ "github.com/ccns/quiz-server/utils"
-	// "github.com/ccns/quiz-server/config"
 )
 
 func main() {
 
-	r := gin.Default()
-	v1 := r.Group("/v1")
+	fvtFlag := flag.Bool("fvt", false, "run functional verification test")
+	flag.Parse()
+
+	if *fvtFlag {
+		runFVT()
+	} else {
+		runService()
+	}
+}
+
+func runFVT() {
+
+	fvt.VerifyGetPlayers()
+	fvt.VerifyGetQuizzes()
+}
+
+func runService() {
+
+	router := gin.Default()
+	v1 := router.Group("/v1")
 	{
 		v1.GET("/players", handler.GetPlayersHandler)
 		v1.POST("/players", handler.PostPlayersHandler)
@@ -34,5 +55,5 @@ func main() {
 		v1.GET("/provokes", handler.GetProvokesHandler)
 		v1.POST("/provokes", handler.PostAnswersHandler)
 	}
-	r.Run()
+	router.Run()
 }
