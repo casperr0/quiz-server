@@ -14,11 +14,11 @@ DELETE  /v1/players/:player_name
 
 GET     /v1/quizzes?tag=<tag_name>
 POST    /v1/quizzes
-DELETE  /v1/quizzes/:quiz_id
+DELETE  /v1/quizzes/:quiz_number
 
-GET     /v1/quizzes/:quiz_id/tags
-POST    /v1/quizzes/:quiz_id/tags
-DELETE  /v1/quizzes/:quiz_id/tags/:tag_name
+GET     /v1/quizzes/:quiz_number/tags
+POST    /v1/quizzes/:quiz_number/tags
+DELETE  /v1/quizzes/:quiz_number/tags/:tag_name
 
 GET     /v1/answers?player=<player_name>&quiz=<quiz_number>
 POST    /v1/answers
