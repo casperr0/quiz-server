@@ -18,5 +18,5 @@ build/*
 # Evironment variable settings
 .env
 
-# Quizzes to be imported
-quizzes.json
+# external data to be imported
+data/*

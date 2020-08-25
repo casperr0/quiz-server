@@ -14,6 +14,7 @@ DELETE  /v1/players/:player_name
 
 GET     /v1/quizzes?tag=<tag_name>
 POST    /v1/quizzes
+GET     /v1/quizzes/:quiz_number
 DELETE  /v1/quizzes/:quiz_number
 
 GET     /v1/quizzes/:quiz_number/tags
