@@ -7,7 +7,7 @@ import (
 	_ "github.com/gin-gonic/gin"
 
 	_ "github.com/ccns/quiz-server/config"
-	_ "github.com/ccns/quiz-server/db"
+	"github.com/ccns/quiz-server/db"
 	"github.com/ccns/quiz-server/fvt"
 	"github.com/ccns/quiz-server/handler"
 	_ "github.com/ccns/quiz-server/utils"
@@ -16,11 +16,15 @@ import (
 func main() {
 
 	fvtFlag := flag.Bool("fvt", false, "run functional verification test")
+	resetFlag := flag.Bool("reset", false, "reset records in current database before run service.")
 	flag.Parse()
 
 	if *fvtFlag {
 		runFVT()
 	} else {
+		if *resetFlag {
+			db.ResetDatabase()
+		}
 		runService()
 	}
 }

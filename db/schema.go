@@ -217,6 +217,7 @@ func connectDatabase() {
 func ResetDatabase() {
 
 	database.MustExec(drop)
+	log.Print("database has been reset")
 }
 
 // DisconnectDatabase break the connection with database.
