@@ -29,7 +29,7 @@ func VerifyGetPlayers() {
 	}
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "All Players"))
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -53,7 +53,7 @@ func VerifyPostPlayers() {
 	}
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "New Player"))
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -65,7 +65,7 @@ func VerifyPostPlayers() {
 	fmt.Print(string(bodyBytes))
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Duplicate Player"))
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -88,7 +88,7 @@ func VerifyDeletePlayer() {
 	}
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Existed Player"))
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ DELETE %s\n", url))
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -100,7 +100,7 @@ func VerifyDeletePlayer() {
 	fmt.Print(string(bodyBytes))
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Non-existed Player"))
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ DELETE %s\n", url))
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)

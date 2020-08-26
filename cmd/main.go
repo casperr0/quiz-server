@@ -27,12 +27,21 @@ func main() {
 
 func runFVT() {
 
-	// fvt.VerifyGetPlayers()
-	// fvt.VerifyPostPlayers()
-	// fvt.VerifyDeletePlayer()
+	fvt.VerifyGetProvokes()
+	fvt.VerifyPostProvokes()
+
+	fvt.VerifyGetPlayers()
+	fvt.VerifyPostPlayers()
 
 	fvt.VerifyGetQuizzes()
 	fvt.VerifyPostQuizzes()
+	fvt.VerifyGetQuiz()
+
+	fvt.VerifyGetAnswers()
+	fvt.VerifyPostAnswers()
+
+	fvt.VerifyDeleteQuiz()
+	fvt.VerifyDeletePlayer()
 }
 
 func runService() {
@@ -57,7 +66,7 @@ func runService() {
 		v1.POST("/answers", handler.PostAnswersHandler)
 
 		v1.GET("/provokes", handler.GetProvokesHandler)
-		v1.POST("/provokes", handler.PostAnswersHandler)
+		v1.POST("/provokes", handler.PostProvokesHandler)
 	}
 	router.Run()
 }

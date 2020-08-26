@@ -25,7 +25,7 @@ func VerifyGetQuizzes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -42,7 +42,7 @@ func VerifyGetQuizzes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -78,7 +78,7 @@ func VerifyPostQuizzes() {
 	}
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "New Quiz"))
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -90,7 +90,65 @@ func VerifyPostQuizzes() {
 	fmt.Print(string(bodyBytes))
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Duplicate Quiz"))
-	fmt.Print(fmt.Sprintf("$ %s\n", url))
+	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
+	resp, err = client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes))
+}
+
+// VerifyGetQuiz verify the get method of the route quizzes/:quiz_number.
+func VerifyGetQuiz() {
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyGetQuizzes"))
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d", testQuizNumber)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Particular Quiz"))
+	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes))
+}
+
+// VerifyDeleteQuiz verify the delete method of the route quizzes/:quiz_number.
+func VerifyDeleteQuiz() {
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyDeletePlayer"))
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d", testQuizNumber)
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Existed Quiz"))
+	fmt.Print(fmt.Sprintf("$ DELETE %s\n", url))
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes))
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Non-existed Quiz"))
+	fmt.Print(fmt.Sprintf("$ DELETE %s\n", url))
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
