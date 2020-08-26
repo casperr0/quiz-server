@@ -3,8 +3,9 @@ package db
 import (
 	"testing"
 
-	"github.com/ccns/quiz-server/config"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/ccns/quiz-server/config"
 )
 
 var (
@@ -42,6 +43,17 @@ var (
 			OptionD:     "",
 			Answer:      "C",
 		},
+		Quiz{
+			ID:          4,
+			Number:      4,
+			Description: "_____________________________________________",
+			Score:       37,
+			OptionA:     "_",
+			OptionB:     "__",
+			OptionC:     "___",
+			OptionD:     "____",
+			Answer:      "C",
+		},
 	}
 )
 
@@ -62,6 +74,14 @@ func TestListQuizzes(t *testing.T) {
 	assert.Nil(t, err)
 	for i, r := range result {
 		assert.Equal(t, quizzes[i], r, "Quiz not match.")
+	}
+}
+
+func TestFeedQuizzes(t *testing.T) {
+
+	for _, p := range players {
+		_, err := FeedQuizzes(p.Name)
+		assert.Equal(t, err.Error(), "no quiz left")
 	}
 }
 

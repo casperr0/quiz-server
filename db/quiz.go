@@ -79,6 +79,37 @@ func QueryQuizzes(tagName string) ([]Quiz, error) {
 	return quizzes, nil
 }
 
+// FeedQuizzes feed all quizzes that the players have not answers.
+func FeedQuizzes(playerName string) ([]Quiz, error) {
+
+	feedSQL := `
+	SELECT q.id, q.number, q.description, q.score, q.option_a, q.option_b, q.option_c, q.option_d, q.answer
+	FROM quiz q
+	WHERE q.id NOT IN (
+		SELECT p_q.quiz_id
+		FROM player_to_quiz p_q
+		WHERE p_q.player_id = $1 AND p_q.quiz_id = q.id
+	)
+	`
+	playerFound, err := GetPlayer(playerName)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			tpl := "player %s not found"
+			return nil, fmt.Errorf(tpl, playerName)
+		}
+		return nil, err
+	}
+	playerID := playerFound.ID
+	var quizzes []Quiz
+	err = database.Select(&quizzes, feedSQL, playerID)
+	if err != nil {
+		return nil, err
+	} else if len(quizzes) == 0 {
+		return nil, fmt.Errorf("no quiz left")
+	}
+	return quizzes, nil
+}
+
 // DeleteQuiz will delete quiz with specified ID.
 func DeleteQuiz(quizNumber int) {
 

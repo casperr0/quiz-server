@@ -669,6 +669,98 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
   "_embedded": null
 }
 
+====================[ VerifyPostPlayers ]====================
+
+---------------[ Finished Player ]---------------
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "player RainrainWu fed successfully."
+  },
+  "data": [
+    {
+      "ID": 6,
+      "Number": 999,
+      "Description": "test description.",
+      "Score": 3,
+      "OptionA": "test A",
+      "OptionB": "test B",
+      "OptionC": "test C",
+      "OptionD": "test D",
+      "Answer": "A"
+    }
+  ],
+  "_embedded": null
+}
+
+---------------[ Ongoing Player ]---------------
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "player testplayer fed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Number": 1,
+      "Description": "quiz 1 description.",
+      "Score": 1,
+      "OptionA": "1.A",
+      "OptionB": "1.B",
+      "OptionC": "1.C",
+      "OptionD": "1.D",
+      "Answer": "A"
+    },
+    {
+      "ID": 2,
+      "Number": 2,
+      "Description": "quiz 2 description.",
+      "Score": 1,
+      "OptionA": "2.A",
+      "OptionB": "2.B",
+      "OptionC": "2.C",
+      "OptionD": "2.D",
+      "Answer": "C"
+    },
+    {
+      "ID": 3,
+      "Number": 3,
+      "Description": "quiz 3 description.",
+      "Score": 1,
+      "OptionA": "3.A",
+      "OptionB": "3.B",
+      "OptionC": "3.C",
+      "OptionD": "3.D",
+      "Answer": "A"
+    },
+    {
+      "ID": 4,
+      "Number": 4,
+      "Description": "quiz 4 description.",
+      "Score": 2,
+      "OptionA": "4.A",
+      "OptionB": "4.B",
+      "OptionC": "4.C",
+      "OptionD": "4.D",
+      "Answer": "D"
+    },
+    {
+      "ID": 5,
+      "Number": 5,
+      "Description": "quiz 5 description.",
+      "Score": 3,
+      "OptionA": "5.A",
+      "OptionB": "5.B",
+      "OptionC": "5.C",
+      "OptionD": "5.D",
+      "Answer": "B"
+    }
+  ],
+  "_embedded": null
+}
+
 ====================[ VerifyDeletePlayer ]====================
 
 ---------------[ Existed Quiz ]---------------

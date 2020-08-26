@@ -53,26 +53,51 @@ func PostPlayersHandler(ctx *gin.Context) {
 	ctx.String(201, resp)
 }
 
-// DeletePlayerHandler handles delete requests on route /players/<player_name>.
+// DeletePlayerHandler handles delete requests on route /players/:player_name.
 func DeletePlayerHandler(ctx *gin.Context) {
 
 	playerName := ctx.Param("player_name")
 	if playerName == "" {
-		status := Status{400, "player_name not specified."}
-		resp, _ := BuildHATEOAS(nil, status, nil, nil)
+		resp, _ := BuildHATEOAS(nil, Status{400, "player_name not specified."}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
 
 	data, err := db.GetPlayer(playerName)
 	if err != nil {
-		status := Status{400, err.Error()}
-		resp, _ := BuildHATEOAS(nil, status, nil, nil)
+		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
 	db.DeletePlayer(playerName)
 	status := Status{200, fmt.Sprintf("player %s deleted successfully.", playerName)}
+	resp, _ := BuildHATEOAS(nil, status, data, nil)
+	ctx.String(200, resp)
+}
+
+// GetPlayerFeedHandler handles GET requests on route /players/:player_name/feed.
+func GetPlayerFeedHandler(ctx *gin.Context) {
+
+	playerName := ctx.Param("player_name")
+	if playerName == "" {
+		resp, _ := BuildHATEOAS(nil, Status{400, "player_name not specified."}, nil, nil)
+		ctx.String(400, resp)
+		return
+	}
+
+	data, err := db.FeedQuizzes(playerName)
+	if err != nil {
+		if err.Error() == "no quiz left" {
+			resp, _ := BuildHATEOAS(nil, Status{404, err.Error()}, nil, nil)
+			ctx.String(404, resp)
+			return
+		}
+		resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, nil, nil)
+		ctx.String(500, resp)
+		return
+	}
+
+	status := Status{200, fmt.Sprintf("player %s fed successfully.", playerName)}
 	resp, _ := BuildHATEOAS(nil, status, data, nil)
 	ctx.String(200, resp)
 }
