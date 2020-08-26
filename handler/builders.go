@@ -15,7 +15,6 @@ type HATEOAS struct {
 // LinkDetail describe details of each link in _links
 type LinkDetail struct {
 	Href string `json:"href"`
-	Rel  string `json:"rel"`
 }
 
 // Status describe status of the response

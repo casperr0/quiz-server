@@ -8,8 +8,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GetQuizzesHandler handles get requests on route /quizzes.
+// GetQuizzesHandler handles GET requests on route /quizzes.
 func GetQuizzesHandler(ctx *gin.Context) {
+
+	links := map[string]LinkDetail{
+		"self": LinkDetail{"/v1/quizzes"},
+	}
 
 	tagName := ctx.DefaultQuery("tag", "")
 
@@ -17,34 +21,38 @@ func GetQuizzesHandler(ctx *gin.Context) {
 
 		data, err := db.QueryQuizzes(tagName)
 		if err != nil {
-			resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, nil, nil)
+			resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, nil, nil)
 			ctx.String(500, resp)
 			return
 		}
 
-		resp, _ := BuildHATEOAS(nil, Status{200, "quizzes listed successfully."}, data, nil)
+		resp, _ := BuildHATEOAS(links, Status{200, "quizzes listed successfully."}, data, nil)
 		ctx.String(200, resp)
 		return
 	}
 
 	data, err := db.ListQuizzes()
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, nil, nil)
 		ctx.String(500, resp)
 		return
 	}
 
-	resp, _ := BuildHATEOAS(nil, Status{200, "quizzes listed successfully."}, data, nil)
+	resp, _ := BuildHATEOAS(links, Status{200, "quizzes listed successfully."}, data, nil)
 	ctx.String(200, resp)
 }
 
-// PostQuizzesHandler handles post requests on route /quizzes.
+// PostQuizzesHandler handles POST requests on route /quizzes.
 func PostQuizzesHandler(ctx *gin.Context) {
+
+	links := map[string]LinkDetail{
+		"self": LinkDetail{"/v1/quizzes"},
+	}
 
 	var quiz db.Quiz
 	err := ctx.BindJSON(&quiz)
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
@@ -52,26 +60,32 @@ func PostQuizzesHandler(ctx *gin.Context) {
 	err = db.CreateQuiz(quiz)
 	if err != nil {
 		if err.Error() == fmt.Sprintf("quiz number %d already existed", quiz.Number) {
-			resp, _ := BuildHATEOAS(nil, Status{409, err.Error()}, quiz, nil)
+			resp, _ := BuildHATEOAS(links, Status{409, err.Error()}, quiz, nil)
 			ctx.String(409, resp)
 			return
 		}
-		resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, quiz, nil)
+		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, quiz, nil)
 		ctx.String(500, resp)
 		return
 	}
+	links["quiz"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quiz.Number)}
+	links["tags"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quiz.Number)}
 
 	status := Status{201, fmt.Sprintf("quiz number %d created successfully.", quiz.Number)}
-	resp, _ := BuildHATEOAS(nil, status, quiz, nil)
+	resp, _ := BuildHATEOAS(links, status, quiz, nil)
 	ctx.String(201, resp)
 }
 
 // GetQuizHandler handles get requests on route /quizzes/:quiz_number.
 func GetQuizHandler(ctx *gin.Context) {
 
+	links := map[string]LinkDetail{
+		"list": LinkDetail{"/v1/quizzes"},
+	}
+
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
@@ -82,43 +96,48 @@ func GetQuizHandler(ctx *gin.Context) {
 		ctx.String(400, resp)
 		return
 	}
+	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
+	links["tags"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
 
 	status := Status{200, fmt.Sprintf("quiz number %d accessed successfully.", quizNumber)}
 	resp, _ := BuildHATEOAS(nil, status, data, nil)
 	ctx.String(200, resp)
 }
 
-// UpdateQuizHandler handles update requests on route /quizzes/:quiz_number.
-func UpdateQuizHandler(ctx *gin.Context) {}
-
 // DeleteQuizHandler handles delete requests on route /quizzes/:quiz_number.
 func DeleteQuizHandler(ctx *gin.Context) {
 
+	links := map[string]LinkDetail{
+		"list": LinkDetail{"/v1/quizzes"},
+	}
+
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
 
 	data, err := db.GetQuiz(quizNumber)
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
 	db.DeleteQuiz(quizNumber)
 	status := Status{200, fmt.Sprintf("quiz number %d deleted successfully.", quizNumber)}
-	resp, _ := BuildHATEOAS(nil, status, data, nil)
+	resp, _ := BuildHATEOAS(links, status, data, nil)
 	ctx.String(200, resp)
 }
 
-// GetQuizTagsHandler handles get requests on route /quizzes/:quiz_number/tags.
+// GetQuizTagsHandler handles GET requests on route /quizzes/:quiz_number/tags.
 func GetQuizTagsHandler(ctx *gin.Context) {
+
+	links := map[string]LinkDetail{}
 
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
@@ -126,22 +145,26 @@ func GetQuizTagsHandler(ctx *gin.Context) {
 	var data []db.Tag
 	data, err = db.QueryTags(quizNumber)
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, nil, nil)
 		ctx.String(500, resp)
 		return
 	}
+	links["quiz"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
+	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
 
 	status := Status{200, fmt.Sprintf("tags of quiz number %d listed successfully.", quizNumber)}
-	resp, _ := BuildHATEOAS(nil, status, data, nil)
+	resp, _ := BuildHATEOAS(links, status, data, nil)
 	ctx.String(200, resp)
 }
 
-// PostQuizTagsHandler handles post requests on route /quizzes/:quiz_number/tags.
+// PostQuizTagsHandler handles POST requests on route /quizzes/:quiz_number/tags.
 func PostQuizTagsHandler(ctx *gin.Context) {
+
+	links := map[string]LinkDetail{}
 
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
@@ -149,19 +172,28 @@ func PostQuizTagsHandler(ctx *gin.Context) {
 	var tag db.Tag
 	err = ctx.BindJSON(&tag)
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
 
 	_, err = db.GetTag(tag.Name)
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
 
-	db.RegisterTag(quizNumber, tag.Name)
+	err = db.RegisterTag(quizNumber, tag.Name)
+	if err != nil {
+		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, nil, nil)
+		ctx.String(500, resp)
+		return
+	}
+	links["quiz"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
+	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
+	links["tag"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags/%s", quizNumber, tag.Name)}
+
 	message := fmt.Sprintf("quiz number %d registered with tag %s successfully.", quizNumber, tag.Name)
 	status := Status{200, message}
 	resp, _ := BuildHATEOAS(nil, status, tag, nil)
@@ -170,6 +202,8 @@ func PostQuizTagsHandler(ctx *gin.Context) {
 
 // DeleteQuizTagHandler handles delete requests on route /quizzes/:quiz_number/tags/:tag_name.
 func DeleteQuizTagHandler(ctx *gin.Context) {
+
+	links := map[string]LinkDetail{}
 
 	quizNumber, err := strconv.Atoi(ctx.Param("quiz_number"))
 	if err != nil {
@@ -185,7 +219,16 @@ func DeleteQuizTagHandler(ctx *gin.Context) {
 		return
 	}
 
-	db.DeregisterTag(quizNumber, tagName)
+	err = db.DeregisterTag(quizNumber, tagName)
+	if err != nil {
+		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, nil, nil)
+		ctx.String(500, resp)
+		return
+	}
+	links["quiz"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
+	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
+	links["tag"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags/%s", quizNumber, tagName)}
+
 	message := fmt.Sprintf("quiz number %d deregistered with tag %s successfully.", quizNumber, tagName)
 	status := Status{200, message}
 	resp, _ := BuildHATEOAS(nil, status, tagName, nil)

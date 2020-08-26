@@ -5,7 +5,11 @@
 ---------------[ New Provoke ]---------------
 $ POST http://0.0.0.0:8080/v1/provokes
 {
-  "_links": null,
+  "_links": {
+    "self": {
+      "href": "/v1/provokes"
+    }
+  },
   "status": {
     "status_code": 201,
     "message": "provoke created successfully."
@@ -21,7 +25,11 @@ $ POST http://0.0.0.0:8080/v1/provokes
 ---------------[ Duplicate Provoke ]---------------
 $ POST http://0.0.0.0:8080/v1/provokes
 {
-  "_links": null,
+  "_links": {
+    "self": {
+      "href": "/v1/provokes"
+    }
+  },
   "status": {
     "status_code": 201,
     "message": "provoke created successfully."
@@ -39,7 +47,11 @@ $ POST http://0.0.0.0:8080/v1/provokes
 ---------------[ All Provokes ]---------------
 $ GET http://0.0.0.0:8080/v1/provokes
 {
-  "_links": null,
+  "_links": {
+    "self": {
+      "href": "/v1/provokes"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "provokes listed successfully."
@@ -87,49 +99,11 @@ $ GET http://0.0.0.0:8080/v1/provokes
 ---------------[ Query Provokes by Correctness ]---------------
 $ GET http://0.0.0.0:8080/v1/provokes?correct=true
 {
-  "_links": null,
-  "status": {
-    "status_code": 200,
-    "message": "provokes listed successfully."
-  },
-  "data": [
-    {
-      "ID": 1,
-      "Correct": true,
-      "Message": "啊不就好棒棒?"
-    },
-    {
-      "ID": 2,
-      "Correct": true,
-      "Message": "這題就當作送分啦!"
-    },
-    {
-      "ID": 3,
-      "Correct": true,
-      "Message": "你是不是偷看過我們的 database?"
-    },
-    {
-      "ID": 6,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 7,
-      "Correct": true,
-      "Message": "test provoke message"
+  "_links": {
+    "self": {
+      "href": "/v1/provokes"
     }
-  ],
-  "_embedded": null
-}{
-  "_links": null,
-  "status": {
-    "status_code": 400,
-    "message": "correctness should be true or false."
   },
-  "data": null,
-  "_embedded": null
-}{
-  "_links": null,
   "status": {
     "status_code": 200,
     "message": "provokes listed successfully."
@@ -149,16 +123,6 @@ $ GET http://0.0.0.0:8080/v1/provokes?correct=true
       "ID": 3,
       "Correct": true,
       "Message": "你是不是偷看過我們的 database?"
-    },
-    {
-      "ID": 4,
-      "Correct": false,
-      "Message": "你踩到陷阱，損失了 1 點生命值"
-    },
-    {
-      "ID": 5,
-      "Correct": false,
-      "Message": "系統管理員使用了影分身，你的命中率降低了"
     },
     {
       "ID": 6,
@@ -179,7 +143,17 @@ $ GET http://0.0.0.0:8080/v1/provokes?correct=true
 ---------------[ New Player ]---------------
 $ POST http://0.0.0.0:8080/v1/players
 {
-  "_links": null,
+  "_links": {
+    "feed": {
+      "href": "/v1/players/testplayer/feed"
+    },
+    "player": {
+      "href": "/v1/players/testplayer"
+    },
+    "self": {
+      "href": "/v1/players"
+    }
+  },
   "status": {
     "status_code": 201,
     "message": "player testplayer created successfully."
@@ -194,7 +168,14 @@ $ POST http://0.0.0.0:8080/v1/players
 ---------------[ Duplicate Player ]---------------
 $ POST http://0.0.0.0:8080/v1/players
 {
-  "_links": null,
+  "_links": {
+    "player": {
+      "href": "/v1/players/testplayer"
+    },
+    "self": {
+      "href": "/v1/players"
+    }
+  },
   "status": {
     "status_code": 409,
     "message": "player testplayer already existed"
@@ -246,7 +227,17 @@ $ GET http://0.0.0.0:8080/v1/players
 ---------------[ New Quiz ]---------------
 $ POST http://0.0.0.0:8080/v1/quizzes
 {
-  "_links": null,
+  "_links": {
+    "quiz": {
+      "href": "/v1/quizzes/999"
+    },
+    "self": {
+      "href": "/v1/quizzes"
+    },
+    "tags": {
+      "href": "/v1/quizzes/999/tags"
+    }
+  },
   "status": {
     "status_code": 201,
     "message": "quiz number 999 created successfully."
@@ -268,7 +259,11 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 ---------------[ Duplicate Quiz ]---------------
 $ POST http://0.0.0.0:8080/v1/quizzes
 {
-  "_links": null,
+  "_links": {
+    "self": {
+      "href": "/v1/quizzes"
+    }
+  },
   "status": {
     "status_code": 409,
     "message": "quiz number 999 already existed"
@@ -292,7 +287,11 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 ---------------[ All Quizzes ]---------------
 $ GET http://0.0.0.0:8080/v1/quizzes
 {
-  "_links": null,
+  "_links": {
+    "self": {
+      "href": "/v1/quizzes"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "quizzes listed successfully."
@@ -371,7 +370,11 @@ $ GET http://0.0.0.0:8080/v1/quizzes
 ---------------[ Query Quizzes by Tag ]---------------
 $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
 {
-  "_links": null,
+  "_links": {
+    "self": {
+      "href": "/v1/quizzes"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "quizzes listed successfully."
@@ -464,7 +467,14 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
 ---------------[ All Quiz Tags ]---------------
 $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
 {
-  "_links": null,
+  "_links": {
+    "quiz": {
+      "href": "/v1/quizzes/999"
+    },
+    "self": {
+      "href": "/v1/quizzes/999/tags"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "tags of quiz number 999 listed successfully."
@@ -513,7 +523,11 @@ $ POST http://0.0.0.0:8080/v1/answers
 ---------------[ All Answers ]---------------
 $ GET http://0.0.0.0:8080/v1/answers
 {
-  "_links": null,
+  "_links": {
+    "self": {
+      "href": "/v1/answers"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "answers listed successfully."
@@ -634,7 +648,14 @@ $ GET http://0.0.0.0:8080/v1/answers
 ---------------[ Query Answers by Player ]---------------
 $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
 {
-  "_links": null,
+  "_links": {
+    "player": {
+      "href": "/v1/players/testplayer"
+    },
+    "self": {
+      "href": "/v1/answers"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "answers listed successfully."
@@ -653,7 +674,14 @@ $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
 ---------------[ Query Answers by Quiz ]---------------
 $ GET http://0.0.0.0:8080/v1/answers?quiz=999
 {
-  "_links": null,
+  "_links": {
+    "quiz": {
+      "href": "/v1/quizzes/999"
+    },
+    "self": {
+      "href": "/v1/answers"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "answers listed successfully."
@@ -673,7 +701,17 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
 
 ---------------[ Finished Player ]---------------
 {
-  "_links": null,
+  "_links": {
+    "list": {
+      "href": "/players"
+    },
+    "player": {
+      "href": "/players/RainrainWu"
+    },
+    "self": {
+      "href": "/players/RainrainWu/feed"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "player RainrainWu fed successfully."
@@ -696,7 +734,17 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
 
 ---------------[ Ongoing Player ]---------------
 {
-  "_links": null,
+  "_links": {
+    "list": {
+      "href": "/players"
+    },
+    "player": {
+      "href": "/players/testplayer"
+    },
+    "self": {
+      "href": "/players/testplayer/feed"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "player testplayer fed successfully."
@@ -766,7 +814,11 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
 ---------------[ Existed Quiz ]---------------
 $ DELETE http://0.0.0.0:8080/v1/quizzes/999
 {
-  "_links": null,
+  "_links": {
+    "list": {
+      "href": "/v1/quizzes"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "quiz number 999 deleted successfully."
@@ -788,7 +840,11 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
 ---------------[ Non-existed Quiz ]---------------
 $ DELETE http://0.0.0.0:8080/v1/quizzes/999
 {
-  "_links": null,
+  "_links": {
+    "list": {
+      "href": "/v1/quizzes"
+    }
+  },
   "status": {
     "status_code": 400,
     "message": "quiz number 999 not found"
@@ -802,7 +858,11 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
 ---------------[ Existed Player ]---------------
 $ DELETE http://0.0.0.0:8080/v1/players/testplayer
 {
-  "_links": null,
+  "_links": {
+    "list": {
+      "href": "/players"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "player testplayer deleted successfully."
@@ -817,7 +877,11 @@ $ DELETE http://0.0.0.0:8080/v1/players/testplayer
 ---------------[ Non-existed Player ]---------------
 $ DELETE http://0.0.0.0:8080/v1/players/testplayer
 {
-  "_links": null,
+  "_links": {
+    "list": {
+      "href": "/players"
+    }
+  },
   "status": {
     "status_code": 400,
     "message": "player testplayer not found"
