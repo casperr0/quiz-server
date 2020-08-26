@@ -56,11 +56,17 @@ func GetPlayer(playerName string) (*Player, error) {
 // RegisterAnswer will records whether the player's answer is correct or not.
 func RegisterAnswer(playerName string, quizNumber int, correct bool) error {
 
+	answerFound, _ := GetAnswer(playerName, quizNumber)
+	if answerFound != nil {
+		tpl := "answer from player %s to quiz number %d already existed"
+		return fmt.Errorf(tpl, playerName, quizNumber)
+	}
+
 	registerSQL := `
 	INSERT INTO player_to_quiz (player_id, quiz_id, correct)
 	SELECT $1::INT, $2::INT, $3::BOOLEAN
 	WHERE NOT EXISTS (
-		SELECT 1 FROM player_to_quiz
+		SELECT * FROM player_to_quiz
 		WHERE player_to_quiz.player_id = $1 AND player_to_quiz.quiz_id = $2
 	);
 	`

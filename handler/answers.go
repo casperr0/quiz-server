@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/ccns/quiz-server/db"
@@ -104,8 +105,14 @@ func PostAnswersHandler(ctx *gin.Context) {
 
 	err = db.RegisterAnswer(answer.PlayerName, answer.QuizNumber, answer.Correct)
 	if err != nil {
-		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
-		ctx.String(400, resp)
+		tpl := "answer from player %s to quiz number %d already existed"
+		if err.Error() == fmt.Sprintf(tpl, answer.PlayerName, answer.QuizNumber) {
+			resp, _ := BuildHATEOAS(nil, Status{409, err.Error()}, nil, nil)
+			ctx.String(409, resp)
+			return
+		}
+		resp, _ := BuildHATEOAS(nil, Status{500, err.Error()}, nil, nil)
+		ctx.String(500, resp)
 		return
 	}
 

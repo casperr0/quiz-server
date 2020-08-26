@@ -1,0 +1,735 @@
+
+
+====================[ VerifyPostProvokes ]====================
+
+---------------[ New Provoke ]---------------
+$ POST http://0.0.0.0:8080/v1/provokes
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "provoke created successfully."
+  },
+  "data": {
+    "ID": 0,
+    "Correct": true,
+    "Message": "test provoke message"
+  },
+  "_embedded": null
+}
+
+---------------[ Duplicate Provoke ]---------------
+$ POST http://0.0.0.0:8080/v1/provokes
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "provoke created successfully."
+  },
+  "data": {
+    "ID": 0,
+    "Correct": true,
+    "Message": "test provoke message"
+  },
+  "_embedded": null
+}
+
+====================[ VerifyGetProvokes ]====================
+
+---------------[ All Provokes ]---------------
+$ GET http://0.0.0.0:8080/v1/provokes
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "provokes listed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Correct": true,
+      "Message": "啊不就好棒棒?"
+    },
+    {
+      "ID": 2,
+      "Correct": true,
+      "Message": "這題就當作送分啦!"
+    },
+    {
+      "ID": 3,
+      "Correct": true,
+      "Message": "你是不是偷看過我們的 database?"
+    },
+    {
+      "ID": 4,
+      "Correct": false,
+      "Message": "你踩到陷阱，損失了 1 點生命值"
+    },
+    {
+      "ID": 5,
+      "Correct": false,
+      "Message": "系統管理員使用了影分身，你的命中率降低了"
+    },
+    {
+      "ID": 6,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 7,
+      "Correct": true,
+      "Message": "test provoke message"
+    }
+  ],
+  "_embedded": null
+}
+
+---------------[ Query Provokes by Correctness ]---------------
+$ GET http://0.0.0.0:8080/v1/provokes?correct=true
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "provokes listed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Correct": true,
+      "Message": "啊不就好棒棒?"
+    },
+    {
+      "ID": 2,
+      "Correct": true,
+      "Message": "這題就當作送分啦!"
+    },
+    {
+      "ID": 3,
+      "Correct": true,
+      "Message": "你是不是偷看過我們的 database?"
+    },
+    {
+      "ID": 6,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 7,
+      "Correct": true,
+      "Message": "test provoke message"
+    }
+  ],
+  "_embedded": null
+}{
+  "_links": null,
+  "status": {
+    "status_code": 400,
+    "message": "correctness should be true or false."
+  },
+  "data": null,
+  "_embedded": null
+}{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "provokes listed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Correct": true,
+      "Message": "啊不就好棒棒?"
+    },
+    {
+      "ID": 2,
+      "Correct": true,
+      "Message": "這題就當作送分啦!"
+    },
+    {
+      "ID": 3,
+      "Correct": true,
+      "Message": "你是不是偷看過我們的 database?"
+    },
+    {
+      "ID": 4,
+      "Correct": false,
+      "Message": "你踩到陷阱，損失了 1 點生命值"
+    },
+    {
+      "ID": 5,
+      "Correct": false,
+      "Message": "系統管理員使用了影分身，你的命中率降低了"
+    },
+    {
+      "ID": 6,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 7,
+      "Correct": true,
+      "Message": "test provoke message"
+    }
+  ],
+  "_embedded": null
+}
+
+====================[ VerifyPostPlayers ]====================
+
+---------------[ New Player ]---------------
+$ POST http://0.0.0.0:8080/v1/players
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "player testplayer created successfully."
+  },
+  "data": {
+    "ID": 0,
+    "Name": "testplayer"
+  },
+  "_embedded": null
+}
+
+---------------[ Duplicate Player ]---------------
+$ POST http://0.0.0.0:8080/v1/players
+{
+  "_links": null,
+  "status": {
+    "status_code": 409,
+    "message": "player testplayer already existed"
+  },
+  "data": {
+    "ID": 0,
+    "Name": "testplayer"
+  },
+  "_embedded": null
+}
+
+====================[ VerifyGetPlayers ]====================
+
+---------------[ All Players ]---------------
+$ GET http://0.0.0.0:8080/v1/players
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "players listed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Name": "RainrainWu",
+      "Score": 8
+    },
+    {
+      "ID": 2,
+      "Name": "!(\u0026GQ(WDUHQ(",
+      "Score": 6
+    },
+    {
+      "ID": 3,
+      "Name": "  ",
+      "Score": 4
+    },
+    {
+      "ID": 4,
+      "Name": "__",
+      "Score": 3
+    }
+  ],
+  "_embedded": null
+}
+
+====================[ VerifyPostQuizzes ]====================
+
+---------------[ New Quiz ]---------------
+$ POST http://0.0.0.0:8080/v1/quizzes
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "quiz number 999 created successfully."
+  },
+  "data": {
+    "ID": 0,
+    "Number": 999,
+    "Description": "test description.",
+    "Score": 3,
+    "OptionA": "test A",
+    "OptionB": "test B",
+    "OptionC": "test C",
+    "OptionD": "test D",
+    "Answer": "A"
+  },
+  "_embedded": null
+}
+
+---------------[ Duplicate Quiz ]---------------
+$ POST http://0.0.0.0:8080/v1/quizzes
+{
+  "_links": null,
+  "status": {
+    "status_code": 409,
+    "message": "quiz number 999 already existed"
+  },
+  "data": {
+    "ID": 0,
+    "Number": 999,
+    "Description": "test description.",
+    "Score": 3,
+    "OptionA": "test A",
+    "OptionB": "test B",
+    "OptionC": "test C",
+    "OptionD": "test D",
+    "Answer": "A"
+  },
+  "_embedded": null
+}
+
+====================[ VerifyGetQuizzes ]====================
+
+---------------[ All Quizzes ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "quizzes listed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Number": 1,
+      "Description": "quiz 1 description.",
+      "Score": 1,
+      "OptionA": "1.A",
+      "OptionB": "1.B",
+      "OptionC": "1.C",
+      "OptionD": "1.D",
+      "Answer": "A"
+    },
+    {
+      "ID": 2,
+      "Number": 2,
+      "Description": "quiz 2 description.",
+      "Score": 1,
+      "OptionA": "2.A",
+      "OptionB": "2.B",
+      "OptionC": "2.C",
+      "OptionD": "2.D",
+      "Answer": "C"
+    },
+    {
+      "ID": 3,
+      "Number": 3,
+      "Description": "quiz 3 description.",
+      "Score": 1,
+      "OptionA": "3.A",
+      "OptionB": "3.B",
+      "OptionC": "3.C",
+      "OptionD": "3.D",
+      "Answer": "A"
+    },
+    {
+      "ID": 4,
+      "Number": 4,
+      "Description": "quiz 4 description.",
+      "Score": 2,
+      "OptionA": "4.A",
+      "OptionB": "4.B",
+      "OptionC": "4.C",
+      "OptionD": "4.D",
+      "Answer": "D"
+    },
+    {
+      "ID": 5,
+      "Number": 5,
+      "Description": "quiz 5 description.",
+      "Score": 3,
+      "OptionA": "5.A",
+      "OptionB": "5.B",
+      "OptionC": "5.C",
+      "OptionD": "5.D",
+      "Answer": "B"
+    },
+    {
+      "ID": 6,
+      "Number": 999,
+      "Description": "test description.",
+      "Score": 3,
+      "OptionA": "test A",
+      "OptionB": "test B",
+      "OptionC": "test C",
+      "OptionD": "test D",
+      "Answer": "A"
+    }
+  ],
+  "_embedded": null
+}
+
+---------------[ Query Quizzes by Tag ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "quizzes listed successfully."
+  },
+  "data": [
+    {
+      "ID": 2,
+      "Number": 2,
+      "Description": "quiz 2 description.",
+      "Score": 1,
+      "OptionA": "2.A",
+      "OptionB": "2.B",
+      "OptionC": "2.C",
+      "OptionD": "2.D",
+      "Answer": "C"
+    },
+    {
+      "ID": 3,
+      "Number": 3,
+      "Description": "quiz 3 description.",
+      "Score": 1,
+      "OptionA": "3.A",
+      "OptionB": "3.B",
+      "OptionC": "3.C",
+      "OptionD": "3.D",
+      "Answer": "A"
+    }
+  ],
+  "_embedded": null
+}
+
+====================[ VerifyGetQuiz ]====================
+
+---------------[ Particular Quiz ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes/999
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "quiz number 999 accessed successfully."
+  },
+  "data": {
+    "ID": 6,
+    "Number": 999,
+    "Description": "test description.",
+    "Score": 3,
+    "OptionA": "test A",
+    "OptionB": "test B",
+    "OptionC": "test C",
+    "OptionD": "test D",
+    "Answer": "A"
+  },
+  "_embedded": null
+}
+
+====================[ VerifyPostQuizTags ]====================
+
+---------------[ New Quiz Tag ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "quiz number 999 registered with tag Engineering successfully."
+  },
+  "data": {
+    "id": 0,
+    "name": "Engineering"
+  },
+  "_embedded": null
+}
+
+---------------[ Deuplicate Quiz Tag ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "quiz number 999 registered with tag Engineering successfully."
+  },
+  "data": {
+    "id": 0,
+    "name": "Engineering"
+  },
+  "_embedded": null
+}
+
+====================[ VerifyGetQuizTags ]====================
+
+---------------[ All Quiz Tags ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "tags of quiz number 999 listed successfully."
+  },
+  "data": [
+    {
+      "id": 10,
+      "name": "Engineering"
+    }
+  ],
+  "_embedded": null
+}
+
+====================[ VerifyPostAnswers ]====================
+
+---------------[ New Answer ]---------------
+$ POST http://0.0.0.0:8080/v1/answers
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "answer created successfully."
+  },
+  "data": {
+    "player_name": "testplayer",
+    "quiz_number": 999,
+    "correct": true
+  },
+  "_embedded": null
+}
+
+---------------[ Duplicate Answer ]---------------
+$ POST http://0.0.0.0:8080/v1/answers
+{
+  "_links": null,
+  "status": {
+    "status_code": 409,
+    "message": "answer from player testplayer to quiz number 999 already existed"
+  },
+  "data": null,
+  "_embedded": null
+}
+
+====================[ VerifyGetAnswers ]====================
+
+---------------[ All Answers ]---------------
+$ GET http://0.0.0.0:8080/v1/answers
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "answers listed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "PlayerID": 1,
+      "QuizID": 1,
+      "Correct": true
+    },
+    {
+      "ID": 2,
+      "PlayerID": 1,
+      "QuizID": 2,
+      "Correct": true
+    },
+    {
+      "ID": 3,
+      "PlayerID": 1,
+      "QuizID": 3,
+      "Correct": true
+    },
+    {
+      "ID": 4,
+      "PlayerID": 1,
+      "QuizID": 4,
+      "Correct": true
+    },
+    {
+      "ID": 5,
+      "PlayerID": 1,
+      "QuizID": 5,
+      "Correct": true
+    },
+    {
+      "ID": 6,
+      "PlayerID": 2,
+      "QuizID": 1,
+      "Correct": true
+    },
+    {
+      "ID": 7,
+      "PlayerID": 2,
+      "QuizID": 4,
+      "Correct": true
+    },
+    {
+      "ID": 8,
+      "PlayerID": 2,
+      "QuizID": 5,
+      "Correct": true
+    },
+    {
+      "ID": 9,
+      "PlayerID": 2,
+      "QuizID": 2,
+      "Correct": false
+    },
+    {
+      "ID": 10,
+      "PlayerID": 2,
+      "QuizID": 3,
+      "Correct": false
+    },
+    {
+      "ID": 11,
+      "PlayerID": 3,
+      "QuizID": 1,
+      "Correct": true
+    },
+    {
+      "ID": 12,
+      "PlayerID": 3,
+      "QuizID": 5,
+      "Correct": true
+    },
+    {
+      "ID": 13,
+      "PlayerID": 3,
+      "QuizID": 2,
+      "Correct": false
+    },
+    {
+      "ID": 14,
+      "PlayerID": 4,
+      "QuizID": 4,
+      "Correct": true
+    },
+    {
+      "ID": 15,
+      "PlayerID": 4,
+      "QuizID": 1,
+      "Correct": true
+    },
+    {
+      "ID": 16,
+      "PlayerID": 4,
+      "QuizID": 5,
+      "Correct": false
+    },
+    {
+      "ID": 17,
+      "PlayerID": 4,
+      "QuizID": 2,
+      "Correct": false
+    },
+    {
+      "ID": 18,
+      "PlayerID": 5,
+      "QuizID": 6,
+      "Correct": true
+    }
+  ],
+  "_embedded": null
+}
+
+---------------[ Query Answers by Player ]---------------
+$ GET http://0.0.0.0:8080/v1/answers?player=testplayer
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "answers listed successfully."
+  },
+  "data": [
+    {
+      "ID": 18,
+      "PlayerID": 0,
+      "QuizID": 6,
+      "Correct": true
+    }
+  ],
+  "_embedded": null
+}
+
+---------------[ Query Answers by Quiz ]---------------
+$ GET http://0.0.0.0:8080/v1/answers?quiz=999
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "answers listed successfully."
+  },
+  "data": [
+    {
+      "ID": 18,
+      "PlayerID": 5,
+      "QuizID": 0,
+      "Correct": true
+    }
+  ],
+  "_embedded": null
+}
+
+====================[ VerifyDeletePlayer ]====================
+
+---------------[ Existed Quiz ]---------------
+$ DELETE http://0.0.0.0:8080/v1/quizzes/999
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "quiz number 999 deleted successfully."
+  },
+  "data": {
+    "ID": 6,
+    "Number": 999,
+    "Description": "test description.",
+    "Score": 3,
+    "OptionA": "test A",
+    "OptionB": "test B",
+    "OptionC": "test C",
+    "OptionD": "test D",
+    "Answer": "A"
+  },
+  "_embedded": null
+}
+
+---------------[ Non-existed Quiz ]---------------
+$ DELETE http://0.0.0.0:8080/v1/quizzes/999
+{
+  "_links": null,
+  "status": {
+    "status_code": 400,
+    "message": "quiz number 999 not found"
+  },
+  "data": null,
+  "_embedded": null
+}
+
+====================[ VerifyPostPlayers ]====================
+
+---------------[ Existed Player ]---------------
+$ DELETE http://0.0.0.0:8080/v1/players/testplayer
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "player testplayer deleted successfully."
+  },
+  "data": {
+    "ID": 5,
+    "Name": "testplayer"
+  },
+  "_embedded": null
+}
+
+---------------[ Non-existed Player ]---------------
+$ DELETE http://0.0.0.0:8080/v1/players/testplayer
+{
+  "_links": null,
+  "status": {
+    "status_code": 400,
+    "message": "player testplayer not found"
+  },
+  "data": null,
+  "_embedded": null
+}
