@@ -30,6 +30,9 @@ func runFVT() {
 	fvt.VerifyPostProvokes()
 	fvt.VerifyGetProvokes()
 
+	fvt.VerifyPostTags()
+	fvt.VerifyGetTags()
+
 	fvt.VerifyPostPlayers()
 	fvt.VerifyGetPlayers()
 
@@ -66,6 +69,9 @@ func runService() {
 		v1.GET("/quizzes/:quiz_number/tags", handler.GetQuizTagsHandler)
 		v1.POST("/quizzes/:quiz_number/tags", handler.PostQuizTagsHandler)
 		v1.DELETE("/quizzes/:quiz_number/tags/:tag_name", handler.DeleteQuizTagHandler)
+
+		v1.GET("/tags", handler.GetTagsHandler)
+		v1.POST("/tags", handler.PostTagsHandler)
 
 		v1.GET("/answers", handler.GetAnswersHandler)
 		v1.POST("/answers", handler.PostAnswersHandler)

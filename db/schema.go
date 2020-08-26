@@ -210,8 +210,13 @@ func connectDatabase() {
 		log.Fatal(err)
 	}
 
-	database.MustExec(drop)
 	database.MustExec(schema)
+}
+
+// ResetDatabase will reset all records in the current databse.
+func ResetDatabase() {
+
+	database.MustExec(drop)
 }
 
 // DisconnectDatabase break the connection with database.

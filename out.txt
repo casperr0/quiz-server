@@ -138,6 +138,114 @@ $ GET http://0.0.0.0:8080/v1/provokes?correct=true
   "_embedded": null
 }
 
+====================[ VerifyPostTags ]====================
+
+---------------[ New Tag ]---------------
+$ POST http://0.0.0.0:8080/v1/tags
+{
+  "_links": {
+    "self": {
+      "href": "/v1/tags"
+    }
+  },
+  "status": {
+    "status_code": 201,
+    "message": "tags created successfully."
+  },
+  "data": {
+    "id": 0,
+    "name": "TestTag"
+  },
+  "_embedded": null
+}
+
+---------------[ Duplicate Tag ]---------------
+$ POST http://0.0.0.0:8080/v1/tags
+{
+  "_links": {
+    "self": {
+      "href": "/v1/tags"
+    }
+  },
+  "status": {
+    "status_code": 409,
+    "message": "tag TestTag already existed"
+  },
+  "data": null,
+  "_embedded": null
+}
+
+====================[ VerifyGetTags ]====================
+
+---------------[ All Tags ]---------------
+$ GET http://0.0.0.0:8080/v1/tags
+{
+  "_links": {
+    "self": {
+      "href": "/v1/tags"
+    }
+  },
+  "status": {
+    "status_code": 200,
+    "message": "tags listed successfully."
+  },
+  "data": [
+    {
+      "id": 1,
+      "name": "Network"
+    },
+    {
+      "id": 2,
+      "name": "Language"
+    },
+    {
+      "id": 3,
+      "name": "Security"
+    },
+    {
+      "id": 4,
+      "name": "Hardware"
+    },
+    {
+      "id": 5,
+      "name": "Animation"
+    },
+    {
+      "id": 6,
+      "name": "Game"
+    },
+    {
+      "id": 7,
+      "name": "SysAdmin"
+    },
+    {
+      "id": 8,
+      "name": "School"
+    },
+    {
+      "id": 9,
+      "name": "CCNS"
+    },
+    {
+      "id": 10,
+      "name": "Engineering"
+    },
+    {
+      "id": 11,
+      "name": "Math"
+    },
+    {
+      "id": 12,
+      "name": "Others"
+    },
+    {
+      "id": 13,
+      "name": "TestTag"
+    }
+  ],
+  "_embedded": null
+}
+
 ====================[ VerifyPostPlayers ]====================
 
 ---------------[ New Player ]---------------
@@ -437,7 +545,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
 {
   "_links": null,
   "status": {
-    "status_code": 200,
+    "status_code": 201,
     "message": "quiz number 999 registered with tag Engineering successfully."
   },
   "data": {
@@ -452,7 +560,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
 {
   "_links": null,
   "status": {
-    "status_code": 200,
+    "status_code": 201,
     "message": "quiz number 999 registered with tag Engineering successfully."
   },
   "data": {
@@ -468,6 +576,9 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
 $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
 {
   "_links": {
+    "answers": {
+      "href": "/v1/answers?quiz=999"
+    },
     "quiz": {
       "href": "/v1/quizzes/999"
     },

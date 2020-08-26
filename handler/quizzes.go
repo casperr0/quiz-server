@@ -98,6 +98,7 @@ func GetQuizHandler(ctx *gin.Context) {
 	}
 	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
 	links["tags"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
+	links["answers"] = LinkDetail{fmt.Sprintf("/v1/answers?quiz=%d", quizNumber)}
 
 	status := Status{200, fmt.Sprintf("quiz number %d accessed successfully.", quizNumber)}
 	resp, _ := BuildHATEOAS(nil, status, data, nil)
@@ -151,6 +152,7 @@ func GetQuizTagsHandler(ctx *gin.Context) {
 	}
 	links["quiz"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
 	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
+	links["answers"] = LinkDetail{fmt.Sprintf("/v1/answers?quiz=%d", quizNumber)}
 
 	status := Status{200, fmt.Sprintf("tags of quiz number %d listed successfully.", quizNumber)}
 	resp, _ := BuildHATEOAS(links, status, data, nil)
@@ -193,11 +195,13 @@ func PostQuizTagsHandler(ctx *gin.Context) {
 	links["quiz"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
 	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
 	links["tag"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags/%s", quizNumber, tag.Name)}
+	links["related_quizzes"] = LinkDetail{fmt.Sprintf("/v1/quizzes?tag=%s", tag.Name)}
+	links["answers"] = LinkDetail{fmt.Sprintf("/v1/answers?quiz=%d", quizNumber)}
 
 	message := fmt.Sprintf("quiz number %d registered with tag %s successfully.", quizNumber, tag.Name)
-	status := Status{200, message}
+	status := Status{201, message}
 	resp, _ := BuildHATEOAS(nil, status, tag, nil)
-	ctx.String(200, resp)
+	ctx.String(201, resp)
 }
 
 // DeleteQuizTagHandler handles delete requests on route /quizzes/:quiz_number/tags/:tag_name.
@@ -228,6 +232,8 @@ func DeleteQuizTagHandler(ctx *gin.Context) {
 	links["quiz"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
 	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
 	links["tag"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags/%s", quizNumber, tagName)}
+	links["related_quizzes"] = LinkDetail{fmt.Sprintf("/v1/quizzes?tag=%s", tagName)}
+	links["answers"] = LinkDetail{fmt.Sprintf("/v1/answers?quiz=%d", quizNumber)}
 
 	message := fmt.Sprintf("quiz number %d deregistered with tag %s successfully.", quizNumber, tagName)
 	status := Status{200, message}
