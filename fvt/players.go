@@ -77,7 +77,7 @@ func VerifyPostPlayers() {
 	fmt.Print(string(bodyBytes))
 }
 
-// VerifyDeletePlayer verify the delete function of player endpoints.
+// VerifyDeletePlayer verify the DELETE method on the route /player/:player_name.
 func VerifyDeletePlayer() {
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyPostPlayers"))
@@ -101,6 +101,44 @@ func VerifyDeletePlayer() {
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Non-existed Player"))
 	fmt.Print(fmt.Sprintf("$ DELETE %s\n", url))
+	resp, err = client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes))
+}
+
+// VerifyGetPlayerFeed verify the DELETE method on the route /player/:player_name/feed.
+func VerifyGetPlayerFeed() {
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyPostPlayers"))
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Finished Player"))
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/players/%s/feed", "RainrainWu")
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes))
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Ongoing Player"))
+	url = fmt.Sprintf("http://0.0.0.0:8080/v1/players/%s/feed", testPlayerName)
+	req, err = http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
