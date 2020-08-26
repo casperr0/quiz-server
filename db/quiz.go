@@ -122,6 +122,11 @@ func DeleteQuiz(quizNumber int) {
 // CreateTag create a new quiz tag.
 func CreateTag(tagName string) error {
 
+	tagFound, _ := GetTag(tagName)
+	if tagFound != nil {
+		return fmt.Errorf("tag %s already existed", tagName)
+	}
+
 	createSQL := `
 	INSERT INTO tag (name)
 	SELECT $1::VARCHAR
