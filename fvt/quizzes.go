@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	testQuizNumber int = 999
+	testQuizNumber int    = 999
+	testTagName    string = "Engineering"
 )
 
 // VerifyGetQuizzes verify the function of player endpoints.
@@ -36,7 +37,7 @@ func VerifyGetQuizzes() {
 	}
 	fmt.Print(string(bodyBytes))
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Query Quizzes"))
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Query Quizzes by Tag"))
 	url = "http://0.0.0.0:8080/v1/quizzes?tag=Security"
 	req, err = http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -105,7 +106,7 @@ func VerifyPostQuizzes() {
 // VerifyGetQuiz verify the get method of the route quizzes/:quiz_number.
 func VerifyGetQuiz() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyGetQuizzes"))
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyGetQuiz"))
 	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d", testQuizNumber)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -149,6 +150,66 @@ func VerifyDeleteQuiz() {
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Non-existed Quiz"))
 	fmt.Print(fmt.Sprintf("$ DELETE %s\n", url))
+	resp, err = client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes))
+}
+
+// VerifyGetQuizTags verify the GET method of the route quizzes/:quiz_number/tags.
+func VerifyGetQuizTags() {
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyGetQuizTags"))
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d/tags", testQuizNumber)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "All Quiz Tags"))
+	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes))
+}
+
+// VerifyPostQuizTags verify the POST method of the route quizzes/:quiz_number/tags.
+func VerifyPostQuizTags() {
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyPostQuizTags"))
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d/tags", testQuizNumber)
+	payload := `{"name":"%s"}`
+	jsonStr := []byte(fmt.Sprintf(payload, testTagName))
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "New Quiz Tag"))
+	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes))
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Deuplicate Quiz Tag"))
+	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)

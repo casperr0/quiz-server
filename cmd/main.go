@@ -27,18 +27,21 @@ func main() {
 
 func runFVT() {
 
-	fvt.VerifyGetProvokes()
 	fvt.VerifyPostProvokes()
+	fvt.VerifyGetProvokes()
 
-	fvt.VerifyGetPlayers()
 	fvt.VerifyPostPlayers()
+	fvt.VerifyGetPlayers()
 
-	fvt.VerifyGetQuizzes()
 	fvt.VerifyPostQuizzes()
+	fvt.VerifyGetQuizzes()
 	fvt.VerifyGetQuiz()
 
-	fvt.VerifyGetAnswers()
+	fvt.VerifyPostQuizTags()
+	fvt.VerifyGetQuizTags()
+
 	fvt.VerifyPostAnswers()
+	fvt.VerifyGetAnswers()
 
 	fvt.VerifyDeleteQuiz()
 	fvt.VerifyDeletePlayer()

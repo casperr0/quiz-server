@@ -154,6 +154,13 @@ func PostQuizTagsHandler(ctx *gin.Context) {
 		return
 	}
 
+	_, err = db.GetTag(tag.Name)
+	if err != nil {
+		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		ctx.String(400, resp)
+		return
+	}
+
 	db.RegisterTag(quizNumber, tag.Name)
 	message := fmt.Sprintf("quiz number %d registered with tag %s successfully.", quizNumber, tag.Name)
 	status := Status{200, message}

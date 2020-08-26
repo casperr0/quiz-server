@@ -1,5 +1,39 @@
 
 
+====================[ VerifyPostProvokes ]====================
+
+---------------[ New Provoke ]---------------
+$ POST http://0.0.0.0:8080/v1/provokes
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "provoke created successfully."
+  },
+  "data": {
+    "ID": 0,
+    "Correct": true,
+    "Message": "test provoke message"
+  },
+  "_embedded": null
+}
+
+---------------[ Duplicate Provoke ]---------------
+$ POST http://0.0.0.0:8080/v1/provokes
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "provoke created successfully."
+  },
+  "data": {
+    "ID": 0,
+    "Correct": true,
+    "Message": "test provoke message"
+  },
+  "_embedded": null
+}
+
 ====================[ VerifyGetProvokes ]====================
 
 ---------------[ All Provokes ]---------------
@@ -35,41 +69,139 @@ $ GET http://0.0.0.0:8080/v1/provokes
       "ID": 5,
       "Correct": false,
       "Message": "系統管理員使用了影分身，你的命中率降低了"
+    },
+    {
+      "ID": 6,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 7,
+      "Correct": true,
+      "Message": "test provoke message"
     }
   ],
   "_embedded": null
 }
 
-====================[ VerifyPostProvokes ]====================
+---------------[ Query Provokes by Correctness ]---------------
+$ GET http://0.0.0.0:8080/v1/provokes?correct=true
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "provokes listed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Correct": true,
+      "Message": "啊不就好棒棒?"
+    },
+    {
+      "ID": 2,
+      "Correct": true,
+      "Message": "這題就當作送分啦!"
+    },
+    {
+      "ID": 3,
+      "Correct": true,
+      "Message": "你是不是偷看過我們的 database?"
+    },
+    {
+      "ID": 6,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 7,
+      "Correct": true,
+      "Message": "test provoke message"
+    }
+  ],
+  "_embedded": null
+}{
+  "_links": null,
+  "status": {
+    "status_code": 400,
+    "message": "correctness should be true or false."
+  },
+  "data": null,
+  "_embedded": null
+}{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "provokes listed successfully."
+  },
+  "data": [
+    {
+      "ID": 1,
+      "Correct": true,
+      "Message": "啊不就好棒棒?"
+    },
+    {
+      "ID": 2,
+      "Correct": true,
+      "Message": "這題就當作送分啦!"
+    },
+    {
+      "ID": 3,
+      "Correct": true,
+      "Message": "你是不是偷看過我們的 database?"
+    },
+    {
+      "ID": 4,
+      "Correct": false,
+      "Message": "你踩到陷阱，損失了 1 點生命值"
+    },
+    {
+      "ID": 5,
+      "Correct": false,
+      "Message": "系統管理員使用了影分身，你的命中率降低了"
+    },
+    {
+      "ID": 6,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 7,
+      "Correct": true,
+      "Message": "test provoke message"
+    }
+  ],
+  "_embedded": null
+}
 
----------------[ New Provoke ]---------------
-$ POST http://0.0.0.0:8080/v1/provokes
+====================[ VerifyPostPlayers ]====================
+
+---------------[ New Player ]---------------
+$ POST http://0.0.0.0:8080/v1/players
 {
   "_links": null,
   "status": {
     "status_code": 201,
-    "message": "provoke created successfully."
+    "message": "player testplayer created successfully."
   },
   "data": {
     "ID": 0,
-    "Correct": true,
-    "Message": "test provoke message"
+    "Name": "testplayer"
   },
   "_embedded": null
 }
 
----------------[ Duplicate Provoke ]---------------
-$ POST http://0.0.0.0:8080/v1/provokes
+---------------[ Duplicate Player ]---------------
+$ POST http://0.0.0.0:8080/v1/players
 {
   "_links": null,
   "status": {
-    "status_code": 201,
-    "message": "provoke created successfully."
+    "status_code": 409,
+    "message": "player testplayer already existed"
   },
   "data": {
     "ID": 0,
-    "Correct": true,
-    "Message": "test provoke message"
+    "Name": "testplayer"
   },
   "_embedded": null
 }
@@ -109,34 +241,48 @@ $ GET http://0.0.0.0:8080/v1/players
   "_embedded": null
 }
 
-====================[ VerifyPostPlayers ]====================
+====================[ VerifyPostQuizzes ]====================
 
----------------[ New Player ]---------------
-$ POST http://0.0.0.0:8080/v1/players
+---------------[ New Quiz ]---------------
+$ POST http://0.0.0.0:8080/v1/quizzes
 {
   "_links": null,
   "status": {
     "status_code": 201,
-    "message": "player testplayer created successfully."
+    "message": "quiz number 999 created successfully."
   },
   "data": {
     "ID": 0,
-    "Name": "testplayer"
+    "Number": 999,
+    "Description": "test description.",
+    "Score": 3,
+    "OptionA": "test A",
+    "OptionB": "test B",
+    "OptionC": "test C",
+    "OptionD": "test D",
+    "Answer": "A"
   },
   "_embedded": null
 }
 
----------------[ Duplicate Player ]---------------
-$ POST http://0.0.0.0:8080/v1/players
+---------------[ Duplicate Quiz ]---------------
+$ POST http://0.0.0.0:8080/v1/quizzes
 {
   "_links": null,
   "status": {
     "status_code": 409,
-    "message": "player testplayer already existed"
+    "message": "quiz number 999 already existed"
   },
   "data": {
     "ID": 0,
-    "Name": "testplayer"
+    "Number": 999,
+    "Description": "test description.",
+    "Score": 3,
+    "OptionA": "test A",
+    "OptionB": "test B",
+    "OptionC": "test C",
+    "OptionD": "test D",
+    "Answer": "A"
   },
   "_embedded": null
 }
@@ -206,12 +352,23 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "OptionC": "5.C",
       "OptionD": "5.D",
       "Answer": "B"
+    },
+    {
+      "ID": 6,
+      "Number": 999,
+      "Description": "test description.",
+      "Score": 3,
+      "OptionA": "test A",
+      "OptionB": "test B",
+      "OptionC": "test C",
+      "OptionD": "test D",
+      "Answer": "A"
     }
   ],
   "_embedded": null
 }
 
----------------[ Query Quizzes ]---------------
+---------------[ Query Quizzes by Tag ]---------------
 $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
 {
   "_links": null,
@@ -246,53 +403,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
   "_embedded": null
 }
 
-====================[ VerifyPostQuizzes ]====================
-
----------------[ New Quiz ]---------------
-$ POST http://0.0.0.0:8080/v1/quizzes
-{
-  "_links": null,
-  "status": {
-    "status_code": 201,
-    "message": "quiz number 999 created successfully."
-  },
-  "data": {
-    "ID": 0,
-    "Number": 999,
-    "Description": "test description.",
-    "Score": 3,
-    "OptionA": "test A",
-    "OptionB": "test B",
-    "OptionC": "test C",
-    "OptionD": "test D",
-    "Answer": "A"
-  },
-  "_embedded": null
-}
-
----------------[ Duplicate Quiz ]---------------
-$ POST http://0.0.0.0:8080/v1/quizzes
-{
-  "_links": null,
-  "status": {
-    "status_code": 409,
-    "message": "quiz number 999 already existed"
-  },
-  "data": {
-    "ID": 0,
-    "Number": 999,
-    "Description": "test description.",
-    "Score": 3,
-    "OptionA": "test A",
-    "OptionB": "test B",
-    "OptionC": "test C",
-    "OptionD": "test D",
-    "Answer": "A"
-  },
-  "_embedded": null
-}
-
-====================[ VerifyGetQuizzes ]====================
+====================[ VerifyGetQuiz ]====================
 
 ---------------[ Particular Quiz ]---------------
 $ GET http://0.0.0.0:8080/v1/quizzes/999
@@ -313,6 +424,87 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999
     "OptionD": "test D",
     "Answer": "A"
   },
+  "_embedded": null
+}
+
+====================[ VerifyPostQuizTags ]====================
+
+---------------[ New Quiz Tag ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "quiz number 999 registered with tag Engineering successfully."
+  },
+  "data": {
+    "id": 0,
+    "name": "Engineering"
+  },
+  "_embedded": null
+}
+
+---------------[ Deuplicate Quiz Tag ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "quiz number 999 registered with tag Engineering successfully."
+  },
+  "data": {
+    "id": 0,
+    "name": "Engineering"
+  },
+  "_embedded": null
+}
+
+====================[ VerifyGetQuizTags ]====================
+
+---------------[ All Quiz Tags ]---------------
+$ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+{
+  "_links": null,
+  "status": {
+    "status_code": 200,
+    "message": "tags of quiz number 999 listed successfully."
+  },
+  "data": [
+    {
+      "id": 10,
+      "name": "Engineering"
+    }
+  ],
+  "_embedded": null
+}
+
+====================[ VerifyPostAnswers ]====================
+
+---------------[ New Answer ]---------------
+$ POST http://0.0.0.0:8080/v1/answers
+{
+  "_links": null,
+  "status": {
+    "status_code": 201,
+    "message": "answer created successfully."
+  },
+  "data": {
+    "player_name": "testplayer",
+    "quiz_number": 999,
+    "correct": true
+  },
+  "_embedded": null
+}
+
+---------------[ Duplicate Answer ]---------------
+$ POST http://0.0.0.0:8080/v1/answers
+{
+  "_links": null,
+  "status": {
+    "status_code": 409,
+    "message": "answer from player testplayer to quiz number 999 already existed"
+  },
+  "data": null,
   "_embedded": null
 }
 
@@ -428,12 +620,18 @@ $ GET http://0.0.0.0:8080/v1/answers
       "PlayerID": 4,
       "QuizID": 2,
       "Correct": false
+    },
+    {
+      "ID": 18,
+      "PlayerID": 5,
+      "QuizID": 6,
+      "Correct": true
     }
   ],
   "_embedded": null
 }
 
----------------[ Query Answers By Player ]---------------
+---------------[ Query Answers by Player ]---------------
 $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
 {
   "_links": null,
@@ -441,11 +639,18 @@ $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
     "status_code": 200,
     "message": "answers listed successfully."
   },
-  "data": null,
+  "data": [
+    {
+      "ID": 18,
+      "PlayerID": 0,
+      "QuizID": 6,
+      "Correct": true
+    }
+  ],
   "_embedded": null
 }
 
----------------[ Query Answers By Quiz ]---------------
+---------------[ Query Answers by Quiz ]---------------
 $ GET http://0.0.0.0:8080/v1/answers?quiz=999
 {
   "_links": null,
@@ -453,37 +658,14 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
     "status_code": 200,
     "message": "answers listed successfully."
   },
-  "data": null,
-  "_embedded": null
-}
-
-====================[ VerifyPostAnswers ]====================
-
----------------[ New Answer ]---------------
-$ POST http://0.0.0.0:8080/v1/answers
-{
-  "_links": null,
-  "status": {
-    "status_code": 201,
-    "message": "answer created successfully."
-  },
-  "data": {
-    "player_name": "testplayer",
-    "quiz_number": 999,
-    "correct": true
-  },
-  "_embedded": null
-}
-
----------------[ Duplicate Answer ]---------------
-$ POST http://0.0.0.0:8080/v1/answers
-{
-  "_links": null,
-  "status": {
-    "status_code": 409,
-    "message": "answer from player testplayer to quiz number 999 already existed"
-  },
-  "data": null,
+  "data": [
+    {
+      "ID": 18,
+      "PlayerID": 5,
+      "QuizID": 0,
+      "Correct": true
+    }
+  ],
   "_embedded": null
 }
 

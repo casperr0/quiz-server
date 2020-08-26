@@ -32,7 +32,7 @@ func VerifyGetAnswers() {
 	}
 	fmt.Print(string(bodyBytes))
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Query Answers By Player"))
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Query Answers by Player"))
 	url = fmt.Sprintf("http://0.0.0.0:8080/v1/answers?player=%s", testPlayerName)
 	req, err = http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -49,7 +49,7 @@ func VerifyGetAnswers() {
 	}
 	fmt.Print(string(bodyBytes))
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Query Answers By Quiz"))
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Query Answers by Quiz"))
 	url = fmt.Sprintf("http://0.0.0.0:8080/v1/answers?quiz=%d", testQuizNumber)
 	req, err = http.NewRequest("GET", url, nil)
 	if err != nil {
