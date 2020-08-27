@@ -11,21 +11,23 @@ type OfficerConfig struct {
 	DefaultRoles []string
 }
 
-// QuizConfig contains all quiz-related configs.
-type QuizConfig struct {
-	DefaultTags []string
+// LoadConfig contains all external data loading config.
+type LoadConfig struct {
+	ProdDir string
+	DevDir  string
 }
 
 // FVTConfig contains all functional verification test config.
 type FVTConfig struct {
 	Topic   string
 	Section string
+	Detail  string
 }
 
 // UsingConfig intergrate all config group.
 type UsingConfig struct {
 	Officer OfficerConfig
-	Quiz    QuizConfig
+	Load    LoadConfig
 	FVT     FVTConfig
 }
 
@@ -35,16 +37,14 @@ var (
 		Officer: OfficerConfig{
 			DefaultRoles: []string{"Admin", "Maintainer", "Guest"},
 		},
-		Quiz: QuizConfig{
-			DefaultTags: []string{
-				"Network", "Language", "Security", "Hardware", "Animation",
-				"Game", "SysAdmin", "School", "CCNS", "Engineering", "Math",
-				"Others",
-			},
+		Load: LoadConfig{
+			ProdDir: "data/",
+			DevDir:  "example_data/",
 		},
 		FVT: FVTConfig{
-			Topic:   "\n\n====================[ %s ]====================",
-			Section: "\n\n---------------[ %s ]---------------\n",
+			Topic:   "\n\n# %s\n",
+			Section: "\n\n## %s\n",
+			Detail:  "\n- [ %s ]\n",
 		},
 	}
 )

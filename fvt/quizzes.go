@@ -10,15 +10,10 @@ import (
 	"github.com/ccns/quiz-server/config"
 )
 
-const (
-	testQuizNumber int    = 999
-	testTagName    string = "Engineering"
-)
-
 // VerifyGetQuizzes verify the function of player endpoints.
 func VerifyGetQuizzes() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyGetQuizzes"))
+	fmt.Printf(config.Config.FVT.Topic, "VerifyGetQuizzes")
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "All Quizzes"))
 	url := "http://0.0.0.0:8080/v1/quizzes"
@@ -26,7 +21,8 @@ func VerifyGetQuizzes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ GET %s\n```\n", url)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -35,7 +31,8 @@ func VerifyGetQuizzes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Query Quizzes by Tag"))
 	url = "http://0.0.0.0:8080/v1/quizzes?tag=Security"
@@ -43,7 +40,8 @@ func VerifyGetQuizzes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ GET %s\n```\n", url)
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -52,34 +50,36 @@ func VerifyGetQuizzes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }
 
 // VerifyPostQuizzes verify the function of quizzes endpoints.
 func VerifyPostQuizzes() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyPostQuizzes"))
+	fmt.Printf(config.Config.FVT.Topic, "VerifyPostQuizzes")
 	url := "http://0.0.0.0:8080/v1/quizzes"
-	payload := `
-	{
-		"number":%d,
-		"Description":"test description.",
-		"Score":3,
-		"OptionA":"test A",
-		"OptionB":"test B",
-		"OptionC":"test C",
-		"OptionD":"test D",
-		"Answer":"A"
-	}
-	`
-	jsonStr := []byte(fmt.Sprintf(payload, testQuizNumber))
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
+	payload := `{
+	"number":%d,
+	"Description":"test description.",
+	"Score":3,
+	"OptionA":"test A",
+	"OptionB":"test B",
+	"OptionC":"test C",
+	"OptionD":"test D",
+	"Answer":"A"
+}`
+	jsonStr := fmt.Sprintf(payload, testQuizNumber)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(jsonStr)))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "New Quiz"))
-	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "New Quiz")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ POST %s\n```\n", url)
+	fmt.Printf(config.Config.FVT.Detail, "example payload")
+	fmt.Printf("```\n%s\n```\n", jsonStr)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -88,10 +88,14 @@ func VerifyPostQuizzes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Duplicate Quiz"))
-	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "Duplicate Quiz")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ POST %s\n```\n", url)
+	fmt.Printf(config.Config.FVT.Detail, "example payload")
+	fmt.Printf("```\n%s\n```\n", jsonStr)
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -100,21 +104,23 @@ func VerifyPostQuizzes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }
 
 // VerifyGetQuiz verify the get method of the route quizzes/:quiz_number.
 func VerifyGetQuiz() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyGetQuiz"))
+	fmt.Printf(config.Config.FVT.Topic, "VerifyGetQuiz")
 	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d", testQuizNumber)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Particular Quiz"))
-	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "Particular Quiz")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ GET %s\n```\n", url)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -123,21 +129,23 @@ func VerifyGetQuiz() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }
 
 // VerifyDeleteQuiz verify the delete method of the route quizzes/:quiz_number.
 func VerifyDeleteQuiz() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyDeletePlayer"))
+	fmt.Printf(config.Config.FVT.Topic, "VerifyDeletePlayer")
 	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d", testQuizNumber)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Existed Quiz"))
-	fmt.Print(fmt.Sprintf("$ DELETE %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "Existed Quiz")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ DELETE %s\n```\n", url)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -146,10 +154,12 @@ func VerifyDeleteQuiz() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Non-existed Quiz"))
-	fmt.Print(fmt.Sprintf("$ DELETE %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "Non-existed Quiz")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ DELETE %s\n```\n", url)
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -158,21 +168,23 @@ func VerifyDeleteQuiz() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }
 
 // VerifyGetQuizTags verify the GET method of the route quizzes/:quiz_number/tags.
 func VerifyGetQuizTags() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyGetQuizTags"))
+	fmt.Printf(config.Config.FVT.Topic, "VerifyGetQuizTags")
 	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d/tags", testQuizNumber)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "All Quiz Tags"))
-	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "All Quiz Tags")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ GET %s\n```\n", url)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -181,23 +193,29 @@ func VerifyGetQuizTags() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }
 
 // VerifyPostQuizTags verify the POST method of the route quizzes/:quiz_number/tags.
 func VerifyPostQuizTags() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyPostQuizTags"))
+	fmt.Printf(config.Config.FVT.Topic, "VerifyPostQuizTags")
 	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d/tags", testQuizNumber)
-	payload := `{"name":"%s"}`
-	jsonStr := []byte(fmt.Sprintf(payload, testTagName))
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
+	payload := `{
+	"name":"%s"
+}`
+	jsonStr := fmt.Sprintf(payload, testTagName)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(jsonStr)))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "New Quiz Tag"))
-	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "New Quiz Tag")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ POST %s\n```\n", url)
+	fmt.Printf(config.Config.FVT.Detail, "example payload")
+	fmt.Printf("```\n%s\n```\n", jsonStr)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -206,10 +224,14 @@ func VerifyPostQuizTags() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Deuplicate Quiz Tag"))
-	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "Duplicate Quiz Tag")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ POST %s\n```\n", url)
+	fmt.Printf(config.Config.FVT.Detail, "example payload")
+	fmt.Printf("```\n%s\n```\n", jsonStr)
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -218,5 +240,6 @@ func VerifyPostQuizTags() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }

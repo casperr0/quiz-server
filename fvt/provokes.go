@@ -10,22 +10,19 @@ import (
 	"github.com/ccns/quiz-server/config"
 )
 
-const (
-	testProvokeMessage = "test provoke message"
-)
-
 // VerifyGetProvokes verify the GET method of the route /provokes.
 func VerifyGetProvokes() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyGetProvokes"))
+	fmt.Printf(config.Config.FVT.Topic, "VerifyGetProvokes")
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "All Provokes"))
+	fmt.Printf(config.Config.FVT.Section, "All Provokes")
 	url := "http://0.0.0.0:8080/v1/provokes"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ GET %s\n```\n", url)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -34,15 +31,17 @@ func VerifyGetProvokes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Query Provokes by Correctness"))
+	fmt.Printf(config.Config.FVT.Section, "Query Provokes by Correctness")
 	url = "http://0.0.0.0:8080/v1/provokes?correct=true"
 	req, err = http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(fmt.Sprintf("$ GET %s\n", url))
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ GET %s\n```\n", url)
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -51,28 +50,30 @@ func VerifyGetProvokes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }
 
 // VerifyPostProvokes verify the POST method of the route /provokes.
 func VerifyPostProvokes() {
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Topic, "VerifyPostProvokes"))
+	fmt.Printf(config.Config.FVT.Topic, "VerifyPostProvokes")
 	url := "http://0.0.0.0:8080/v1/provokes"
-	payload := `
-	{
-		"correct":true,
-		"message":"%s"
-	}
-	`
-	jsonStr := []byte(fmt.Sprintf(payload, testProvokeMessage))
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
+	payload := `{
+	"correct":true,
+	"message":"%s"
+}`
+	jsonStr := fmt.Sprintf(payload, testProvokeMessage)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(jsonStr)))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "New Provoke"))
-	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "New Provoke")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ POST %s\n```\n", url)
+	fmt.Printf(config.Config.FVT.Detail, "example payload")
+	fmt.Printf("```\n%s\n```\n", jsonStr)
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -81,10 +82,14 @@ func VerifyPostProvokes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 
-	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Duplicate Provoke"))
-	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
+	fmt.Printf(config.Config.FVT.Section, "Duplicate Provoke")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ POST %s\n```\n", url)
+	fmt.Printf(config.Config.FVT.Detail, "example payload")
+	fmt.Printf("```\n%s\n```\n", jsonStr)
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
@@ -93,5 +98,6 @@ func VerifyPostProvokes() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Print(string(bodyBytes))
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }
