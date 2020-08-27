@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"math/rand"
 
 	"github.com/gin-gonic/gin"
 
@@ -98,7 +99,7 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 
 	playerName := ctx.Param("player_name")
 	if playerName == "" {
-		resp, _ := BuildHATEOAS(nil, Status{400, "player_name not specified."}, nil, nil)
+		resp, _ := BuildHATEOAS(links, Status{400, "player_name not specified."}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
@@ -108,8 +109,8 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 	data, err := db.FeedQuizzes(playerName)
 	if err != nil {
 		if err.Error() == "no quiz left" {
-			resp, _ := BuildHATEOAS(links, Status{204, err.Error()}, nil, nil)
-			ctx.String(204, resp)
+			resp, _ := BuildHATEOAS(links, Status{200, err.Error()}, nil, nil)
+			ctx.String(200, resp)
 			return
 		}
 		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, nil, nil)
@@ -117,7 +118,8 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 		return
 	}
 
+	randomQuiz := data[rand.Intn(len(data))]
 	status := Status{200, fmt.Sprintf("player %s fed successfully.", playerName)}
-	resp, _ := BuildHATEOAS(links, status, data, nil)
+	resp, _ := BuildHATEOAS(links, status, randomQuiz, nil)
 	ctx.String(200, resp)
 }

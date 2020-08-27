@@ -1,9 +1,25 @@
 
 
-====================[ VerifyPostProvokes ]====================
+# VerifyPostProvokes
 
----------------[ New Provoke ]---------------
+
+## New Provoke
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/provokes
+```
+
+- [ example payload ]
+```
+{
+	"correct":true,
+	"message":"test provoke message"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -21,9 +37,26 @@ $ POST http://0.0.0.0:8080/v1/provokes
   },
   "_embedded": null
 }
+```
 
----------------[ Duplicate Provoke ]---------------
+
+## Duplicate Provoke
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/provokes
+```
+
+- [ example payload ]
+```
+{
+	"correct":true,
+	"message":"test provoke message"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -41,11 +74,21 @@ $ POST http://0.0.0.0:8080/v1/provokes
   },
   "_embedded": null
 }
+```
 
-====================[ VerifyGetProvokes ]====================
 
----------------[ All Provokes ]---------------
+# VerifyGetProvokes
+
+
+## All Provokes
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/provokes
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -95,9 +138,18 @@ $ GET http://0.0.0.0:8080/v1/provokes
   ],
   "_embedded": null
 }
+```
 
----------------[ Query Provokes by Correctness ]---------------
+
+## Query Provokes by Correctness
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/provokes?correct=true
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -137,11 +189,28 @@ $ GET http://0.0.0.0:8080/v1/provokes?correct=true
   ],
   "_embedded": null
 }
+```
 
-====================[ VerifyPostTags ]====================
 
----------------[ New Tag ]---------------
+# VerifyPostTags
+
+
+## New Tag
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/tags
+```
+
+- [ example payload ]
+```
+{
+	"name":"TestTag"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -150,7 +219,7 @@ $ POST http://0.0.0.0:8080/v1/tags
   },
   "status": {
     "status_code": 201,
-    "message": "tags created successfully."
+    "message": "tag TestTag created successfully."
   },
   "data": {
     "id": 0,
@@ -158,9 +227,25 @@ $ POST http://0.0.0.0:8080/v1/tags
   },
   "_embedded": null
 }
+```
 
----------------[ Duplicate Tag ]---------------
+
+## Duplicate Tag
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/tags
+```
+
+- [ example payload ]
+```
+{
+	"name":"TestTag"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -174,11 +259,21 @@ $ POST http://0.0.0.0:8080/v1/tags
   "data": null,
   "_embedded": null
 }
+```
 
-====================[ VerifyGetTags ]====================
 
----------------[ All Tags ]---------------
+# VerifyGetTags
+
+
+## All Tags
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/tags
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -245,11 +340,28 @@ $ GET http://0.0.0.0:8080/v1/tags
   ],
   "_embedded": null
 }
+```
 
-====================[ VerifyPostPlayers ]====================
 
----------------[ New Player ]---------------
+# VerifyPostPlayers
+
+
+## New Player
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/players
+```
+
+- [ example payload ]
+```
+{
+	"name":"testplayer"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "feed": {
@@ -272,9 +384,25 @@ $ POST http://0.0.0.0:8080/v1/players
   },
   "_embedded": null
 }
+```
 
----------------[ Duplicate Player ]---------------
+
+## Duplicate Player
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/players
+```
+
+- [ example payload ]
+```
+{
+	"name":"testplayer"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "player": {
@@ -294,11 +422,21 @@ $ POST http://0.0.0.0:8080/v1/players
   },
   "_embedded": null
 }
+```
 
-====================[ VerifyGetPlayers ]====================
 
----------------[ All Players ]---------------
+# VerifyGetPlayers
+
+
+## All Players
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/players
+```
+
+- [ example response ]
+```
 {
   "_links": null,
   "status": {
@@ -329,11 +467,110 @@ $ GET http://0.0.0.0:8080/v1/players
   ],
   "_embedded": null
 }
+```
 
-====================[ VerifyPostQuizzes ]====================
 
----------------[ New Quiz ]---------------
+# VerifyGetPlayerFeed
+
+
+## Finished Player
+
+- [ method and url ]
+```
+$ GET http://0.0.0.0:8080/v1/players/RainrainWu/feed
+```
+
+- [ example response ]
+```
+{
+  "_links": {
+    "list": {
+      "href": "/players"
+    },
+    "player": {
+      "href": "/players/RainrainWu"
+    },
+    "self": {
+      "href": "/players/RainrainWu/feed"
+    }
+  },
+  "status": {
+    "status_code": 200,
+    "message": "no quiz left"
+  },
+  "data": null,
+  "_embedded": null
+}
+```
+
+
+## Ongoing Player
+
+- [ method and url ]
+```
+$ GET http://0.0.0.0:8080/v1/players/testplayer/feed
+```
+
+- [ example response ]
+```
+{
+  "_links": {
+    "list": {
+      "href": "/players"
+    },
+    "player": {
+      "href": "/players/testplayer"
+    },
+    "self": {
+      "href": "/players/testplayer/feed"
+    }
+  },
+  "status": {
+    "status_code": 200,
+    "message": "player testplayer fed successfully."
+  },
+  "data": {
+    "ID": 2,
+    "Number": 2,
+    "Description": "quiz 2 description.",
+    "Score": 1,
+    "OptionA": "2.A",
+    "OptionB": "2.B",
+    "OptionC": "2.C",
+    "OptionD": "2.D",
+    "Answer": "C"
+  },
+  "_embedded": null
+}
+```
+
+
+# VerifyPostQuizzes
+
+
+## New Quiz
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/quizzes
+```
+
+- [ example payload ]
+```
+{
+	"number":999,
+	"Description":"test description.",
+	"Score":3,
+	"OptionA":"test A",
+	"OptionB":"test B",
+	"OptionC":"test C",
+	"OptionD":"test D",
+	"Answer":"A"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "quiz": {
@@ -363,9 +600,32 @@ $ POST http://0.0.0.0:8080/v1/quizzes
   },
   "_embedded": null
 }
+```
 
----------------[ Duplicate Quiz ]---------------
+
+## Duplicate Quiz
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/quizzes
+```
+
+- [ example payload ]
+```
+{
+	"number":999,
+	"Description":"test description.",
+	"Score":3,
+	"OptionA":"test A",
+	"OptionB":"test B",
+	"OptionC":"test C",
+	"OptionD":"test D",
+	"Answer":"A"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -389,11 +649,21 @@ $ POST http://0.0.0.0:8080/v1/quizzes
   },
   "_embedded": null
 }
+```
 
-====================[ VerifyGetQuizzes ]====================
 
----------------[ All Quizzes ]---------------
+# VerifyGetQuizzes
+
+
+## All Quizzes
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/quizzes
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -474,9 +744,18 @@ $ GET http://0.0.0.0:8080/v1/quizzes
   ],
   "_embedded": null
 }
+```
 
----------------[ Query Quizzes by Tag ]---------------
+
+## Query Quizzes by Tag
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -513,11 +792,21 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
   ],
   "_embedded": null
 }
+```
 
-====================[ VerifyGetQuiz ]====================
 
----------------[ Particular Quiz ]---------------
+# VerifyGetQuiz
+
+
+## Particular Quiz
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/quizzes/999
+```
+
+- [ example response ]
+```
 {
   "_links": null,
   "status": {
@@ -537,11 +826,28 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999
   },
   "_embedded": null
 }
+```
 
-====================[ VerifyPostQuizTags ]====================
 
----------------[ New Quiz Tag ]---------------
-$ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+# VerifyPostQuizTags
+
+
+## New Quiz Tag
+
+- [ method and url ]
+```
+$ POST http://0.0.0.0:8080/v1/quizzes/999/tags
+```
+
+- [ example payload ]
+```
+{
+	"name":"Engineering"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": null,
   "status": {
@@ -554,9 +860,25 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
   },
   "_embedded": null
 }
+```
 
----------------[ Deuplicate Quiz Tag ]---------------
-$ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+
+## Duplicate Quiz Tag
+
+- [ method and url ]
+```
+$ POST http://0.0.0.0:8080/v1/quizzes/999/tags
+```
+
+- [ example payload ]
+```
+{
+	"name":"Engineering"
+}
+```
+
+- [ example response ]
+```
 {
   "_links": null,
   "status": {
@@ -569,11 +891,21 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
   },
   "_embedded": null
 }
+```
 
-====================[ VerifyGetQuizTags ]====================
 
----------------[ All Quiz Tags ]---------------
+# VerifyGetQuizTags
+
+
+## All Quiz Tags
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "answers": {
@@ -598,11 +930,30 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
   ],
   "_embedded": null
 }
+```
 
-====================[ VerifyPostAnswers ]====================
 
----------------[ New Answer ]---------------
+# VerifyPostAnswers
+
+
+## New Answer
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/answers
+```
+
+- [ example payload ]
+```
+{
+	"player_name":"testplayer",
+	"quiz_number":999,
+	"correct":true
+}
+```
+
+- [ example response ]
+```
 {
   "_links": null,
   "status": {
@@ -616,9 +967,28 @@ $ POST http://0.0.0.0:8080/v1/answers
   },
   "_embedded": null
 }
+```
 
----------------[ Duplicate Answer ]---------------
+
+## Duplicate Answer
+
+- [ method and url ]
+```
 $ POST http://0.0.0.0:8080/v1/answers
+```
+
+- [ example payload ]
+```
+{
+	"player_name":"testplayer",
+	"quiz_number":999,
+	"correct":true
+}
+```
+$ POST http://0.0.0.0:8080/v1/answers
+
+- [ example response ]
+```
 {
   "_links": null,
   "status": {
@@ -628,11 +998,21 @@ $ POST http://0.0.0.0:8080/v1/answers
   "data": null,
   "_embedded": null
 }
+```
 
-====================[ VerifyGetAnswers ]====================
 
----------------[ All Answers ]---------------
+# VerifyGetAnswers
+
+
+## All Answers
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/answers
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "self": {
@@ -755,9 +1135,18 @@ $ GET http://0.0.0.0:8080/v1/answers
   ],
   "_embedded": null
 }
+```
 
----------------[ Query Answers by Player ]---------------
+
+## Query Answers by Player
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "player": {
@@ -781,9 +1170,18 @@ $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
   ],
   "_embedded": null
 }
+```
 
----------------[ Query Answers by Quiz ]---------------
+
+## Query Answers by Quiz
+
+- [ method and url ]
+```
 $ GET http://0.0.0.0:8080/v1/answers?quiz=999
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "quiz": {
@@ -807,123 +1205,21 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
   ],
   "_embedded": null
 }
+```
 
-====================[ VerifyPostPlayers ]====================
 
----------------[ Finished Player ]---------------
-{
-  "_links": {
-    "list": {
-      "href": "/players"
-    },
-    "player": {
-      "href": "/players/RainrainWu"
-    },
-    "self": {
-      "href": "/players/RainrainWu/feed"
-    }
-  },
-  "status": {
-    "status_code": 200,
-    "message": "player RainrainWu fed successfully."
-  },
-  "data": [
-    {
-      "ID": 6,
-      "Number": 999,
-      "Description": "test description.",
-      "Score": 3,
-      "OptionA": "test A",
-      "OptionB": "test B",
-      "OptionC": "test C",
-      "OptionD": "test D",
-      "Answer": "A"
-    }
-  ],
-  "_embedded": null
-}
+# VerifyDeletePlayer
 
----------------[ Ongoing Player ]---------------
-{
-  "_links": {
-    "list": {
-      "href": "/players"
-    },
-    "player": {
-      "href": "/players/testplayer"
-    },
-    "self": {
-      "href": "/players/testplayer/feed"
-    }
-  },
-  "status": {
-    "status_code": 200,
-    "message": "player testplayer fed successfully."
-  },
-  "data": [
-    {
-      "ID": 1,
-      "Number": 1,
-      "Description": "quiz 1 description.",
-      "Score": 1,
-      "OptionA": "1.A",
-      "OptionB": "1.B",
-      "OptionC": "1.C",
-      "OptionD": "1.D",
-      "Answer": "A"
-    },
-    {
-      "ID": 2,
-      "Number": 2,
-      "Description": "quiz 2 description.",
-      "Score": 1,
-      "OptionA": "2.A",
-      "OptionB": "2.B",
-      "OptionC": "2.C",
-      "OptionD": "2.D",
-      "Answer": "C"
-    },
-    {
-      "ID": 3,
-      "Number": 3,
-      "Description": "quiz 3 description.",
-      "Score": 1,
-      "OptionA": "3.A",
-      "OptionB": "3.B",
-      "OptionC": "3.C",
-      "OptionD": "3.D",
-      "Answer": "A"
-    },
-    {
-      "ID": 4,
-      "Number": 4,
-      "Description": "quiz 4 description.",
-      "Score": 2,
-      "OptionA": "4.A",
-      "OptionB": "4.B",
-      "OptionC": "4.C",
-      "OptionD": "4.D",
-      "Answer": "D"
-    },
-    {
-      "ID": 5,
-      "Number": 5,
-      "Description": "quiz 5 description.",
-      "Score": 3,
-      "OptionA": "5.A",
-      "OptionB": "5.B",
-      "OptionC": "5.C",
-      "OptionD": "5.D",
-      "Answer": "B"
-    }
-  ],
-  "_embedded": null
-}
 
-====================[ VerifyDeletePlayer ]====================
+## Existed Quiz
 
----------------[ Existed Quiz ]---------------
+- [ method and url ]
+```
 $ DELETE http://0.0.0.0:8080/v1/quizzes/999
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "list": {
@@ -947,9 +1243,18 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
   },
   "_embedded": null
 }
+```
 
----------------[ Non-existed Quiz ]---------------
+
+## Non-existed Quiz
+
+- [ method and url ]
+```
 $ DELETE http://0.0.0.0:8080/v1/quizzes/999
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "list": {
@@ -963,11 +1268,21 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
   "data": null,
   "_embedded": null
 }
+```
 
-====================[ VerifyPostPlayers ]====================
 
----------------[ Existed Player ]---------------
+# VerifyDeletePlayers
+
+
+## Existed Player
+
+- [ method and url ]
+```
 $ DELETE http://0.0.0.0:8080/v1/players/testplayer
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "list": {
@@ -984,9 +1299,18 @@ $ DELETE http://0.0.0.0:8080/v1/players/testplayer
   },
   "_embedded": null
 }
+```
 
----------------[ Non-existed Player ]---------------
+
+## Non-existed Player
+
+- [ method and url ]
+```
 $ DELETE http://0.0.0.0:8080/v1/players/testplayer
+```
+
+- [ example response ]
+```
 {
   "_links": {
     "list": {
@@ -1000,3 +1324,4 @@ $ DELETE http://0.0.0.0:8080/v1/players/testplayer
   "data": null,
   "_embedded": null
 }
+```

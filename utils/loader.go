@@ -40,7 +40,8 @@ type PlayerLoad struct {
 	IncorrectQuizNumbers []int  `json:"incorrect_quiz_numbers"`
 }
 
-func init() {
+// LoadAll will load all external staticdata
+func LoadAll() {
 
 	loadProvokes()
 	loadTags()

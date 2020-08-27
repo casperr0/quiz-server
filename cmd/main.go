@@ -10,7 +10,7 @@ import (
 	"github.com/ccns/quiz-server/db"
 	"github.com/ccns/quiz-server/fvt"
 	"github.com/ccns/quiz-server/handler"
-	_ "github.com/ccns/quiz-server/utils"
+	"github.com/ccns/quiz-server/utils"
 )
 
 func main() {
@@ -22,9 +22,8 @@ func main() {
 	if *fvtFlag {
 		runFVT()
 	} else {
-		if *resetFlag {
-			db.ResetDatabase()
-		}
+		db.InitDatabase(*resetFlag)
+		utils.LoadAll()
 		runService()
 	}
 }
@@ -39,6 +38,7 @@ func runFVT() {
 
 	fvt.VerifyPostPlayers()
 	fvt.VerifyGetPlayers()
+	fvt.VerifyGetPlayerFeed()
 
 	fvt.VerifyPostQuizzes()
 	fvt.VerifyGetQuizzes()
@@ -49,7 +49,6 @@ func runFVT() {
 
 	fvt.VerifyPostAnswers()
 	fvt.VerifyGetAnswers()
-	fvt.VerifyGetPlayerFeed()
 
 	fvt.VerifyDeleteQuiz()
 	fvt.VerifyDeletePlayer()

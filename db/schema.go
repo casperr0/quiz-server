@@ -182,8 +182,9 @@ var (
 	err      interface{}
 )
 
-func init() {
-	connectDatabase()
+// InitDatabase will build the connection and initialize the database.
+func InitDatabase(reset bool) {
+	connectDatabase(reset)
 	for _, r := range config.Config.Officer.DefaultRoles {
 		CreateRole(r)
 	}
@@ -193,7 +194,7 @@ func init() {
 }
 
 // connectDatabse build the connection with database.
-func connectDatabase() {
+func connectDatabase(reset bool) {
 	connStr := "host=%s port=%s user=%s dbname=%s password=%s sslmode=%s"
 	connStr = fmt.Sprintf(
 		connStr,
@@ -209,15 +210,11 @@ func connectDatabase() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	if reset {
+		database.MustExec(drop)
+		log.Print("database has been reset")
+	}
 	database.MustExec(schema)
-}
-
-// ResetDatabase will reset all records in the current databse.
-func ResetDatabase() {
-
-	database.MustExec(drop)
-	log.Print("database has been reset")
 }
 
 // DisconnectDatabase break the connection with database.

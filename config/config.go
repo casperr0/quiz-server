@@ -20,6 +20,7 @@ type QuizConfig struct {
 type FVTConfig struct {
 	Topic   string
 	Section string
+	Detail  string
 }
 
 // UsingConfig intergrate all config group.
@@ -43,8 +44,9 @@ var (
 			},
 		},
 		FVT: FVTConfig{
-			Topic:   "\n\n====================[ %s ]====================",
-			Section: "\n\n---------------[ %s ]---------------\n",
+			Topic:   "\n\n# %s\n",
+			Section: "\n\n## %s\n",
+			Detail:  "\n- [ %s ]\n",
 		},
 	}
 )
