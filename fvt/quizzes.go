@@ -10,11 +10,6 @@ import (
 	"github.com/ccns/quiz-server/config"
 )
 
-const (
-	testQuizNumber int    = 999
-	testTagName    string = "Engineering"
-)
-
 // VerifyGetQuizzes verify the function of player endpoints.
 func VerifyGetQuizzes() {
 

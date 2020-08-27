@@ -1,12 +1,15 @@
 package utils
 
 import (
+	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 
-	"github.com/ccns/quiz-server/db"
+	"github.com/ccns/quiz-server/config"
 )
 
 // ProvokeLoad describe the struct of external provoke file
@@ -40,18 +43,43 @@ type PlayerLoad struct {
 	IncorrectQuizNumbers []int  `json:"incorrect_quiz_numbers"`
 }
 
-// LoadAll will load all external staticdata
-func LoadAll() {
+var (
+	client *http.Client = &http.Client{}
+)
 
-	loadProvokes()
-	loadTags()
-	loadQuizzes()
-	loadPlayers()
+// LoadAll will load all external staticdata
+func LoadAll(prod bool) {
+
+	dir := config.Config.Load.DevDir
+	if prod {
+		dir = config.Config.Load.ProdDir
+	}
+	loadProvokes(dir)
+	loadTags(dir)
+	loadQuizzes(dir)
+	loadPlayers(dir)
 }
 
-func loadProvokes() {
+func fireRecord(url, jsonStr string) {
 
-	jsonFile, err := os.Open("data/provokes.json")
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(jsonStr)))
+	if err != nil {
+		log.Fatal(err)
+	}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Print(string(bodyBytes) + "\n")
+}
+
+func loadProvokes(dataDir string) {
+
+	jsonFile, err := os.Open(dataDir + "provokes.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,24 +89,21 @@ func loadProvokes() {
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	json.Unmarshal(byteValue, &provokes)
 
+	url := "http://0.0.0.0:8080/v1/provokes"
+	payload := `{"correct":%t,"message":"%s"}`
 	for _, p := range provokes.Correct {
-		err := db.CreateProvoke(true, p)
-		if err != nil {
-			log.Fatal(err)
-		}
+		jsonStr := fmt.Sprintf(payload, true, p)
+		fireRecord(url, jsonStr)
 	}
-
 	for _, p := range provokes.Incorrect {
-		err := db.CreateProvoke(false, p)
-		if err != nil {
-			log.Fatal(err)
-		}
+		jsonStr := fmt.Sprintf(payload, false, p)
+		fireRecord(url, jsonStr)
 	}
 }
 
-func loadTags() {
+func loadTags(dataDir string) {
 
-	jsonFile, err := os.Open("data/tags.json")
+	jsonFile, err := os.Open(dataDir + "tags.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,17 +113,17 @@ func loadTags() {
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	json.Unmarshal(byteValue, &tags)
 
+	url := "http://0.0.0.0:8080/v1/tags"
+	payload := `{"name":"%s"}`
 	for _, t := range tags.Names {
-		err := db.CreateTag(t)
-		if err != nil {
-			log.Fatal(err)
-		}
+		jsonStr := fmt.Sprintf(payload, t)
+		fireRecord(url, jsonStr)
 	}
 }
 
-func loadQuizzes() {
+func loadQuizzes(dataDir string) {
 
-	jsonFile, err := os.Open("data/quizzes.json")
+	jsonFile, err := os.Open(dataDir + "quizzes.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -108,35 +133,43 @@ func loadQuizzes() {
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	json.Unmarshal(byteValue, &quizzes)
 
+	url := "http://0.0.0.0:8080/v1/quizzes"
+	payload := `{
+	"number":%d,
+	"description":"%s",
+	"score":%d,
+	"optionA":"%s",
+	"optionB":"%s",
+	"optionC":"%s",
+	"optionD":"%s",
+	"answer":"%s"
+}`
 	for _, q := range quizzes {
+		jsonStr := fmt.Sprintf(
+			payload,
+			q.Number,
+			q.Description,
+			q.Score,
+			q.OptionA,
+			q.OptionB,
+			q.OptionC,
+			q.OptionD,
+			q.Answer,
+		)
+		fireRecord(url, jsonStr)
 
-		quiz := db.Quiz{
-			Number:      q.Number,
-			Description: q.Description,
-			Score:       q.Score,
-			OptionA:     q.OptionA,
-			OptionB:     q.OptionB,
-			OptionC:     q.OptionC,
-			OptionD:     q.OptionD,
-			Answer:      q.Answer,
-		}
-		err := db.CreateQuiz(quiz)
-		if err != nil {
-			log.Fatal(err)
-		}
-
+		tagURL := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d/tags", q.Number)
+		tagPayload := `{"name":"%s"}`
 		for _, t := range q.Tags {
-			err := db.RegisterTag(q.Number, t)
-			if err != nil {
-				log.Fatal(err)
-			}
+			jsonStr := fmt.Sprintf(tagPayload, t)
+			fireRecord(tagURL, jsonStr)
 		}
 	}
 }
 
-func loadPlayers() {
+func loadPlayers(dataDir string) {
 
-	jsonFile, err := os.Open("data/players.json")
+	jsonFile, err := os.Open(dataDir + "players.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -146,25 +179,22 @@ func loadPlayers() {
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 	json.Unmarshal(byteValue, &players)
 
+	url := "http://0.0.0.0:8080/v1/players"
+	payload := `{"name":"%s"}`
 	for _, p := range players {
 
-		err := db.CreatePlayer(p.Name)
-		if err != nil {
-			log.Fatal(err)
-		}
+		jsonStr := fmt.Sprintf(payload, p.Name)
+		fireRecord(url, jsonStr)
 
+		answerURL := "http://0.0.0.0:8080/v1/answers"
+		answerPayload := `{"player_name":"%s","quiz_number":%d,"correct":%t}`
 		for _, c := range p.CorrectQuizNumbers {
-			err := db.RegisterAnswer(p.Name, c, true)
-			if err != nil {
-				log.Fatal(err)
-			}
+			jsonStr := fmt.Sprintf(answerPayload, p.Name, c, true)
+			fireRecord(answerURL, jsonStr)
 		}
-
 		for _, c := range p.IncorrectQuizNumbers {
-			err := db.RegisterAnswer(p.Name, c, false)
-			if err != nil {
-				log.Fatal(err)
-			}
+			jsonStr := fmt.Sprintf(answerPayload, p.Name, c, false)
+			fireRecord(answerURL, jsonStr)
 		}
 	}
 }

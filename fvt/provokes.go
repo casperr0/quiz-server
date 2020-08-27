@@ -10,10 +10,6 @@ import (
 	"github.com/ccns/quiz-server/config"
 )
 
-const (
-	testProvokeMessage = "test provoke message"
-)
-
 // VerifyGetProvokes verify the GET method of the route /provokes.
 func VerifyGetProvokes() {
 

@@ -10,10 +10,6 @@ import (
 	"github.com/ccns/quiz-server/config"
 )
 
-const (
-	testTag string = "TestTag"
-)
-
 // VerifyGetTags verify the GET method of the route /tags.
 func VerifyGetTags() {
 

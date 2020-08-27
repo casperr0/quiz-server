@@ -8,9 +8,7 @@ import (
 	// posetgreSQL databse driver required by sqlx
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/jmoiron/sqlx"
-
 	// load config for environment setup
-	"github.com/ccns/quiz-server/config"
 )
 
 // Officer describe the schema of event staff.
@@ -182,19 +180,8 @@ var (
 	err      interface{}
 )
 
-// InitDatabase will build the connection and initialize the database.
-func InitDatabase(reset bool) {
-	connectDatabase(reset)
-	for _, r := range config.Config.Officer.DefaultRoles {
-		CreateRole(r)
-	}
-	for _, t := range config.Config.Quiz.DefaultTags {
-		CreateTag(t)
-	}
-}
-
-// connectDatabse build the connection with database.
-func connectDatabase(reset bool) {
+// ConnectDatabase build the connection with database.
+func ConnectDatabase(reset bool) {
 	connStr := "host=%s port=%s user=%s dbname=%s password=%s sslmode=%s"
 	connStr = fmt.Sprintf(
 		connStr,

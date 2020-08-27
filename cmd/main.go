@@ -3,27 +3,34 @@ package main
 import (
 	"flag"
 
+	"github.com/ccns/quiz-server/utils"
+
 	"github.com/gin-gonic/gin"
-	_ "github.com/gin-gonic/gin"
 
 	_ "github.com/ccns/quiz-server/config"
 	"github.com/ccns/quiz-server/db"
 	"github.com/ccns/quiz-server/fvt"
 	"github.com/ccns/quiz-server/handler"
-	"github.com/ccns/quiz-server/utils"
 )
 
 func main() {
 
 	fvtFlag := flag.Bool("fvt", false, "run functional verification test")
+	loadFlag := flag.Bool("load", false, "load prod data from external file.")
+	loaddevFlag := flag.Bool("loaddev", false, "load dev data from external file.")
 	resetFlag := flag.Bool("reset", false, "reset records in current database before run service.")
 	flag.Parse()
 
 	if *fvtFlag {
 		runFVT()
+	} else if *loadFlag {
+		utils.LoadAll(true)
+	} else if *loaddevFlag {
+		utils.LoadAll(false)
+	} else if *resetFlag {
+		db.ConnectDatabase(true)
 	} else {
-		db.InitDatabase(*resetFlag)
-		utils.LoadAll()
+		db.ConnectDatabase(false)
 		runService()
 	}
 }

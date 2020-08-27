@@ -10,14 +10,6 @@ import (
 	"github.com/ccns/quiz-server/config"
 )
 
-const (
-	testPlayerName string = "testplayer"
-)
-
-var (
-	client *http.Client = &http.Client{}
-)
-
 // VerifyGetPlayers verify the function of player endpoints.
 func VerifyGetPlayers() {
 

@@ -18,5 +18,8 @@ build/*
 # Evironment variable settings
 .env
 
-# external data to be imported
+# External data file for production
 data/*
+
+# Testing output
+out.txt

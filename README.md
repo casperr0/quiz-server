@@ -15,10 +15,22 @@ Remember to run a postgreSQL databse on localhost.
 go run cmd/main.go
 ```
 
-### Reset Before Running
-Reset all records in the current database before running.
+### Reset Before
+Reset all records in the current database.
 ```zsh
 go run cmd/main.go -reset
+```
+
+### Load Dev Data
+Load dev data from external static file within directory `example_data/`.
+```zsh
+go run cmd/main.go -loaddev
+```
+
+### Load Prod Data
+Load prod data from external static file within directory `data/`.
+```zsh
+go run cmd/main.go -load
 ```
 
 ### Run Functional Verification Test
@@ -87,7 +99,7 @@ You can upload or query answers from players to quizzes through these api endpoi
 You can uplaod new provoke messages or query messages by correctness through these api endpoints.
 
 ## More Examples and References
-Please refer to `out.txt` for more details of requests and responses.
+Please refer to `out.md` for more details of requests and responses.
 
 # Contributors
 [RainrainWu](https://github.com/RainrainWu)
