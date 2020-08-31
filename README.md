@@ -42,7 +42,7 @@ go run cmd/main.go -fvt
 ## Containerization
 ### Build the docker image
 ```zsh
-docker build -t ccns/quiz-server:latest .
+docker build -t rainrainwu/quiz-server:latest .
 ```
 
 ### Start services

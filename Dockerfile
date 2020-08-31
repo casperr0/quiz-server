@@ -1,4 +1,4 @@
-FROM golang:1.15
+FROM golang:alpine
 
 ENV GO111MODULE=on
 WORKDIR /service/
@@ -8,5 +8,5 @@ COPY go.sum .
 RUN go mod download
 COPY . .
 
-RUN go build -o ./build/quiz-server ./...
-CMD ["./build/quiz-server"]
+RUN go build -o ./build/ ./...
+CMD ["./build/cmd"]

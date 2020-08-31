@@ -1,15 +1,25 @@
 version: "3"
 
 services:
-    # quiz-server:
-    #     image: ccns/quiz-server:latest
-    #     ports:
-    #         - "8080:8080"
     postgres:
         image: "postgres"
         ports:
             - "5432:5432"
+        volumes:
+            - pgdata:/var/lib/postgresql/data
         environment:
             - POSTGRES_DB=${PG_DBNAME}
             - POSTGRES_USER=${PG_USERNAME}
             - POSTGRES_PASSWORD=${PG_PASSWORD}
+    quiz-server:
+        image: rainrainwu/quiz-server:latest
+        restart: always
+        ports:
+            - "8080:8080"
+        depends_on:
+            - postgres
+        environment:
+            - PG_HOST=postgres
+
+volumes: 
+    pgdata:
