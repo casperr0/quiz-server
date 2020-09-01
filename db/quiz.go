@@ -89,7 +89,7 @@ func GetQuiz(quizNumber int) (*QuizTag, error) {
 		return nil, err
 	}
 	for _, t := range tags {
-		quizTag.Options = append(quizTag.Options, t.Name)
+		quizTag.Tags = append(quizTag.Tags, t.Name)
 	}
 
 	return &quizTag, nil
