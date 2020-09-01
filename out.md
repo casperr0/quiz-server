@@ -134,6 +134,26 @@ $ GET http://0.0.0.0:8080/v1/provokes
       "ID": 7,
       "Correct": true,
       "Message": "test provoke message"
+    },
+    {
+      "ID": 8,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 9,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 10,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 11,
+      "Correct": true,
+      "Message": "test provoke message"
     }
   ],
   "_embedded": null
@@ -185,6 +205,26 @@ $ GET http://0.0.0.0:8080/v1/provokes?correct=true
       "ID": 7,
       "Correct": true,
       "Message": "test provoke message"
+    },
+    {
+      "ID": 8,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 9,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 10,
+      "Correct": true,
+      "Message": "test provoke message"
+    },
+    {
+      "ID": 11,
+      "Correct": true,
+      "Message": "test provoke message"
     }
   ],
   "_embedded": null
@@ -218,13 +258,10 @@ $ POST http://0.0.0.0:8080/v1/tags
     }
   },
   "status": {
-    "status_code": 201,
-    "message": "tag TestTag created successfully."
+    "status_code": 409,
+    "message": "tag TestTag already existed"
   },
-  "data": {
-    "id": 0,
-    "name": "TestTag"
-  },
+  "data": null,
   "_embedded": null
 }
 ```
@@ -530,17 +567,40 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
     "message": "player testplayer fed successfully."
   },
   "data": {
-    "ID": 2,
-    "Number": 2,
-    "Description": "quiz 2 description.",
+    "ID": 3,
+    "Number": 3,
+    "Description": "quiz 3 description.",
     "Score": 1,
-    "OptionA": "2.A",
-    "OptionB": "2.B",
-    "OptionC": "2.C",
-    "OptionD": "2.D",
-    "Answer": "C"
+    "OptionA": "3.A",
+    "OptionB": "3.B",
+    "OptionC": "3.C",
+    "OptionD": "3.D",
+    "Answer": "A"
   },
-  "_embedded": null
+  "_embedded": [
+    {
+      "_links": null,
+      "status": {
+        "status_code": 200,
+        "message": "tags listed successfully."
+      },
+      "data": [
+        {
+          "id": 3,
+          "name": "Security"
+        },
+        {
+          "id": 6,
+          "name": "Game"
+        },
+        {
+          "id": 9,
+          "name": "CCNS"
+        }
+      ],
+      "_embedded": null
+    }
+  ]
 }
 ```
 
@@ -731,7 +791,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "Answer": "B"
     },
     {
-      "ID": 6,
+      "ID": 8,
       "Number": 999,
       "Description": "test description.",
       "Score": 3,
@@ -808,13 +868,26 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999
 - [ example response ]
 ```
 {
-  "_links": null,
+  "_links": {
+    "answers": {
+      "href": "/v1/answers?quiz=999"
+    },
+    "list": {
+      "href": "/v1/quizzes"
+    },
+    "self": {
+      "href": "/v1/quizzes/999"
+    },
+    "tags": {
+      "href": "/v1/quizzes/999/tags"
+    }
+  },
   "status": {
     "status_code": 200,
     "message": "quiz number 999 accessed successfully."
   },
   "data": {
-    "ID": 6,
+    "ID": 8,
     "Number": 999,
     "Description": "test description.",
     "Score": 3,
@@ -824,7 +897,17 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999
     "OptionD": "test D",
     "Answer": "A"
   },
-  "_embedded": null
+  "_embedded": [
+    {
+      "_links": null,
+      "status": {
+        "status_code": 200,
+        "message": "tags listed successfully."
+      },
+      "data": null,
+      "_embedded": null
+    }
+  ]
 }
 ```
 
@@ -1127,9 +1210,9 @@ $ GET http://0.0.0.0:8080/v1/answers
       "Correct": false
     },
     {
-      "ID": 18,
-      "PlayerID": 5,
-      "QuizID": 6,
+      "ID": 20,
+      "PlayerID": 7,
+      "QuizID": 8,
       "Correct": true
     }
   ],
@@ -1162,9 +1245,9 @@ $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
   },
   "data": [
     {
-      "ID": 18,
+      "ID": 20,
       "PlayerID": 0,
-      "QuizID": 6,
+      "QuizID": 8,
       "Correct": true
     }
   ],
@@ -1197,8 +1280,8 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
   },
   "data": [
     {
-      "ID": 18,
-      "PlayerID": 5,
+      "ID": 20,
+      "PlayerID": 7,
       "QuizID": 0,
       "Correct": true
     }
@@ -1231,7 +1314,7 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
     "message": "quiz number 999 deleted successfully."
   },
   "data": {
-    "ID": 6,
+    "ID": 8,
     "Number": 999,
     "Description": "test description.",
     "Score": 3,
@@ -1294,7 +1377,7 @@ $ DELETE http://0.0.0.0:8080/v1/players/testplayer
     "message": "player testplayer deleted successfully."
   },
   "data": {
-    "ID": 5,
+    "ID": 7,
     "Name": "testplayer"
   },
   "_embedded": null
