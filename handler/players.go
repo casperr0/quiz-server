@@ -117,9 +117,25 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 		ctx.String(500, resp)
 		return
 	}
+	randomNumber := rand.Intn(len(data))
+	randomQuiz := data[randomNumber]
 
-	randomQuiz := data[rand.Intn(len(data))]
+	var tags []db.Tag
+	tags, err = db.QueryTags(randomNumber)
+	if err != nil {
+		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, data, nil)
+		ctx.String(500, resp)
+		return
+	}
+	embedded := []HATEOAS{
+		HATEOAS{
+			LinksSection:    nil,
+			StatusSection:   Status{200, fmt.Sprintf("tags listed successfully.")},
+			DataSection:     tags,
+			EmbeddedSection: nil,
+		},
+	}
 	status := Status{200, fmt.Sprintf("player %s fed successfully.", playerName)}
-	resp, _ := BuildHATEOAS(links, status, randomQuiz, nil)
+	resp, _ := BuildHATEOAS(links, status, randomQuiz, embedded)
 	ctx.String(200, resp)
 }

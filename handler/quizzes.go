@@ -96,12 +96,28 @@ func GetQuizHandler(ctx *gin.Context) {
 		ctx.String(400, resp)
 		return
 	}
+
+	var tags []db.Tag
+	tags, err = db.QueryTags(quizNumber)
+	if err != nil {
+		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, data, nil)
+		ctx.String(500, resp)
+		return
+	}
+	embedded := []HATEOAS{
+		HATEOAS{
+			LinksSection:    nil,
+			StatusSection:   Status{200, fmt.Sprintf("tags listed successfully.")},
+			DataSection:     tags,
+			EmbeddedSection: nil,
+		},
+	}
 	links["self"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d", quizNumber)}
 	links["tags"] = LinkDetail{fmt.Sprintf("/v1/quizzes/%d/tags", quizNumber)}
 	links["answers"] = LinkDetail{fmt.Sprintf("/v1/answers?quiz=%d", quizNumber)}
 
 	status := Status{200, fmt.Sprintf("quiz number %d accessed successfully.", quizNumber)}
-	resp, _ := BuildHATEOAS(nil, status, data, nil)
+	resp, _ := BuildHATEOAS(links, status, data, embedded)
 	ctx.String(200, resp)
 }
 
