@@ -13,69 +13,69 @@ import (
 
 // Officer describe the schema of event staff.
 type Officer struct {
-	ID       int    `db:"id"`
-	Username string `db:"username"`
-	Password string `db:"password"`
+	ID       int    `db:"id" json:"_id"`
+	Username string `db:"username" json:"username"`
+	Password string `db:"password" json:"password"`
 }
 
 // Role describe the schema of role with different permissions.
 type Role struct {
-	ID   int    `db:"id"`
-	Name string `db:"name"`
+	ID   int    `db:"id" json:"_id"`
+	Name string `db:"name" json:"name"`
 }
 
 // Player describe the schema of quiz player.
 type Player struct {
-	ID   int    `db:"id"`
-	Name string `db:"name"`
+	ID   int    `db:"id" json:"_id"`
+	Name string `db:"name" json:"name"`
 }
 
 // Quiz describe the schema of quiz content.
 type Quiz struct {
-	ID          int    `db:"id"`
-	Number      int    `db:"number"`
-	Description string `db:"description"`
-	Score       int    `db:"score"`
-	OptionA     string `db:"option_a"`
-	OptionB     string `db:"option_b"`
-	OptionC     string `db:"option_c"`
-	OptionD     string `db:"option_d"`
-	Answer      string `db:"answer"`
+	ID          int    `db:"id" json:"_id"`
+	Number      int    `db:"number" json:"number"`
+	Description string `db:"description" json:"description"`
+	Score       int    `db:"score" json:"score"`
+	OptionA     string `db:"option_a" json:"option_a"`
+	OptionB     string `db:"option_b" json:"option_b"`
+	OptionC     string `db:"option_c" json:"option_c"`
+	OptionD     string `db:"option_d" json:"option_d"`
+	Answer      string `db:"answer" json:"answer"`
 }
 
 // Tag describe the schema of category tags.
 type Tag struct {
-	ID   int    `db:"id" json:"id"`
+	ID   int    `db:"id" json:"_id"`
 	Name string `db:"name" json:"name"`
 }
 
 // Provoke describe the schema of provoke mesaage.
 type Provoke struct {
-	ID      int    `db:"id"`
-	Correct bool   `db:"correct"`
-	Message string `db:"message"`
+	ID      int    `db:"id" json:"_id"`
+	Correct bool   `db:"correct" json:"correct"`
+	Message string `db:"message" json:"message"`
 }
 
 // OfficerToRole describe the many-to-many relationships between officers and roles.
 type OfficerToRole struct {
-	ID        int `db:"id"`
-	OfficerID int `db:"officer_id"`
-	RoleID    int `db:"role_id"`
+	ID        int `db:"id" json:"_id"`
+	OfficerID int `db:"officer_id" json:"officer_id"`
+	RoleID    int `db:"role_id" json:"role_id"`
 }
 
 // PlayerToQuiz describe the many-to-many relationships between players and quizes.
 type PlayerToQuiz struct {
-	ID       int  `db:"id"`
-	PlayerID int  `db:"player_id"`
-	QuizID   int  `db:"quiz_id"`
-	Correct  bool `db:"correct"`
+	ID       int  `db:"id" json:"_id"`
+	PlayerID int  `db:"player_id" json:"player_id"`
+	QuizID   int  `db:"quiz_id" json:"quiz_id"`
+	Correct  bool `db:"correct" json:"correct"`
 }
 
 // QuizToTag describe the many-to-many relationships between quizes and tags.
 type QuizToTag struct {
-	ID     int `db:"id"`
-	QuizID int `db:"quiz_id"`
-	TagID  int `db:"tag_id"`
+	ID     int `db:"id" json:"_id"`
+	QuizID int `db:"quiz_id" json:"quiz_id"`
+	TagID  int `db:"tag_id" json:"tag_id"`
 }
 
 const drop = `

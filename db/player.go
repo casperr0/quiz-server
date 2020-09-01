@@ -9,9 +9,9 @@ import (
 
 // PlayerScore describe the player with its total score.
 type PlayerScore struct {
-	ID    int    `db:"id"`
-	Name  string `db:"name"`
-	Score int    `db:"score"`
+	ID    int    `db:"id" json:"_id"`
+	Name  string `db:"name" json:"name"`
+	Score int    `db:"score" json:"score"`
 }
 
 // CreatePlayer will create a new player by name.
