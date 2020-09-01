@@ -61,13 +61,13 @@ func VerifyPostQuizzes() {
 	url := "http://0.0.0.0:8080/v1/quizzes"
 	payload := `{
 	"number":%d,
-	"Description":"test description.",
-	"Score":3,
-	"OptionA":"test A",
-	"OptionB":"test B",
-	"OptionC":"test C",
-	"OptionD":"test D",
-	"Answer":"A"
+	"description":"test description.",
+	"score":3,
+	"option_a":"test A",
+	"option_b":"test B",
+	"option_c":"test C",
+	"option_d":"test D",
+	"answer":"A"
 }`
 	jsonStr := fmt.Sprintf(payload, testQuizNumber)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(jsonStr)))

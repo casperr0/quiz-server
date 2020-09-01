@@ -31,9 +31,9 @@ $ POST http://0.0.0.0:8080/v1/provokes
     "message": "provoke created successfully."
   },
   "data": {
-    "ID": 0,
-    "Correct": true,
-    "Message": "test provoke message"
+    "_id": 0,
+    "correct": true,
+    "message": "test provoke message"
   },
   "_embedded": null
 }
@@ -68,9 +68,9 @@ $ POST http://0.0.0.0:8080/v1/provokes
     "message": "provoke created successfully."
   },
   "data": {
-    "ID": 0,
-    "Correct": true,
-    "Message": "test provoke message"
+    "_id": 0,
+    "correct": true,
+    "message": "test provoke message"
   },
   "_embedded": null
 }
@@ -101,59 +101,39 @@ $ GET http://0.0.0.0:8080/v1/provokes
   },
   "data": [
     {
-      "ID": 1,
-      "Correct": true,
-      "Message": "啊不就好棒棒?"
+      "_id": 1,
+      "correct": true,
+      "message": "啊不就好棒棒?"
     },
     {
-      "ID": 2,
-      "Correct": true,
-      "Message": "這題就當作送分啦!"
+      "_id": 2,
+      "correct": true,
+      "message": "這題就當作送分啦!"
     },
     {
-      "ID": 3,
-      "Correct": true,
-      "Message": "你是不是偷看過我們的 database?"
+      "_id": 3,
+      "correct": true,
+      "message": "你是不是偷看過我們的 database?"
     },
     {
-      "ID": 4,
-      "Correct": false,
-      "Message": "你踩到陷阱，損失了 1 點生命值"
+      "_id": 4,
+      "correct": false,
+      "message": "你踩到陷阱，損失了 1 點生命值"
     },
     {
-      "ID": 5,
-      "Correct": false,
-      "Message": "系統管理員使用了影分身，你的命中率降低了"
+      "_id": 5,
+      "correct": false,
+      "message": "系統管理員使用了影分身，你的命中率降低了"
     },
     {
-      "ID": 6,
-      "Correct": true,
-      "Message": "test provoke message"
+      "_id": 6,
+      "correct": true,
+      "message": "test provoke message"
     },
     {
-      "ID": 7,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 8,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 9,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 10,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 11,
-      "Correct": true,
-      "Message": "test provoke message"
+      "_id": 7,
+      "correct": true,
+      "message": "test provoke message"
     }
   ],
   "_embedded": null
@@ -182,49 +162,29 @@ $ GET http://0.0.0.0:8080/v1/provokes?correct=true
   },
   "data": [
     {
-      "ID": 1,
-      "Correct": true,
-      "Message": "啊不就好棒棒?"
+      "_id": 1,
+      "correct": true,
+      "message": "啊不就好棒棒?"
     },
     {
-      "ID": 2,
-      "Correct": true,
-      "Message": "這題就當作送分啦!"
+      "_id": 2,
+      "correct": true,
+      "message": "這題就當作送分啦!"
     },
     {
-      "ID": 3,
-      "Correct": true,
-      "Message": "你是不是偷看過我們的 database?"
+      "_id": 3,
+      "correct": true,
+      "message": "你是不是偷看過我們的 database?"
     },
     {
-      "ID": 6,
-      "Correct": true,
-      "Message": "test provoke message"
+      "_id": 6,
+      "correct": true,
+      "message": "test provoke message"
     },
     {
-      "ID": 7,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 8,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 9,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 10,
-      "Correct": true,
-      "Message": "test provoke message"
-    },
-    {
-      "ID": 11,
-      "Correct": true,
-      "Message": "test provoke message"
+      "_id": 7,
+      "correct": true,
+      "message": "test provoke message"
     }
   ],
   "_embedded": null
@@ -258,10 +218,13 @@ $ POST http://0.0.0.0:8080/v1/tags
     }
   },
   "status": {
-    "status_code": 409,
-    "message": "tag TestTag already existed"
+    "status_code": 201,
+    "message": "tag TestTag created successfully."
   },
-  "data": null,
+  "data": {
+    "_id": 0,
+    "name": "TestTag"
+  },
   "_embedded": null
 }
 ```
@@ -323,55 +286,55 @@ $ GET http://0.0.0.0:8080/v1/tags
   },
   "data": [
     {
-      "id": 1,
+      "_id": 1,
       "name": "Network"
     },
     {
-      "id": 2,
+      "_id": 2,
       "name": "Language"
     },
     {
-      "id": 3,
+      "_id": 3,
       "name": "Security"
     },
     {
-      "id": 4,
+      "_id": 4,
       "name": "Hardware"
     },
     {
-      "id": 5,
+      "_id": 5,
       "name": "Animation"
     },
     {
-      "id": 6,
+      "_id": 6,
       "name": "Game"
     },
     {
-      "id": 7,
+      "_id": 7,
       "name": "SysAdmin"
     },
     {
-      "id": 8,
+      "_id": 8,
       "name": "School"
     },
     {
-      "id": 9,
+      "_id": 9,
       "name": "CCNS"
     },
     {
-      "id": 10,
+      "_id": 10,
       "name": "Engineering"
     },
     {
-      "id": 11,
+      "_id": 11,
       "name": "Math"
     },
     {
-      "id": 12,
+      "_id": 12,
       "name": "Others"
     },
     {
-      "id": 13,
+      "_id": 13,
       "name": "TestTag"
     }
   ],
@@ -416,8 +379,8 @@ $ POST http://0.0.0.0:8080/v1/players
     "message": "player testplayer created successfully."
   },
   "data": {
-    "ID": 0,
-    "Name": "testplayer"
+    "_id": 0,
+    "name": "testplayer"
   },
   "_embedded": null
 }
@@ -454,8 +417,8 @@ $ POST http://0.0.0.0:8080/v1/players
     "message": "player testplayer already existed"
   },
   "data": {
-    "ID": 0,
-    "Name": "testplayer"
+    "_id": 0,
+    "name": "testplayer"
   },
   "_embedded": null
 }
@@ -482,24 +445,24 @@ $ GET http://0.0.0.0:8080/v1/players
   },
   "data": [
     {
-      "ID": 1,
-      "Name": "RainrainWu",
-      "Score": 8
+      "_id": 1,
+      "name": "RainrainWu",
+      "score": 8
     },
     {
-      "ID": 2,
-      "Name": "!(\u0026GQ(WDUHQ(",
-      "Score": 6
+      "_id": 2,
+      "name": "!(\u0026GQ(WDUHQ(",
+      "score": 6
     },
     {
-      "ID": 3,
-      "Name": "  ",
-      "Score": 4
+      "_id": 3,
+      "name": "  ",
+      "score": 4
     },
     {
-      "ID": 4,
-      "Name": "__",
-      "Score": 3
+      "_id": 4,
+      "name": "__",
+      "score": 3
     }
   ],
   "_embedded": null
@@ -567,15 +530,15 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
     "message": "player testplayer fed successfully."
   },
   "data": {
-    "ID": 3,
-    "Number": 3,
-    "Description": "quiz 3 description.",
-    "Score": 1,
-    "OptionA": "3.A",
-    "OptionB": "3.B",
-    "OptionC": "3.C",
-    "OptionD": "3.D",
-    "Answer": "A"
+    "_id": 2,
+    "number": 2,
+    "description": "quiz 2 description.",
+    "score": 1,
+    "option_a": "",
+    "option_b": "",
+    "option_c": "",
+    "option_d": "",
+    "answer": "C"
   },
   "_embedded": [
     {
@@ -586,16 +549,12 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
       },
       "data": [
         {
-          "id": 3,
-          "name": "Security"
+          "_id": 1,
+          "name": "Network"
         },
         {
-          "id": 6,
-          "name": "Game"
-        },
-        {
-          "id": 9,
-          "name": "CCNS"
+          "_id": 2,
+          "name": "Language"
         }
       ],
       "_embedded": null
@@ -619,13 +578,13 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 ```
 {
 	"number":999,
-	"Description":"test description.",
-	"Score":3,
-	"OptionA":"test A",
-	"OptionB":"test B",
-	"OptionC":"test C",
-	"OptionD":"test D",
-	"Answer":"A"
+	"description":"test description.",
+	"score":3,
+	"option_a":"test A",
+	"option_b":"test B",
+	"option_c":"test C",
+	"option_d":"test D",
+	"answer":"A"
 }
 ```
 
@@ -648,15 +607,15 @@ $ POST http://0.0.0.0:8080/v1/quizzes
     "message": "quiz number 999 created successfully."
   },
   "data": {
-    "ID": 0,
-    "Number": 999,
-    "Description": "test description.",
-    "Score": 3,
-    "OptionA": "test A",
-    "OptionB": "test B",
-    "OptionC": "test C",
-    "OptionD": "test D",
-    "Answer": "A"
+    "_id": 0,
+    "number": 999,
+    "description": "test description.",
+    "score": 3,
+    "option_a": "test A",
+    "option_b": "test B",
+    "option_c": "test C",
+    "option_d": "test D",
+    "answer": "A"
   },
   "_embedded": null
 }
@@ -674,13 +633,13 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 ```
 {
 	"number":999,
-	"Description":"test description.",
-	"Score":3,
-	"OptionA":"test A",
-	"OptionB":"test B",
-	"OptionC":"test C",
-	"OptionD":"test D",
-	"Answer":"A"
+	"description":"test description.",
+	"score":3,
+	"option_a":"test A",
+	"option_b":"test B",
+	"option_c":"test C",
+	"option_d":"test D",
+	"answer":"A"
 }
 ```
 
@@ -697,15 +656,15 @@ $ POST http://0.0.0.0:8080/v1/quizzes
     "message": "quiz number 999 already existed"
   },
   "data": {
-    "ID": 0,
-    "Number": 999,
-    "Description": "test description.",
-    "Score": 3,
-    "OptionA": "test A",
-    "OptionB": "test B",
-    "OptionC": "test C",
-    "OptionD": "test D",
-    "Answer": "A"
+    "_id": 0,
+    "number": 999,
+    "description": "test description.",
+    "score": 3,
+    "option_a": "test A",
+    "option_b": "test B",
+    "option_c": "test C",
+    "option_d": "test D",
+    "answer": "A"
   },
   "_embedded": null
 }
@@ -736,70 +695,70 @@ $ GET http://0.0.0.0:8080/v1/quizzes
   },
   "data": [
     {
-      "ID": 1,
-      "Number": 1,
-      "Description": "quiz 1 description.",
-      "Score": 1,
-      "OptionA": "1.A",
-      "OptionB": "1.B",
-      "OptionC": "1.C",
-      "OptionD": "1.D",
-      "Answer": "A"
+      "_id": 1,
+      "number": 1,
+      "description": "quiz 1 description.",
+      "score": 1,
+      "option_a": "",
+      "option_b": "",
+      "option_c": "",
+      "option_d": "",
+      "answer": "A"
     },
     {
-      "ID": 2,
-      "Number": 2,
-      "Description": "quiz 2 description.",
-      "Score": 1,
-      "OptionA": "2.A",
-      "OptionB": "2.B",
-      "OptionC": "2.C",
-      "OptionD": "2.D",
-      "Answer": "C"
+      "_id": 2,
+      "number": 2,
+      "description": "quiz 2 description.",
+      "score": 1,
+      "option_a": "",
+      "option_b": "",
+      "option_c": "",
+      "option_d": "",
+      "answer": "C"
     },
     {
-      "ID": 3,
-      "Number": 3,
-      "Description": "quiz 3 description.",
-      "Score": 1,
-      "OptionA": "3.A",
-      "OptionB": "3.B",
-      "OptionC": "3.C",
-      "OptionD": "3.D",
-      "Answer": "A"
+      "_id": 3,
+      "number": 3,
+      "description": "quiz 3 description.",
+      "score": 1,
+      "option_a": "",
+      "option_b": "",
+      "option_c": "",
+      "option_d": "",
+      "answer": "A"
     },
     {
-      "ID": 4,
-      "Number": 4,
-      "Description": "quiz 4 description.",
-      "Score": 2,
-      "OptionA": "4.A",
-      "OptionB": "4.B",
-      "OptionC": "4.C",
-      "OptionD": "4.D",
-      "Answer": "D"
+      "_id": 4,
+      "number": 4,
+      "description": "quiz 4 description.",
+      "score": 2,
+      "option_a": "",
+      "option_b": "",
+      "option_c": "",
+      "option_d": "",
+      "answer": "D"
     },
     {
-      "ID": 5,
-      "Number": 5,
-      "Description": "quiz 5 description.",
-      "Score": 3,
-      "OptionA": "5.A",
-      "OptionB": "5.B",
-      "OptionC": "5.C",
-      "OptionD": "5.D",
-      "Answer": "B"
+      "_id": 5,
+      "number": 5,
+      "description": "quiz 5 description.",
+      "score": 3,
+      "option_a": "",
+      "option_b": "",
+      "option_c": "",
+      "option_d": "",
+      "answer": "B"
     },
     {
-      "ID": 8,
-      "Number": 999,
-      "Description": "test description.",
-      "Score": 3,
-      "OptionA": "test A",
-      "OptionB": "test B",
-      "OptionC": "test C",
-      "OptionD": "test D",
-      "Answer": "A"
+      "_id": 6,
+      "number": 999,
+      "description": "test description.",
+      "score": 3,
+      "option_a": "test A",
+      "option_b": "test B",
+      "option_c": "test C",
+      "option_d": "test D",
+      "answer": "A"
     }
   ],
   "_embedded": null
@@ -828,26 +787,26 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
   },
   "data": [
     {
-      "ID": 2,
-      "Number": 2,
-      "Description": "quiz 2 description.",
-      "Score": 1,
-      "OptionA": "2.A",
-      "OptionB": "2.B",
-      "OptionC": "2.C",
-      "OptionD": "2.D",
-      "Answer": "C"
+      "_id": 2,
+      "number": 2,
+      "description": "quiz 2 description.",
+      "score": 1,
+      "option_a": "",
+      "option_b": "",
+      "option_c": "",
+      "option_d": "",
+      "answer": "C"
     },
     {
-      "ID": 3,
-      "Number": 3,
-      "Description": "quiz 3 description.",
-      "Score": 1,
-      "OptionA": "3.A",
-      "OptionB": "3.B",
-      "OptionC": "3.C",
-      "OptionD": "3.D",
-      "Answer": "A"
+      "_id": 3,
+      "number": 3,
+      "description": "quiz 3 description.",
+      "score": 1,
+      "option_a": "",
+      "option_b": "",
+      "option_c": "",
+      "option_d": "",
+      "answer": "A"
     }
   ],
   "_embedded": null
@@ -887,15 +846,15 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999
     "message": "quiz number 999 accessed successfully."
   },
   "data": {
-    "ID": 8,
-    "Number": 999,
-    "Description": "test description.",
-    "Score": 3,
-    "OptionA": "test A",
-    "OptionB": "test B",
-    "OptionC": "test C",
-    "OptionD": "test D",
-    "Answer": "A"
+    "_id": 6,
+    "number": 999,
+    "description": "test description.",
+    "score": 3,
+    "option_a": "test A",
+    "option_b": "test B",
+    "option_c": "test C",
+    "option_d": "test D",
+    "answer": "A"
   },
   "_embedded": [
     {
@@ -938,7 +897,7 @@ $ POST http://0.0.0.0:8080/v1/quizzes/999/tags
     "message": "quiz number 999 registered with tag Engineering successfully."
   },
   "data": {
-    "id": 0,
+    "_id": 0,
     "name": "Engineering"
   },
   "_embedded": null
@@ -969,7 +928,7 @@ $ POST http://0.0.0.0:8080/v1/quizzes/999/tags
     "message": "quiz number 999 registered with tag Engineering successfully."
   },
   "data": {
-    "id": 0,
+    "_id": 0,
     "name": "Engineering"
   },
   "_embedded": null
@@ -1007,7 +966,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
   },
   "data": [
     {
-      "id": 10,
+      "_id": 10,
       "name": "Engineering"
     }
   ],
@@ -1108,112 +1067,112 @@ $ GET http://0.0.0.0:8080/v1/answers
   },
   "data": [
     {
-      "ID": 1,
-      "PlayerID": 1,
-      "QuizID": 1,
-      "Correct": true
+      "_id": 1,
+      "player_id": 1,
+      "quiz_id": 1,
+      "correct": true
     },
     {
-      "ID": 2,
-      "PlayerID": 1,
-      "QuizID": 2,
-      "Correct": true
+      "_id": 2,
+      "player_id": 1,
+      "quiz_id": 2,
+      "correct": true
     },
     {
-      "ID": 3,
-      "PlayerID": 1,
-      "QuizID": 3,
-      "Correct": true
+      "_id": 3,
+      "player_id": 1,
+      "quiz_id": 3,
+      "correct": true
     },
     {
-      "ID": 4,
-      "PlayerID": 1,
-      "QuizID": 4,
-      "Correct": true
+      "_id": 4,
+      "player_id": 1,
+      "quiz_id": 4,
+      "correct": true
     },
     {
-      "ID": 5,
-      "PlayerID": 1,
-      "QuizID": 5,
-      "Correct": true
+      "_id": 5,
+      "player_id": 1,
+      "quiz_id": 5,
+      "correct": true
     },
     {
-      "ID": 6,
-      "PlayerID": 2,
-      "QuizID": 1,
-      "Correct": true
+      "_id": 6,
+      "player_id": 2,
+      "quiz_id": 1,
+      "correct": true
     },
     {
-      "ID": 7,
-      "PlayerID": 2,
-      "QuizID": 4,
-      "Correct": true
+      "_id": 7,
+      "player_id": 2,
+      "quiz_id": 4,
+      "correct": true
     },
     {
-      "ID": 8,
-      "PlayerID": 2,
-      "QuizID": 5,
-      "Correct": true
+      "_id": 8,
+      "player_id": 2,
+      "quiz_id": 5,
+      "correct": true
     },
     {
-      "ID": 9,
-      "PlayerID": 2,
-      "QuizID": 2,
-      "Correct": false
+      "_id": 9,
+      "player_id": 2,
+      "quiz_id": 2,
+      "correct": false
     },
     {
-      "ID": 10,
-      "PlayerID": 2,
-      "QuizID": 3,
-      "Correct": false
+      "_id": 10,
+      "player_id": 2,
+      "quiz_id": 3,
+      "correct": false
     },
     {
-      "ID": 11,
-      "PlayerID": 3,
-      "QuizID": 1,
-      "Correct": true
+      "_id": 11,
+      "player_id": 3,
+      "quiz_id": 1,
+      "correct": true
     },
     {
-      "ID": 12,
-      "PlayerID": 3,
-      "QuizID": 5,
-      "Correct": true
+      "_id": 12,
+      "player_id": 3,
+      "quiz_id": 5,
+      "correct": true
     },
     {
-      "ID": 13,
-      "PlayerID": 3,
-      "QuizID": 2,
-      "Correct": false
+      "_id": 13,
+      "player_id": 3,
+      "quiz_id": 2,
+      "correct": false
     },
     {
-      "ID": 14,
-      "PlayerID": 4,
-      "QuizID": 4,
-      "Correct": true
+      "_id": 14,
+      "player_id": 4,
+      "quiz_id": 4,
+      "correct": true
     },
     {
-      "ID": 15,
-      "PlayerID": 4,
-      "QuizID": 1,
-      "Correct": true
+      "_id": 15,
+      "player_id": 4,
+      "quiz_id": 1,
+      "correct": true
     },
     {
-      "ID": 16,
-      "PlayerID": 4,
-      "QuizID": 5,
-      "Correct": false
+      "_id": 16,
+      "player_id": 4,
+      "quiz_id": 5,
+      "correct": false
     },
     {
-      "ID": 17,
-      "PlayerID": 4,
-      "QuizID": 2,
-      "Correct": false
+      "_id": 17,
+      "player_id": 4,
+      "quiz_id": 2,
+      "correct": false
     },
     {
-      "ID": 20,
-      "PlayerID": 7,
-      "QuizID": 8,
-      "Correct": true
+      "_id": 18,
+      "player_id": 5,
+      "quiz_id": 6,
+      "correct": true
     }
   ],
   "_embedded": null
@@ -1245,10 +1204,10 @@ $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
   },
   "data": [
     {
-      "ID": 20,
-      "PlayerID": 0,
-      "QuizID": 8,
-      "Correct": true
+      "_id": 18,
+      "player_id": 0,
+      "quiz_id": 6,
+      "correct": true
     }
   ],
   "_embedded": null
@@ -1280,10 +1239,10 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
   },
   "data": [
     {
-      "ID": 20,
-      "PlayerID": 7,
-      "QuizID": 0,
-      "Correct": true
+      "_id": 18,
+      "player_id": 5,
+      "quiz_id": 0,
+      "correct": true
     }
   ],
   "_embedded": null
@@ -1314,15 +1273,15 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
     "message": "quiz number 999 deleted successfully."
   },
   "data": {
-    "ID": 8,
-    "Number": 999,
-    "Description": "test description.",
-    "Score": 3,
-    "OptionA": "test A",
-    "OptionB": "test B",
-    "OptionC": "test C",
-    "OptionD": "test D",
-    "Answer": "A"
+    "_id": 6,
+    "number": 999,
+    "description": "test description.",
+    "score": 3,
+    "option_a": "test A",
+    "option_b": "test B",
+    "option_c": "test C",
+    "option_d": "test D",
+    "answer": "A"
   },
   "_embedded": null
 }
@@ -1377,8 +1336,8 @@ $ DELETE http://0.0.0.0:8080/v1/players/testplayer
     "message": "player testplayer deleted successfully."
   },
   "data": {
-    "ID": 7,
-    "Name": "testplayer"
+    "_id": 5,
+    "name": "testplayer"
   },
   "_embedded": null
 }
