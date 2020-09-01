@@ -136,7 +136,7 @@ func VerifyGetQuiz() {
 // VerifyDeleteQuiz verify the delete method of the route quizzes/:quiz_number.
 func VerifyDeleteQuiz() {
 
-	fmt.Printf(config.Config.FVT.Topic, "VerifyDeletePlayer")
+	fmt.Printf(config.Config.FVT.Topic, "VerifyDeleteQuiz")
 	url := fmt.Sprintf("http://0.0.0.0:8080/v1/quizzes/%d", testQuizNumber)
 	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {

@@ -538,12 +538,13 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
       "3.A",
       "3.B",
       "3.C",
-      "3.D",
-      "Engineering",
-      "Security"
+      "3.D"
     ],
     "answer": "A",
-    "tags": []
+    "tags": [
+      "Engineering",
+      "Security"
+    ]
   },
   "_embedded": null
 }
@@ -1229,7 +1230,7 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
 ```
 
 
-# VerifyDeletePlayer
+# VerifyDeleteQuiz
 
 
 ## Existed Quiz
@@ -1260,11 +1261,12 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
       "test A",
       "test B",
       "test C",
-      "test D",
-      "Engineering"
+      "test D"
     ],
     "answer": "A",
-    "tags": []
+    "tags": [
+      "Engineering"
+    ]
   },
   "_embedded": null
 }
