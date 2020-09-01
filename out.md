@@ -527,39 +527,25 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
   },
   "status": {
     "status_code": 200,
-    "message": "player testplayer fed successfully."
+    "message": "player fed successfully."
   },
   "data": {
-    "_id": 2,
-    "number": 2,
-    "description": "quiz 2 description.",
+    "_id": 3,
+    "number": 3,
+    "description": "quiz 3 description.",
     "score": 1,
-    "option_a": "",
-    "option_b": "",
-    "option_c": "",
-    "option_d": "",
-    "answer": "C"
+    "options": [
+      "3.A",
+      "3.B",
+      "3.C",
+      "3.D",
+      "Engineering",
+      "Security"
+    ],
+    "answer": "A",
+    "tags": []
   },
-  "_embedded": [
-    {
-      "_links": null,
-      "status": {
-        "status_code": 200,
-        "message": "tags listed successfully."
-      },
-      "data": [
-        {
-          "_id": 1,
-          "name": "Network"
-        },
-        {
-          "_id": 2,
-          "name": "Language"
-        }
-      ],
-      "_embedded": null
-    }
-  ]
+  "_embedded": null
 }
 ```
 
@@ -699,10 +685,10 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "number": 1,
       "description": "quiz 1 description.",
       "score": 1,
-      "option_a": "",
-      "option_b": "",
-      "option_c": "",
-      "option_d": "",
+      "option_a": "1.A",
+      "option_b": "1.B",
+      "option_c": "1.C",
+      "option_d": "1.D",
       "answer": "A"
     },
     {
@@ -710,10 +696,10 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "number": 2,
       "description": "quiz 2 description.",
       "score": 1,
-      "option_a": "",
-      "option_b": "",
-      "option_c": "",
-      "option_d": "",
+      "option_a": "2.A",
+      "option_b": "2.B",
+      "option_c": "2.C",
+      "option_d": "2.D",
       "answer": "C"
     },
     {
@@ -721,10 +707,10 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "number": 3,
       "description": "quiz 3 description.",
       "score": 1,
-      "option_a": "",
-      "option_b": "",
-      "option_c": "",
-      "option_d": "",
+      "option_a": "3.A",
+      "option_b": "3.B",
+      "option_c": "3.C",
+      "option_d": "3.D",
       "answer": "A"
     },
     {
@@ -732,10 +718,10 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "number": 4,
       "description": "quiz 4 description.",
       "score": 2,
-      "option_a": "",
-      "option_b": "",
-      "option_c": "",
-      "option_d": "",
+      "option_a": "4.A",
+      "option_b": "4.B",
+      "option_c": "4.C",
+      "option_d": "4.D",
       "answer": "D"
     },
     {
@@ -743,10 +729,10 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "number": 5,
       "description": "quiz 5 description.",
       "score": 3,
-      "option_a": "",
-      "option_b": "",
-      "option_c": "",
-      "option_d": "",
+      "option_a": "5.A",
+      "option_b": "5.B",
+      "option_c": "5.C",
+      "option_d": "5.D",
       "answer": "B"
     },
     {
@@ -791,10 +777,10 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
       "number": 2,
       "description": "quiz 2 description.",
       "score": 1,
-      "option_a": "",
-      "option_b": "",
-      "option_c": "",
-      "option_d": "",
+      "option_a": "2.A",
+      "option_b": "2.B",
+      "option_c": "2.C",
+      "option_d": "2.D",
       "answer": "C"
     },
     {
@@ -802,10 +788,10 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
       "number": 3,
       "description": "quiz 3 description.",
       "score": 1,
-      "option_a": "",
-      "option_b": "",
-      "option_c": "",
-      "option_d": "",
+      "option_a": "3.A",
+      "option_b": "3.B",
+      "option_c": "3.C",
+      "option_d": "3.D",
       "answer": "A"
     }
   ],
@@ -843,30 +829,23 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999
   },
   "status": {
     "status_code": 200,
-    "message": "quiz number 999 accessed successfully."
+    "message": "quiz accessed successfully."
   },
   "data": {
     "_id": 6,
     "number": 999,
     "description": "test description.",
     "score": 3,
-    "option_a": "test A",
-    "option_b": "test B",
-    "option_c": "test C",
-    "option_d": "test D",
-    "answer": "A"
+    "options": [
+      "test A",
+      "test B",
+      "test C",
+      "test D"
+    ],
+    "answer": "A",
+    "tags": []
   },
-  "_embedded": [
-    {
-      "_links": null,
-      "status": {
-        "status_code": 200,
-        "message": "tags listed successfully."
-      },
-      "data": null,
-      "_embedded": null
-    }
-  ]
+  "_embedded": null
 }
 ```
 
@@ -1277,11 +1256,15 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
     "number": 999,
     "description": "test description.",
     "score": 3,
-    "option_a": "test A",
-    "option_b": "test B",
-    "option_c": "test C",
-    "option_d": "test D",
-    "answer": "A"
+    "options": [
+      "test A",
+      "test B",
+      "test C",
+      "test D",
+      "Engineering"
+    ],
+    "answer": "A",
+    "tags": []
   },
   "_embedded": null
 }

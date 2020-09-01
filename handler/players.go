@@ -106,7 +106,7 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 	links["player"] = LinkDetail{fmt.Sprintf("/players/%s", playerName)}
 	links["self"] = LinkDetail{fmt.Sprintf("/players/%s/feed", playerName)}
 
-	data, err := db.FeedQuizzes(playerName)
+	numbers, err := db.FeedQuizzes(playerName)
 	if err != nil {
 		if err.Error() == "no quiz left" {
 			resp, _ := BuildHATEOAS(links, Status{200, err.Error()}, nil, nil)
@@ -117,25 +117,14 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 		ctx.String(500, resp)
 		return
 	}
-	randomNumber := rand.Intn(len(data))
-	randomQuiz := data[randomNumber]
+	randomQuizNumber := numbers[rand.Intn(len(numbers))].ID
 
-	var tags []db.Tag
-	tags, err = db.QueryTags(randomNumber)
+	data, err := db.GetQuiz(randomQuizNumber)
 	if err != nil {
-		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, data, nil)
-		ctx.String(500, resp)
+		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		ctx.String(400, resp)
 		return
 	}
-	embedded := []HATEOAS{
-		HATEOAS{
-			LinksSection:    nil,
-			StatusSection:   Status{200, fmt.Sprintf("tags listed successfully.")},
-			DataSection:     tags,
-			EmbeddedSection: nil,
-		},
-	}
-	status := Status{200, fmt.Sprintf("player %s fed successfully.", playerName)}
-	resp, _ := BuildHATEOAS(links, status, randomQuiz, embedded)
+	resp, _ := BuildHATEOAS(links, Status{200, "player fed successfully."}, data, nil)
 	ctx.String(200, resp)
 }

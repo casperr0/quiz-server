@@ -138,10 +138,10 @@ func loadQuizzes(dataDir string) {
 	"number":%d,
 	"description":"%s",
 	"score":%d,
-	"optionA":"%s",
-	"optionB":"%s",
-	"optionC":"%s",
-	"optionD":"%s",
+	"option_a":"%s",
+	"option_b":"%s",
+	"option_c":"%s",
+	"option_d":"%s",
 	"answer":"%s"
 }`
 	for _, q := range quizzes {

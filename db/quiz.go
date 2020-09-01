@@ -4,6 +4,21 @@ import (
 	"fmt"
 )
 
+// QuizTag describe the quiz with its tags.
+type QuizTag struct {
+	ID          int      `json:"_id"`
+	Number      int      `json:"number"`
+	Description string   `json:"description"`
+	Score       int      `json:"score"`
+	Options     []string `json:"options"`
+	Answer      string   `json:"answer"`
+	Tags        []string `json:"tags"`
+}
+
+type IDNumber struct {
+	ID int `json:"_id"`
+}
+
 // CreateQuiz create a new quiz with quiz structure.
 func CreateQuiz(quiz Quiz) error {
 
@@ -34,7 +49,7 @@ func CreateQuiz(quiz Quiz) error {
 }
 
 // GetQuiz get a quiz with specified Number
-func GetQuiz(quizNumber int) (*Quiz, error) {
+func GetQuiz(quizNumber int) (*QuizTag, error) {
 
 	getSQL := "SELECT * FROM quiz WHERE number=$1"
 	quiz := Quiz{}
@@ -46,7 +61,38 @@ func GetQuiz(quizNumber int) (*Quiz, error) {
 		}
 		return nil, err
 	}
-	return &quiz, nil
+
+	quizTag := QuizTag{
+		ID:          quiz.ID,
+		Number:      quiz.Number,
+		Description: quiz.Description,
+		Score:       quiz.Score,
+		Options:     []string{},
+		Answer:      quiz.Answer,
+		Tags:        []string{},
+	}
+	if quiz.OptionA != "" {
+		quizTag.Options = append(quizTag.Options, quiz.OptionA)
+	}
+	if quiz.OptionA != "" {
+		quizTag.Options = append(quizTag.Options, quiz.OptionB)
+	}
+	if quiz.OptionA != "" {
+		quizTag.Options = append(quizTag.Options, quiz.OptionC)
+	}
+	if quiz.OptionD != "" {
+		quizTag.Options = append(quizTag.Options, quiz.OptionD)
+	}
+
+	tags, err := QueryTags(quizNumber)
+	if err != nil {
+		return nil, err
+	}
+	for _, t := range tags {
+		quizTag.Options = append(quizTag.Options, t.Name)
+	}
+
+	return &quizTag, nil
 }
 
 // ListQuizzes will list all current quizes.
@@ -79,11 +125,11 @@ func QueryQuizzes(tagName string) ([]Quiz, error) {
 	return quizzes, nil
 }
 
-// FeedQuizzes feed all quizzes that the players have not answers.
-func FeedQuizzes(playerName string) ([]Quiz, error) {
+// FeedQuizzes feed all quizzes number that the players have not answers.
+func FeedQuizzes(playerName string) ([]IDNumber, error) {
 
 	feedSQL := `
-	SELECT q.id, q.number, q.description, q.score, q.option_a, q.option_b, q.option_c, q.option_d, q.answer
+	SELECT q.id
 	FROM quiz q
 	WHERE q.id NOT IN (
 		SELECT p_q.quiz_id
@@ -100,14 +146,14 @@ func FeedQuizzes(playerName string) ([]Quiz, error) {
 		return nil, err
 	}
 	playerID := playerFound.ID
-	var quizzes []Quiz
-	err = database.Select(&quizzes, feedSQL, playerID)
+	var numbers []IDNumber
+	err = database.Select(&numbers, feedSQL, playerID)
 	if err != nil {
 		return nil, err
-	} else if len(quizzes) == 0 {
+	} else if len(numbers) == 0 {
 		return nil, fmt.Errorf("no quiz left")
 	}
-	return quizzes, nil
+	return numbers, nil
 }
 
 // DeleteQuiz will delete quiz with specified ID.
