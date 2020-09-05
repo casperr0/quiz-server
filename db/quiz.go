@@ -74,10 +74,10 @@ func GetQuiz(quizNumber int) (*QuizTag, error) {
 	if quiz.OptionA != "" {
 		quizTag.Options = append(quizTag.Options, quiz.OptionA)
 	}
-	if quiz.OptionA != "" {
+	if quiz.OptionB != "" {
 		quizTag.Options = append(quizTag.Options, quiz.OptionB)
 	}
-	if quiz.OptionA != "" {
+	if quiz.OptionC != "" {
 		quizTag.Options = append(quizTag.Options, quiz.OptionC)
 	}
 	if quiz.OptionD != "" {
