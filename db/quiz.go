@@ -9,12 +9,14 @@ type QuizTag struct {
 	ID          int      `json:"_id"`
 	Number      int      `json:"number"`
 	Description string   `json:"description"`
+	Hint        string   `json:"hint"`
 	Score       int      `json:"score"`
 	Options     []string `json:"options"`
 	Answer      string   `json:"answer"`
 	Tags        []string `json:"tags"`
 }
 
+// IDNumber describe the quiz id.
 type IDNumber struct {
 	ID int `json:"_id"`
 }
@@ -29,14 +31,15 @@ func CreateQuiz(quiz Quiz) error {
 	}
 
 	createSQL := `
-	INSERT INTO quiz (number, description, score, option_a, option_b, option_c, option_d, answer)
-	SELECT $1::INT, $2::VARCHAR, $3::INT, $4::VARCHAR, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR
+	INSERT INTO quiz (number, description, hint, score, option_a, option_b, option_c, option_d, answer)
+	SELECT $1::INT, $2::VARCHAR, $3::VARCHAR, $4::INT, $5::VARCHAR, $6::VARCHAR, $7::VARCHAR, $8::VARCHAR, $9::VARCHAR
 	`
 	tx := database.MustBegin()
 	tx.MustExec(
 		createSQL,
 		quiz.Number,
 		quiz.Description,
+		quiz.Hint,
 		quiz.Score,
 		quiz.OptionA,
 		quiz.OptionB,
@@ -66,6 +69,7 @@ func GetQuiz(quizNumber int) (*QuizTag, error) {
 		ID:          quiz.ID,
 		Number:      quiz.Number,
 		Description: quiz.Description,
+		Hint:        quiz.Hint,
 		Score:       quiz.Score,
 		Options:     []string{},
 		Answer:      quiz.Answer,
@@ -111,7 +115,7 @@ func ListQuizzes() ([]Quiz, error) {
 func QueryQuizzes(tagName string) ([]Quiz, error) {
 
 	querySQL := `
-	SELECT q.id, q.number, q.description, q.score, q.option_a, q.option_b, q.option_c, q.option_d, q.answer
+	SELECT q.id, q.number, q.description, q.hint, q.score, q.option_a, q.option_b, q.option_c, q.option_d, q.answer
 	FROM   quiz q
 	JOIN quiz_to_tag q_t ON q.id = q_t.quiz_id
 	JOIN tag t ON t.id = q_t.tag_id

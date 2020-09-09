@@ -62,6 +62,7 @@ func VerifyPostQuizzes() {
 	payload := `{
 	"number":%d,
 	"description":"test description.",
+	"hint":"test hint",
 	"score":3,
 	"option_a":"test A",
 	"option_b":"test B",

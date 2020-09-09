@@ -530,20 +530,22 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
     "message": "player fed successfully."
   },
   "data": {
-    "_id": 3,
-    "number": 3,
-    "description": "quiz 3 description.",
+    "_id": 2,
+    "number": 2,
+    "description": "quiz 2 description.",
+    "hint": "quiz 2 hint",
     "score": 1,
     "options": [
-      "3.A",
-      "3.B",
-      "3.C",
-      "3.D"
+      "2.A",
+      "2.B",
+      "2.C",
+      "2.D"
     ],
-    "answer": "A",
+    "answer": "C",
     "tags": [
-      "Engineering",
-      "Security"
+      "Security",
+      "Game",
+      "CCNS"
     ]
   },
   "_embedded": null
@@ -566,6 +568,7 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 {
 	"number":999,
 	"description":"test description.",
+	"hint":"test hint",
 	"score":3,
 	"option_a":"test A",
 	"option_b":"test B",
@@ -597,6 +600,7 @@ $ POST http://0.0.0.0:8080/v1/quizzes
     "_id": 0,
     "number": 999,
     "description": "test description.",
+    "hint": "test hint",
     "score": 3,
     "option_a": "test A",
     "option_b": "test B",
@@ -621,6 +625,7 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 {
 	"number":999,
 	"description":"test description.",
+	"hint":"test hint",
 	"score":3,
 	"option_a":"test A",
 	"option_b":"test B",
@@ -646,6 +651,7 @@ $ POST http://0.0.0.0:8080/v1/quizzes
     "_id": 0,
     "number": 999,
     "description": "test description.",
+    "hint": "test hint",
     "score": 3,
     "option_a": "test A",
     "option_b": "test B",
@@ -685,6 +691,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "_id": 1,
       "number": 1,
       "description": "quiz 1 description.",
+      "hint": "quiz 1 hint",
       "score": 1,
       "option_a": "1.A",
       "option_b": "1.B",
@@ -696,6 +703,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "_id": 2,
       "number": 2,
       "description": "quiz 2 description.",
+      "hint": "quiz 2 hint",
       "score": 1,
       "option_a": "2.A",
       "option_b": "2.B",
@@ -707,6 +715,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "_id": 3,
       "number": 3,
       "description": "quiz 3 description.",
+      "hint": "quiz 3 hint",
       "score": 1,
       "option_a": "3.A",
       "option_b": "3.B",
@@ -718,6 +727,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "_id": 4,
       "number": 4,
       "description": "quiz 4 description.",
+      "hint": "quiz 4 hint",
       "score": 2,
       "option_a": "4.A",
       "option_b": "4.B",
@@ -729,6 +739,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "_id": 5,
       "number": 5,
       "description": "quiz 5 description.",
+      "hint": "quiz 5 hint",
       "score": 3,
       "option_a": "5.A",
       "option_b": "5.B",
@@ -740,6 +751,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "_id": 6,
       "number": 999,
       "description": "test description.",
+      "hint": "test hint",
       "score": 3,
       "option_a": "test A",
       "option_b": "test B",
@@ -777,6 +789,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
       "_id": 2,
       "number": 2,
       "description": "quiz 2 description.",
+      "hint": "quiz 2 hint",
       "score": 1,
       "option_a": "2.A",
       "option_b": "2.B",
@@ -788,6 +801,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
       "_id": 3,
       "number": 3,
       "description": "quiz 3 description.",
+      "hint": "quiz 3 hint",
       "score": 1,
       "option_a": "3.A",
       "option_b": "3.B",
@@ -836,6 +850,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999
     "_id": 6,
     "number": 999,
     "description": "test description.",
+    "hint": "test hint",
     "score": 3,
     "options": [
       "test A",
@@ -1256,6 +1271,7 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
     "_id": 6,
     "number": 999,
     "description": "test description.",
+    "hint": "test hint",
     "score": 3,
     "options": [
       "test A",

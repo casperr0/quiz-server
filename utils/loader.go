@@ -27,6 +27,7 @@ type TagLoad struct {
 type QuizLoad struct {
 	Number      int      `json:"number"`
 	Description string   `json:"description"`
+	Hint        string   `json:"hint"`
 	Score       int      `json:"score"`
 	OptionA     string   `json:"option_a"`
 	OptionB     string   `json:"option_b"`
@@ -137,6 +138,7 @@ func loadQuizzes(dataDir string) {
 	payload := `{
 	"number":%d,
 	"description":"%s",
+	"hint":"%s",
 	"score":%d,
 	"option_a":"%s",
 	"option_b":"%s",
@@ -149,6 +151,7 @@ func loadQuizzes(dataDir string) {
 			payload,
 			q.Number,
 			q.Description,
+			q.Hint,
 			q.Score,
 			q.OptionA,
 			q.OptionB,
