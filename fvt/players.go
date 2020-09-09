@@ -121,7 +121,7 @@ func VerifyDeletePlayer() {
 	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
 }
 
-// VerifyGetPlayerFeed verify the DELETE method on the route /player/:player_name/feed.
+// VerifyGetPlayerFeed verify the GET method on the route /player/:player_name/feed.
 func VerifyGetPlayerFeed() {
 
 	fmt.Printf(config.Config.FVT.Topic, "VerifyGetPlayerFeed")
@@ -158,6 +158,31 @@ func VerifyGetPlayerFeed() {
 		log.Fatal(err)
 	}
 	bodyBytes, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
+}
+
+// VerifyGetPlayerRand verify the GET method on the route /player/:player_name/rand.
+func VerifyGetPlayerRand() {
+
+	fmt.Printf(config.Config.FVT.Topic, "VerifyGetPlayerRand")
+
+	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Any Player"))
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/players/%s/rand", "RainrainWu")
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ GET %s\n```\n", url)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
 	}

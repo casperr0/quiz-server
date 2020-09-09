@@ -46,6 +46,7 @@ func runFVT() {
 	fvt.VerifyPostPlayers()
 	fvt.VerifyGetPlayers()
 	fvt.VerifyGetPlayerFeed()
+	fvt.VerifyGetPlayerRand()
 
 	fvt.VerifyPostQuizzes()
 	fvt.VerifyGetQuizzes()
@@ -70,6 +71,7 @@ func runService() {
 		v1.POST("/players", handler.PostPlayersHandler)
 		v1.DELETE("/players/:player_name", handler.DeletePlayerHandler)
 		v1.GET("/players/:player_name/feed", handler.GetPlayerFeedHandler)
+		v1.GET("/players/:player_name/rand", handler.GetPlayerRandHandler)
 
 		v1.GET("/quizzes", handler.GetQuizzesHandler)
 		v1.POST("/quizzes", handler.PostQuizzesHandler)

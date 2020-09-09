@@ -104,6 +104,7 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 		return
 	}
 	links["player"] = LinkDetail{fmt.Sprintf("/players/%s", playerName)}
+	links["rand"] = LinkDetail{fmt.Sprintf("/players/%s/rand", playerName)}
 	links["self"] = LinkDetail{fmt.Sprintf("/players/%s/feed", playerName)}
 
 	numbers, err := db.FeedQuizzes(playerName)
@@ -126,5 +127,39 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 		return
 	}
 	resp, _ := BuildHATEOAS(links, Status{200, "player fed successfully."}, data, nil)
+	ctx.String(200, resp)
+}
+
+// GetPlayerRandHandler handles GET requests on route /players/:player_name/rand.
+func GetPlayerRandHandler(ctx *gin.Context) {
+
+	links := map[string]LinkDetail{
+		"list": LinkDetail{"/quizzes"},
+	}
+	playerName := ctx.Param("player_name")
+	if playerName == "" {
+		resp, _ := BuildHATEOAS(links, Status{400, "player_name not specified."}, nil, nil)
+		ctx.String(400, resp)
+		return
+	}
+	links["player"] = LinkDetail{fmt.Sprintf("/players/%s", playerName)}
+	links["feed"] = LinkDetail{fmt.Sprintf("/players/%s/feed", playerName)}
+	links["self"] = LinkDetail{fmt.Sprintf("/players/%s/rand", playerName)}
+
+	quizzes, err := db.ListQuizzes()
+	if err != nil {
+		resp, _ := BuildHATEOAS(links, Status{500, err.Error()}, nil, nil)
+		ctx.String(500, resp)
+		return
+	}
+	randomQuizNumber := quizzes[rand.Intn(len(quizzes))].ID
+
+	data, err := db.GetQuiz(randomQuizNumber)
+	if err != nil {
+		resp, _ := BuildHATEOAS(nil, Status{400, err.Error()}, nil, nil)
+		ctx.String(400, resp)
+		return
+	}
+	resp, _ := BuildHATEOAS(links, Status{200, "quiz accessed successfully."}, data, nil)
 	ctx.String(200, resp)
 }
