@@ -490,6 +490,9 @@ $ GET http://0.0.0.0:8080/v1/players/RainrainWu/feed
     "player": {
       "href": "/players/RainrainWu"
     },
+    "rand": {
+      "href": "/players/RainrainWu/rand"
+    },
     "self": {
       "href": "/players/RainrainWu/feed"
     }
@@ -521,6 +524,9 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
     "player": {
       "href": "/players/testplayer"
     },
+    "rand": {
+      "href": "/players/testplayer/rand"
+    },
     "self": {
       "href": "/players/testplayer/feed"
     }
@@ -530,22 +536,75 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
     "message": "player fed successfully."
   },
   "data": {
-    "_id": 2,
-    "number": 2,
-    "description": "quiz 2 description.",
-    "hint": "quiz 2 hint",
+    "_id": 1,
+    "number": 1,
+    "description": "quiz 1 description.",
+    "hint": "quiz 1 hint",
     "score": 1,
     "options": [
-      "2.A",
-      "2.B",
-      "2.C",
-      "2.D"
+      "1.A",
+      "1.B",
+      "1.C",
+      "1.D"
     ],
-    "answer": "C",
+    "answer": "A",
     "tags": [
-      "Security",
-      "Game",
-      "CCNS"
+      "Network",
+      "Language"
+    ]
+  },
+  "_embedded": null
+}
+```
+
+
+# VerifyGetPlayerRand
+
+
+## Any Player
+
+- [ method and url ]
+```
+$ GET http://0.0.0.0:8080/v1/players/RainrainWu/rand
+```
+
+- [ example response ]
+```
+{
+  "_links": {
+    "feed": {
+      "href": "/players/RainrainWu/feed"
+    },
+    "list": {
+      "href": "/quizzes"
+    },
+    "player": {
+      "href": "/players/RainrainWu"
+    },
+    "self": {
+      "href": "/players/RainrainWu/rand"
+    }
+  },
+  "status": {
+    "status_code": 200,
+    "message": "quiz accessed successfully."
+  },
+  "data": {
+    "_id": 1,
+    "number": 1,
+    "description": "quiz 1 description.",
+    "hint": "quiz 1 hint",
+    "score": 1,
+    "options": [
+      "1.A",
+      "1.B",
+      "1.C",
+      "1.D"
+    ],
+    "answer": "A",
+    "tags": [
+      "Network",
+      "Language"
     ]
   },
   "_embedded": null
@@ -1022,7 +1081,6 @@ $ POST http://0.0.0.0:8080/v1/answers
 	"correct":true
 }
 ```
-$ POST http://0.0.0.0:8080/v1/answers
 
 - [ example response ]
 ```

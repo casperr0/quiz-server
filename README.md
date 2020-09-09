@@ -63,6 +63,7 @@ GET     /v1/players
 POST    /v1/players
 DELETE  /v1/players/:player_name
 GET     /v1/players/:player_name/feed
+GET     /v1/players/:player_name/rand
 
 GET     /v1/quizzes?tag=<tag_name>
 POST    /v1/quizzes

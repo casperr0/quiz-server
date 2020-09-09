@@ -110,7 +110,6 @@ func VerifyPostAnswers() {
 	fmt.Printf("```\n$ POST %s\n```\n", url)
 	fmt.Printf(config.Config.FVT.Detail, "example payload")
 	fmt.Printf("```\n%s\n```\n", jsonStr)
-	fmt.Print(fmt.Sprintf("$ POST %s\n", url))
 	resp, err = client.Do(req)
 	if err != nil {
 		log.Fatal(err)
