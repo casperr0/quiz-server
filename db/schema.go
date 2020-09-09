@@ -35,6 +35,7 @@ type Quiz struct {
 	ID          int    `db:"id" json:"_id"`
 	Number      int    `db:"number" json:"number"`
 	Description string `db:"description" json:"description"`
+	Hint        string `db:"hint" json:"hint"`
 	Score       int    `db:"score" json:"score"`
 	OptionA     string `db:"option_a" json:"option_a"`
 	OptionB     string `db:"option_b" json:"option_b"`
@@ -111,6 +112,7 @@ CREATE TABLE IF NOT EXISTS quiz (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	number INT NOT NULL,
 	description VARCHAR(2048) NOT NULL,
+	hint VARCHAR(512) NOT NULL,
 	score INT NOT NULL,
 	option_a VARCHAR(255) NOT NULL,
 	option_b VARCHAR(255) NOT NULL,
