@@ -356,7 +356,9 @@ $ POST http://0.0.0.0:8080/v1/players
 - [ example payload ]
 ```
 {
-	"name":"testplayer"
+	"name":"discord-testplayer",
+	"nickname":"testplayer",
+	"platform":"discord"
 }
 ```
 
@@ -365,10 +367,10 @@ $ POST http://0.0.0.0:8080/v1/players
 {
   "_links": {
     "feed": {
-      "href": "/v1/players/testplayer/feed"
+      "href": "/v1/players/discord-testplayer/feed"
     },
     "player": {
-      "href": "/v1/players/testplayer"
+      "href": "/v1/players/discord-testplayer"
     },
     "self": {
       "href": "/v1/players"
@@ -376,11 +378,13 @@ $ POST http://0.0.0.0:8080/v1/players
   },
   "status": {
     "status_code": 201,
-    "message": "player testplayer created successfully."
+    "message": "player discord-testplayer created successfully."
   },
   "data": {
     "_id": 0,
-    "name": "testplayer"
+    "name": "discord-testplayer",
+    "nickname": "testplayer",
+    "platform": "discord"
   },
   "_embedded": null
 }
@@ -397,7 +401,9 @@ $ POST http://0.0.0.0:8080/v1/players
 - [ example payload ]
 ```
 {
-	"name":"testplayer"
+	"name":"discord-testplayer",
+	"nickname":"testplayer",
+	"platform":"discord"
 }
 ```
 
@@ -406,7 +412,7 @@ $ POST http://0.0.0.0:8080/v1/players
 {
   "_links": {
     "player": {
-      "href": "/v1/players/testplayer"
+      "href": "/v1/players/discord-testplayer"
     },
     "self": {
       "href": "/v1/players"
@@ -414,11 +420,52 @@ $ POST http://0.0.0.0:8080/v1/players
   },
   "status": {
     "status_code": 409,
-    "message": "player testplayer already existed"
+    "message": "player discord-testplayer already existed"
   },
   "data": {
     "_id": 0,
-    "name": "testplayer"
+    "name": "discord-testplayer",
+    "nickname": "testplayer",
+    "platform": "discord"
+  },
+  "_embedded": null
+}
+```
+
+
+# VerifyGetPlayer
+
+
+## Particular Player
+
+- [ method and url ]
+```
+$ GET http://0.0.0.0:8080/v1/players/discord-testplayer
+```
+
+- [ example response ]
+```
+{
+  "_links": {
+    "answers": {
+      "href": "/v1/answers?player=discord-testplayer"
+    },
+    "list": {
+      "href": "/v1/players"
+    },
+    "self": {
+      "href": "/v1/players/discord-testplayer"
+    }
+  },
+  "status": {
+    "status_code": 200,
+    "message": "player accessed successfully."
+  },
+  "data": {
+    "_id": 5,
+    "name": "discord-testplayer",
+    "nickname": "testplayer",
+    "platform": "discord"
   },
   "_embedded": null
 }
@@ -446,22 +493,22 @@ $ GET http://0.0.0.0:8080/v1/players
   "data": [
     {
       "_id": 1,
-      "name": "RainrainWu",
+      "name": "telegram-RainrainWu",
       "score": 8
     },
     {
       "_id": 2,
-      "name": "!(\u0026GQ(WDUHQ(",
+      "name": "line-!(\u0026GQ(WDUHQ(",
       "score": 6
     },
     {
       "_id": 3,
-      "name": "  ",
+      "name": "discord-  ",
       "score": 4
     },
     {
       "_id": 4,
-      "name": "__",
+      "name": "facebook-__",
       "score": 3
     }
   ],
@@ -477,7 +524,7 @@ $ GET http://0.0.0.0:8080/v1/players
 
 - [ method and url ]
 ```
-$ GET http://0.0.0.0:8080/v1/players/RainrainWu/feed
+$ GET http://0.0.0.0:8080/v1/players/telegram-RainrainWu/feed
 ```
 
 - [ example response ]
@@ -485,16 +532,16 @@ $ GET http://0.0.0.0:8080/v1/players/RainrainWu/feed
 {
   "_links": {
     "list": {
-      "href": "/players"
+      "href": "/v1/players"
     },
     "player": {
-      "href": "/players/RainrainWu"
+      "href": "/v1/players/telegram-RainrainWu"
     },
     "rand": {
-      "href": "/players/RainrainWu/rand"
+      "href": "/v1/players/telegram-RainrainWu/rand"
     },
     "self": {
-      "href": "/players/RainrainWu/feed"
+      "href": "/v1/players/telegram-RainrainWu/feed"
     }
   },
   "status": {
@@ -511,7 +558,7 @@ $ GET http://0.0.0.0:8080/v1/players/RainrainWu/feed
 
 - [ method and url ]
 ```
-$ GET http://0.0.0.0:8080/v1/players/testplayer/feed
+$ GET http://0.0.0.0:8080/v1/players/discord-testplayer/feed
 ```
 
 - [ example response ]
@@ -519,16 +566,16 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
 {
   "_links": {
     "list": {
-      "href": "/players"
+      "href": "/v1/players"
     },
     "player": {
-      "href": "/players/testplayer"
+      "href": "/v1/players/discord-testplayer"
     },
     "rand": {
-      "href": "/players/testplayer/rand"
+      "href": "/v1/players/discord-testplayer/rand"
     },
     "self": {
-      "href": "/players/testplayer/feed"
+      "href": "/v1/players/discord-testplayer/feed"
     }
   },
   "status": {
@@ -536,21 +583,21 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
     "message": "player fed successfully."
   },
   "data": {
-    "_id": 1,
-    "number": 1,
-    "description": "quiz 1 description.",
-    "hint": "quiz 1 hint",
+    "_id": 3,
+    "number": 3,
+    "description": "quiz 3 description.",
+    "hint": "quiz 3 hint",
     "score": 1,
     "options": [
-      "1.A",
-      "1.B",
-      "1.C",
-      "1.D"
+      "3.A",
+      "3.B",
+      "3.C",
+      "3.D"
     ],
     "answer": "A",
     "tags": [
-      "Network",
-      "Language"
+      "Engineering",
+      "Security"
     ]
   },
   "_embedded": null
@@ -565,7 +612,7 @@ $ GET http://0.0.0.0:8080/v1/players/testplayer/feed
 
 - [ method and url ]
 ```
-$ GET http://0.0.0.0:8080/v1/players/RainrainWu/rand
+$ GET http://0.0.0.0:8080/v1/players/telegram-RainrainWu/rand
 ```
 
 - [ example response ]
@@ -573,16 +620,16 @@ $ GET http://0.0.0.0:8080/v1/players/RainrainWu/rand
 {
   "_links": {
     "feed": {
-      "href": "/players/RainrainWu/feed"
+      "href": "/v1/players/telegram-RainrainWu/feed"
     },
     "list": {
-      "href": "/quizzes"
+      "href": "/v1/quizzes"
     },
     "player": {
-      "href": "/players/RainrainWu"
+      "href": "/v1/players/telegram-RainrainWu"
     },
     "self": {
-      "href": "/players/RainrainWu/rand"
+      "href": "/v1/players/telegram-RainrainWu/rand"
     }
   },
   "status": {
@@ -590,21 +637,20 @@ $ GET http://0.0.0.0:8080/v1/players/RainrainWu/rand
     "message": "quiz accessed successfully."
   },
   "data": {
-    "_id": 1,
-    "number": 1,
-    "description": "quiz 1 description.",
-    "hint": "quiz 1 hint",
-    "score": 1,
+    "_id": 5,
+    "number": 5,
+    "description": "quiz 5 description.",
+    "hint": "quiz 5 hint",
+    "score": 3,
     "options": [
-      "1.A",
-      "1.B",
-      "1.C",
-      "1.D"
+      "5.A",
+      "5.B",
+      "5.C",
+      "5.D"
     ],
-    "answer": "A",
+    "answer": "B",
     "tags": [
-      "Network",
-      "Language"
+      "Others"
     ]
   },
   "_embedded": null
@@ -1042,7 +1088,7 @@ $ POST http://0.0.0.0:8080/v1/answers
 - [ example payload ]
 ```
 {
-	"player_name":"testplayer",
+	"player_name":"discord-testplayer",
 	"quiz_number":999,
 	"correct":true
 }
@@ -1057,7 +1103,7 @@ $ POST http://0.0.0.0:8080/v1/answers
     "message": "answer created successfully."
   },
   "data": {
-    "player_name": "testplayer",
+    "player_name": "discord-testplayer",
     "quiz_number": 999,
     "correct": true
   },
@@ -1076,7 +1122,7 @@ $ POST http://0.0.0.0:8080/v1/answers
 - [ example payload ]
 ```
 {
-	"player_name":"testplayer",
+	"player_name":"discord-testplayer",
 	"quiz_number":999,
 	"correct":true
 }
@@ -1088,7 +1134,7 @@ $ POST http://0.0.0.0:8080/v1/answers
   "_links": null,
   "status": {
     "status_code": 409,
-    "message": "answer from player testplayer to quiz number 999 already existed"
+    "message": "answer from player discord-testplayer to quiz number 999 already existed"
   },
   "data": null,
   "_embedded": null
@@ -1237,7 +1283,7 @@ $ GET http://0.0.0.0:8080/v1/answers
 
 - [ method and url ]
 ```
-$ GET http://0.0.0.0:8080/v1/answers?player=testplayer
+$ GET http://0.0.0.0:8080/v1/answers?player=discord-testplayer
 ```
 
 - [ example response ]
@@ -1245,7 +1291,7 @@ $ GET http://0.0.0.0:8080/v1/answers?player=testplayer
 {
   "_links": {
     "player": {
-      "href": "/v1/players/testplayer"
+      "href": "/v1/players/discord-testplayer"
     },
     "self": {
       "href": "/v1/answers"
@@ -1379,7 +1425,7 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
 
 - [ method and url ]
 ```
-$ DELETE http://0.0.0.0:8080/v1/players/testplayer
+$ DELETE http://0.0.0.0:8080/v1/players/discord-testplayer
 ```
 
 - [ example response ]
@@ -1392,11 +1438,13 @@ $ DELETE http://0.0.0.0:8080/v1/players/testplayer
   },
   "status": {
     "status_code": 200,
-    "message": "player testplayer deleted successfully."
+    "message": "player deleted successfully."
   },
   "data": {
     "_id": 5,
-    "name": "testplayer"
+    "name": "discord-testplayer",
+    "nickname": "testplayer",
+    "platform": "discord"
   },
   "_embedded": null
 }
@@ -1407,7 +1455,7 @@ $ DELETE http://0.0.0.0:8080/v1/players/testplayer
 
 - [ method and url ]
 ```
-$ DELETE http://0.0.0.0:8080/v1/players/testplayer
+$ DELETE http://0.0.0.0:8080/v1/players/discord-testplayer
 ```
 
 - [ example response ]
@@ -1420,7 +1468,7 @@ $ DELETE http://0.0.0.0:8080/v1/players/testplayer
   },
   "status": {
     "status_code": 400,
-    "message": "player testplayer not found"
+    "message": "player discord-testplayer not found"
   },
   "data": null,
   "_embedded": null

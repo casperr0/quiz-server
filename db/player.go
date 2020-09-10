@@ -14,8 +14,8 @@ type PlayerScore struct {
 	Score int    `db:"score" json:"score"`
 }
 
-// CreatePlayer will create a new player by name.
-func CreatePlayer(playerName string) error {
+// CreatePlayer will create a new player by name and platform.
+func CreatePlayer(playerName, nickname, platform string) error {
 
 	player, _ := GetPlayer(playerName)
 	if player != nil {
@@ -24,15 +24,15 @@ func CreatePlayer(playerName string) error {
 	}
 
 	createSQL := `
-	INSERT INTO player (name)
-	SELECT $1::VARCHAR
+	INSERT INTO player (name, nickname, platform)
+	SELECT $1::VARCHAR, $2::VARCHAR, $3::VARCHAR
 	WHERE NOT EXISTS (
 		SELECT 1 FROM player
 		WHERE player.name = $1
 	);
 	`
 	tx := database.MustBegin()
-	tx.MustExec(createSQL, playerName)
+	tx.MustExec(createSQL, playerName, nickname, platform)
 	tx.Commit()
 	return nil
 }

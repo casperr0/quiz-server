@@ -1,13 +1,17 @@
 [
     {
-        "name": "RainrainWu",
+        "name": "telegram-RainrainWu",
+        "nickname": "RainrainWu",
+        "platform": "Telegram",
         "correct_quiz_numbers": [
             1, 2, 3, 4, 5
         ],
         "incorrect_quiz_numbers": []
     },
     {
-        "name": "!(&GQ(WDUHQ(",
+        "name": "line-!(&GQ(WDUHQ(",
+        "nickname": "!(&GQ(WDUHQ(",
+        "platform": "line",
         "correct_quiz_numbers": [
             1, 4, 5
         ],
@@ -16,7 +20,9 @@
         ]
     },
     {
-        "name": "  ",
+        "name": "discord-  ",
+        "nickname": "  ",
+        "platfoem": "discord",
         "correct_quiz_numbers": [
             1, 5
         ],
@@ -25,7 +31,9 @@
         ]
     },
     {
-        "name": "__",
+        "name": "facebook-__",
+        "nickname": "__",
+        "platform": "facebook",
         "correct_quiz_numbers": [
             4, 1
         ],

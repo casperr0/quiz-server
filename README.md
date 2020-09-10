@@ -61,6 +61,7 @@ The service provides an interacting interface via RESTful API, below is the list
 ```
 GET     /v1/players
 POST    /v1/players
+GET     /v1/players/:player_name
 DELETE  /v1/players/:player_name
 GET     /v1/players/:player_name/feed
 GET     /v1/players/:player_name/rand
