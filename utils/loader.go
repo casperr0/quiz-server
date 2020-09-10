@@ -40,6 +40,8 @@ type QuizLoad struct {
 // PlayerLoad describe the struct of external players file
 type PlayerLoad struct {
 	Name                 string `json:"name"`
+	Nickname             string `json:"nickname"`
+	Platform             string `json:"platform"`
 	CorrectQuizNumbers   []int  `json:"correct_quiz_numbers"`
 	IncorrectQuizNumbers []int  `json:"incorrect_quiz_numbers"`
 }
@@ -183,10 +185,10 @@ func loadPlayers(dataDir string) {
 	json.Unmarshal(byteValue, &players)
 
 	url := "http://0.0.0.0:8080/v1/players"
-	payload := `{"name":"%s"}`
+	payload := `{"name":"%s","nickname":"%s","platform":"%s"}`
 	for _, p := range players {
 
-		jsonStr := fmt.Sprintf(payload, p.Name)
+		jsonStr := fmt.Sprintf(payload, p.Name, p.Nickname, p.Platform)
 		fireRecord(url, jsonStr)
 
 		answerURL := "http://0.0.0.0:8080/v1/answers"

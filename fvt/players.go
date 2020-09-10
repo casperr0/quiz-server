@@ -41,9 +41,11 @@ func VerifyPostPlayers() {
 	fmt.Printf(config.Config.FVT.Topic, "VerifyPostPlayers")
 	url := "http://0.0.0.0:8080/v1/players"
 	paylaod := `{
-	"name":"%s"
+	"name":"%s",
+	"nickname":"%s",
+	"platform":"%s"
 }`
-	jsonStr := fmt.Sprintf(paylaod, testPlayerName)
+	jsonStr := fmt.Sprintf(paylaod, testPlayerName, testNickname, testPlatform)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(jsonStr)))
 	if err != nil {
 		log.Fatal(err)
@@ -75,6 +77,31 @@ func VerifyPostPlayers() {
 		log.Fatal(err)
 	}
 	bodyBytes, err = ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf(config.Config.FVT.Detail, "example response")
+	fmt.Printf("```\n%s\n```\n", string(bodyBytes))
+}
+
+// VerifyGetPlayer verify the get method of the route /player/:player_name.
+func VerifyGetPlayer() {
+
+	fmt.Printf(config.Config.FVT.Topic, "VerifyGetPlayer")
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/players/%s", testPlayerName)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf(config.Config.FVT.Section, "Particular Player")
+	fmt.Printf(config.Config.FVT.Detail, "method and url")
+	fmt.Printf("```\n$ GET %s\n```\n", url)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -127,7 +154,7 @@ func VerifyGetPlayerFeed() {
 	fmt.Printf(config.Config.FVT.Topic, "VerifyGetPlayerFeed")
 
 	fmt.Printf(config.Config.FVT.Section, "Finished Player")
-	url := fmt.Sprintf("http://0.0.0.0:8080/v1/players/%s/feed", "RainrainWu")
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/players/%s/feed", "telegram-RainrainWu")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)
@@ -171,7 +198,7 @@ func VerifyGetPlayerRand() {
 	fmt.Printf(config.Config.FVT.Topic, "VerifyGetPlayerRand")
 
 	fmt.Print(fmt.Sprintf(config.Config.FVT.Section, "Any Player"))
-	url := fmt.Sprintf("http://0.0.0.0:8080/v1/players/%s/rand", "RainrainWu")
+	url := fmt.Sprintf("http://0.0.0.0:8080/v1/players/%s/rand", "telegram-RainrainWu")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		log.Fatal(err)

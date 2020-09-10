@@ -26,8 +26,10 @@ type Role struct {
 
 // Player describe the schema of quiz player.
 type Player struct {
-	ID   int    `db:"id" json:"_id"`
-	Name string `db:"name" json:"name"`
+	ID       int    `db:"id" json:"_id"`
+	Name     string `db:"name" json:"name"`
+	Nickname string `db:"nickname" json:"nickname"`
+	Platform string `db:"platform" json:"platform"`
 }
 
 // Quiz describe the schema of quiz content.
@@ -106,6 +108,8 @@ CREATE TABLE IF NOT EXISTS role (
 CREATE TABLE IF NOT EXISTS player (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	name VARCHAR(255) NOT NULL,
+	nickname VARCHAR(255) NOT NULL,
+	platform VARCHAR(255) NOT NULL,
 	PRIMARY KEY(id)
 );
 CREATE TABLE IF NOT EXISTS quiz (

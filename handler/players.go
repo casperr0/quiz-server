@@ -46,7 +46,7 @@ func PostPlayersHandler(ctx *gin.Context) {
 	}
 	links["player"] = LinkDetail{fmt.Sprintf("/v1/players/%s", player.Name)}
 
-	err = db.CreatePlayer(player.Name)
+	err = db.CreatePlayer(player.Name, player.Nickname, player.Platform)
 	if err != nil {
 		if err.Error() == fmt.Sprintf("player %s already existed", player.Name) {
 			resp, _ := BuildHATEOAS(links, Status{409, err.Error()}, player, nil)
@@ -62,6 +62,33 @@ func PostPlayersHandler(ctx *gin.Context) {
 	status := Status{201, fmt.Sprintf("player %s created successfully.", player.Name)}
 	resp, _ := BuildHATEOAS(links, status, player, nil)
 	ctx.String(201, resp)
+}
+
+// GetPlayerHandler handles get requests on route /players/:player_name.
+func GetPlayerHandler(ctx *gin.Context) {
+
+	links := map[string]LinkDetail{
+		"list": LinkDetail{"/v1/players"},
+	}
+
+	playerName := ctx.Param("player_name")
+	if playerName == "" {
+		resp, _ := BuildHATEOAS(links, Status{400, "player_name not specified."}, nil, nil)
+		ctx.String(400, resp)
+		return
+	}
+
+	data, err := db.GetPlayer(playerName)
+	if err != nil {
+		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
+		ctx.String(400, resp)
+		return
+	}
+	links["self"] = LinkDetail{fmt.Sprintf("/v1/players/%s", playerName)}
+	links["answers"] = LinkDetail{fmt.Sprintf("/v1/answers?player=%s", playerName)}
+
+	resp, _ := BuildHATEOAS(links, Status{200, "player accessed successfully."}, data, nil)
+	ctx.String(200, resp)
 }
 
 // DeletePlayerHandler handles delete requests on route /players/:player_name.
@@ -85,8 +112,7 @@ func DeletePlayerHandler(ctx *gin.Context) {
 		return
 	}
 	db.DeletePlayer(playerName)
-	status := Status{200, fmt.Sprintf("player %s deleted successfully.", playerName)}
-	resp, _ := BuildHATEOAS(links, status, data, nil)
+	resp, _ := BuildHATEOAS(links, Status{200, "player deleted successfully."}, data, nil)
 	ctx.String(200, resp)
 }
 
@@ -94,7 +120,7 @@ func DeletePlayerHandler(ctx *gin.Context) {
 func GetPlayerFeedHandler(ctx *gin.Context) {
 
 	links := map[string]LinkDetail{
-		"list": LinkDetail{"/players"},
+		"list": LinkDetail{"/v1/players"},
 	}
 
 	playerName := ctx.Param("player_name")
@@ -103,9 +129,9 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 		ctx.String(400, resp)
 		return
 	}
-	links["player"] = LinkDetail{fmt.Sprintf("/players/%s", playerName)}
-	links["rand"] = LinkDetail{fmt.Sprintf("/players/%s/rand", playerName)}
-	links["self"] = LinkDetail{fmt.Sprintf("/players/%s/feed", playerName)}
+	links["player"] = LinkDetail{fmt.Sprintf("/v1/players/%s", playerName)}
+	links["rand"] = LinkDetail{fmt.Sprintf("/v1/players/%s/rand", playerName)}
+	links["self"] = LinkDetail{fmt.Sprintf("/v1/players/%s/feed", playerName)}
 
 	numbers, err := db.FeedQuizzes(playerName)
 	if err != nil {
@@ -134,7 +160,7 @@ func GetPlayerFeedHandler(ctx *gin.Context) {
 func GetPlayerRandHandler(ctx *gin.Context) {
 
 	links := map[string]LinkDetail{
-		"list": LinkDetail{"/quizzes"},
+		"list": LinkDetail{"/v1/quizzes"},
 	}
 	playerName := ctx.Param("player_name")
 	if playerName == "" {
@@ -142,9 +168,9 @@ func GetPlayerRandHandler(ctx *gin.Context) {
 		ctx.String(400, resp)
 		return
 	}
-	links["player"] = LinkDetail{fmt.Sprintf("/players/%s", playerName)}
-	links["feed"] = LinkDetail{fmt.Sprintf("/players/%s/feed", playerName)}
-	links["self"] = LinkDetail{fmt.Sprintf("/players/%s/rand", playerName)}
+	links["player"] = LinkDetail{fmt.Sprintf("/v1/players/%s", playerName)}
+	links["feed"] = LinkDetail{fmt.Sprintf("/v1/players/%s/feed", playerName)}
+	links["self"] = LinkDetail{fmt.Sprintf("/v1/players/%s/rand", playerName)}
 
 	quizzes, err := db.ListQuizzes()
 	if err != nil {
