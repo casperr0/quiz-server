@@ -61,6 +61,7 @@ func VerifyPostQuizzes() {
 	url := "http://0.0.0.0:8080/v1/quizzes"
 	payload := `{
 	"number":%d,
+	"author":"%s"
 	"description":"test description.",
 	"hint":"test hint",
 	"score":3,
@@ -70,7 +71,7 @@ func VerifyPostQuizzes() {
 	"option_d":"test D",
 	"answer":"A"
 }`
-	jsonStr := fmt.Sprintf(payload, testQuizNumber)
+	jsonStr := fmt.Sprintf(payload, testQuizNumber, testAuthor)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer([]byte(jsonStr)))
 	if err != nil {
 		log.Fatal(err)

@@ -465,7 +465,10 @@ $ GET http://0.0.0.0:8080/v1/players/discord-testplayer
     "_id": 5,
     "name": "discord-testplayer",
     "nickname": "testplayer",
-    "platform": "discord"
+    "platform": "discord",
+    "rank": 5,
+    "score": 0,
+    "last": 5
   },
   "_embedded": null
 }
@@ -494,22 +497,32 @@ $ GET http://0.0.0.0:8080/v1/players
     {
       "_id": 1,
       "name": "telegram-RainrainWu",
-      "score": 8
+      "nickname": "RainrainWu",
+      "platform": "Telegram"
     },
     {
       "_id": 2,
       "name": "line-!(\u0026GQ(WDUHQ(",
-      "score": 6
+      "nickname": "!(\u0026GQ(WDUHQ(",
+      "platform": "line"
     },
     {
       "_id": 3,
       "name": "discord-  ",
-      "score": 4
+      "nickname": "  ",
+      "platform": ""
     },
     {
       "_id": 4,
       "name": "facebook-__",
-      "score": 3
+      "nickname": "__",
+      "platform": "facebook"
+    },
+    {
+      "_id": 5,
+      "name": "discord-testplayer",
+      "nickname": "testplayer",
+      "platform": "discord"
     }
   ],
   "_embedded": null
@@ -583,21 +596,22 @@ $ GET http://0.0.0.0:8080/v1/players/discord-testplayer/feed
     "message": "player fed successfully."
   },
   "data": {
-    "_id": 3,
-    "number": 3,
-    "description": "quiz 3 description.",
-    "hint": "quiz 3 hint",
+    "_id": 1,
+    "number": 1,
+    "author": "",
+    "description": "quiz 1 description.",
+    "hint": "quiz 1 hint",
     "score": 1,
     "options": [
-      "3.A",
-      "3.B",
-      "3.C",
-      "3.D"
+      "1.A",
+      "1.B",
+      "1.C",
+      "1.D"
     ],
     "answer": "A",
     "tags": [
-      "Engineering",
-      "Security"
+      "Network",
+      "Language"
     ]
   },
   "_embedded": null
@@ -637,20 +651,22 @@ $ GET http://0.0.0.0:8080/v1/players/telegram-RainrainWu/rand
     "message": "quiz accessed successfully."
   },
   "data": {
-    "_id": 5,
-    "number": 5,
-    "description": "quiz 5 description.",
-    "hint": "quiz 5 hint",
-    "score": 3,
+    "_id": 1,
+    "number": 1,
+    "author": "",
+    "description": "quiz 1 description.",
+    "hint": "quiz 1 hint",
+    "score": 1,
     "options": [
-      "5.A",
-      "5.B",
-      "5.C",
-      "5.D"
+      "1.A",
+      "1.B",
+      "1.C",
+      "1.D"
     ],
-    "answer": "B",
+    "answer": "A",
     "tags": [
-      "Others"
+      "Network",
+      "Language"
     ]
   },
   "_embedded": null
@@ -672,6 +688,7 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 ```
 {
 	"number":999,
+	"author":"test author"
 	"description":"test description.",
 	"hint":"test hint",
 	"score":3,
@@ -687,32 +704,15 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 ```
 {
   "_links": {
-    "quiz": {
-      "href": "/v1/quizzes/999"
-    },
     "self": {
       "href": "/v1/quizzes"
-    },
-    "tags": {
-      "href": "/v1/quizzes/999/tags"
     }
   },
   "status": {
-    "status_code": 201,
-    "message": "quiz number 999 created successfully."
+    "status_code": 400,
+    "message": "invalid character '\"' after object key:value pair"
   },
-  "data": {
-    "_id": 0,
-    "number": 999,
-    "description": "test description.",
-    "hint": "test hint",
-    "score": 3,
-    "option_a": "test A",
-    "option_b": "test B",
-    "option_c": "test C",
-    "option_d": "test D",
-    "answer": "A"
-  },
+  "data": null,
   "_embedded": null
 }
 ```
@@ -729,6 +729,7 @@ $ POST http://0.0.0.0:8080/v1/quizzes
 ```
 {
 	"number":999,
+	"author":"test author"
 	"description":"test description.",
 	"hint":"test hint",
 	"score":3,
@@ -749,21 +750,10 @@ $ POST http://0.0.0.0:8080/v1/quizzes
     }
   },
   "status": {
-    "status_code": 409,
-    "message": "quiz number 999 already existed"
+    "status_code": 400,
+    "message": "invalid character '\"' after object key:value pair"
   },
-  "data": {
-    "_id": 0,
-    "number": 999,
-    "description": "test description.",
-    "hint": "test hint",
-    "score": 3,
-    "option_a": "test A",
-    "option_b": "test B",
-    "option_c": "test C",
-    "option_d": "test D",
-    "answer": "A"
-  },
+  "data": null,
   "_embedded": null
 }
 ```
@@ -795,6 +785,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
     {
       "_id": 1,
       "number": 1,
+      "author": "quiz 1 author",
       "description": "quiz 1 description.",
       "hint": "quiz 1 hint",
       "score": 1,
@@ -807,6 +798,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
     {
       "_id": 2,
       "number": 2,
+      "author": "quiz 2 author",
       "description": "quiz 2 description.",
       "hint": "quiz 2 hint",
       "score": 1,
@@ -819,6 +811,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
     {
       "_id": 3,
       "number": 3,
+      "author": "quiz 3 author",
       "description": "quiz 3 description.",
       "hint": "quiz 3 hint",
       "score": 1,
@@ -831,6 +824,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
     {
       "_id": 4,
       "number": 4,
+      "author": "quiz 4 author",
       "description": "quiz 4 description.",
       "hint": "quiz 4 hint",
       "score": 2,
@@ -843,6 +837,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes
     {
       "_id": 5,
       "number": 5,
+      "author": "quiz 5 author",
       "description": "quiz 5 description.",
       "hint": "quiz 5 hint",
       "score": 3,
@@ -851,18 +846,6 @@ $ GET http://0.0.0.0:8080/v1/quizzes
       "option_c": "5.C",
       "option_d": "5.D",
       "answer": "B"
-    },
-    {
-      "_id": 6,
-      "number": 999,
-      "description": "test description.",
-      "hint": "test hint",
-      "score": 3,
-      "option_a": "test A",
-      "option_b": "test B",
-      "option_c": "test C",
-      "option_d": "test D",
-      "answer": "A"
     }
   ],
   "_embedded": null
@@ -893,6 +876,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
     {
       "_id": 2,
       "number": 2,
+      "author": "quiz 2 author",
       "description": "quiz 2 description.",
       "hint": "quiz 2 hint",
       "score": 1,
@@ -905,6 +889,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes?tag=Security
     {
       "_id": 3,
       "number": 3,
+      "author": "quiz 3 author",
       "description": "quiz 3 description.",
       "hint": "quiz 3 hint",
       "score": 1,
@@ -933,39 +918,12 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999
 - [ example response ]
 ```
 {
-  "_links": {
-    "answers": {
-      "href": "/v1/answers?quiz=999"
-    },
-    "list": {
-      "href": "/v1/quizzes"
-    },
-    "self": {
-      "href": "/v1/quizzes/999"
-    },
-    "tags": {
-      "href": "/v1/quizzes/999/tags"
-    }
-  },
+  "_links": null,
   "status": {
-    "status_code": 200,
-    "message": "quiz accessed successfully."
+    "status_code": 400,
+    "message": "quiz number 999 not found"
   },
-  "data": {
-    "_id": 6,
-    "number": 999,
-    "description": "test description.",
-    "hint": "test hint",
-    "score": 3,
-    "options": [
-      "test A",
-      "test B",
-      "test C",
-      "test D"
-    ],
-    "answer": "A",
-    "tags": []
-  },
+  "data": null,
   "_embedded": null
 }
 ```
@@ -991,15 +949,12 @@ $ POST http://0.0.0.0:8080/v1/quizzes/999/tags
 - [ example response ]
 ```
 {
-  "_links": null,
+  "_links": {},
   "status": {
-    "status_code": 201,
-    "message": "quiz number 999 registered with tag Engineering successfully."
+    "status_code": 500,
+    "message": "quiz number 999 not found"
   },
-  "data": {
-    "_id": 0,
-    "name": "Engineering"
-  },
+  "data": null,
   "_embedded": null
 }
 ```
@@ -1022,15 +977,12 @@ $ POST http://0.0.0.0:8080/v1/quizzes/999/tags
 - [ example response ]
 ```
 {
-  "_links": null,
+  "_links": {},
   "status": {
-    "status_code": 201,
-    "message": "quiz number 999 registered with tag Engineering successfully."
+    "status_code": 500,
+    "message": "quiz number 999 not found"
   },
-  "data": {
-    "_id": 0,
-    "name": "Engineering"
-  },
+  "data": null,
   "_embedded": null
 }
 ```
@@ -1064,12 +1016,7 @@ $ GET http://0.0.0.0:8080/v1/quizzes/999/tags
     "status_code": 200,
     "message": "tags of quiz number 999 listed successfully."
   },
-  "data": [
-    {
-      "_id": 10,
-      "name": "Engineering"
-    }
-  ],
+  "data": null,
   "_embedded": null
 }
 ```
@@ -1099,14 +1046,10 @@ $ POST http://0.0.0.0:8080/v1/answers
 {
   "_links": null,
   "status": {
-    "status_code": 201,
-    "message": "answer created successfully."
+    "status_code": 500,
+    "message": "quiz number 999 not found"
   },
-  "data": {
-    "player_name": "discord-testplayer",
-    "quiz_number": 999,
-    "correct": true
-  },
+  "data": null,
   "_embedded": null
 }
 ```
@@ -1133,8 +1076,8 @@ $ POST http://0.0.0.0:8080/v1/answers
 {
   "_links": null,
   "status": {
-    "status_code": 409,
-    "message": "answer from player discord-testplayer to quiz number 999 already existed"
+    "status_code": 500,
+    "message": "quiz number 999 not found"
   },
   "data": null,
   "_embedded": null
@@ -1266,12 +1209,6 @@ $ GET http://0.0.0.0:8080/v1/answers
       "player_id": 4,
       "quiz_id": 2,
       "correct": false
-    },
-    {
-      "_id": 18,
-      "player_id": 5,
-      "quiz_id": 6,
-      "correct": true
     }
   ],
   "_embedded": null
@@ -1301,14 +1238,7 @@ $ GET http://0.0.0.0:8080/v1/answers?player=discord-testplayer
     "status_code": 200,
     "message": "answers listed successfully."
   },
-  "data": [
-    {
-      "_id": 18,
-      "player_id": 0,
-      "quiz_id": 6,
-      "correct": true
-    }
-  ],
+  "data": null,
   "_embedded": null
 }
 ```
@@ -1325,23 +1255,58 @@ $ GET http://0.0.0.0:8080/v1/answers?quiz=999
 ```
 {
   "_links": {
-    "quiz": {
-      "href": "/v1/quizzes/999"
-    },
     "self": {
       "href": "/v1/answers"
     }
   },
   "status": {
+    "status_code": 500,
+    "message": "quiz number 999 not found"
+  },
+  "data": null,
+  "_embedded": null
+}
+```
+
+
+# VerifyGetRank
+
+
+## Rank of active player
+
+- [ method and url ]
+```
+$ GET http://0.0.0.0:8080/v1/rank
+```
+
+- [ example response ]
+```
+{
+  "_links": null,
+  "status": {
     "status_code": 200,
-    "message": "answers listed successfully."
+    "message": "rank accessed successfully."
   },
   "data": [
     {
-      "_id": 18,
-      "player_id": 5,
-      "quiz_id": 0,
-      "correct": true
+      "_id": 1,
+      "name": "telegram-RainrainWu",
+      "score": 8
+    },
+    {
+      "_id": 2,
+      "name": "line-!(\u0026GQ(WDUHQ(",
+      "score": 6
+    },
+    {
+      "_id": 3,
+      "name": "discord-  ",
+      "score": 4
+    },
+    {
+      "_id": 4,
+      "name": "facebook-__",
+      "score": 3
     }
   ],
   "_embedded": null
@@ -1368,26 +1333,10 @@ $ DELETE http://0.0.0.0:8080/v1/quizzes/999
     }
   },
   "status": {
-    "status_code": 200,
-    "message": "quiz number 999 deleted successfully."
+    "status_code": 400,
+    "message": "quiz number 999 not found"
   },
-  "data": {
-    "_id": 6,
-    "number": 999,
-    "description": "test description.",
-    "hint": "test hint",
-    "score": 3,
-    "options": [
-      "test A",
-      "test B",
-      "test C",
-      "test D"
-    ],
-    "answer": "A",
-    "tags": [
-      "Engineering"
-    ]
-  },
+  "data": null,
   "_embedded": null
 }
 ```

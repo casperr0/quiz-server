@@ -9,6 +9,17 @@ import (
 	"github.com/ccns/quiz-server/db"
 )
 
+// Profile describe the schema of playser profile.
+type Profile struct {
+	ID       int    `json:"_id"`
+	Name     string `json:"name"`
+	Nickname string `json:"nickname"`
+	Platform string `json:"platform"`
+	Rank     int    `json:"rank"`
+	Score    int    `json:"score"`
+	Last     int    `json:"last"`
+}
+
 // GetPlayersHandler handles get requests on route /players.
 func GetPlayersHandler(ctx *gin.Context) {
 
@@ -16,7 +27,7 @@ func GetPlayersHandler(ctx *gin.Context) {
 		"self": LinkDetail{"/v1/players"},
 	}
 
-	data, err := db.ListPlayersOrderByScore()
+	data, err := db.ListPlayers()
 	if err != nil {
 		status := Status{500, err.Error()}
 		resp, _ := BuildHATEOAS(links, status, nil, nil)
@@ -78,12 +89,31 @@ func GetPlayerHandler(ctx *gin.Context) {
 		return
 	}
 
-	data, err := db.GetPlayer(playerName)
+	playerData, err := db.GetPlayer(playerName)
 	if err != nil {
 		resp, _ := BuildHATEOAS(links, Status{400, err.Error()}, nil, nil)
 		ctx.String(400, resp)
 		return
 	}
+	data := Profile{
+		ID:       playerData.ID,
+		Name:     playerData.Name,
+		Nickname: playerData.Nickname,
+		Platform: playerData.Platform,
+	}
+
+	playerList, err := db.ListPlayersRank()
+	data.Rank = len(playerList) + 1
+	for i, p := range playerList {
+		if p.Name == playerData.Name {
+			data.Rank = i + 1
+			data.Score = p.Score
+		}
+	}
+
+	playerAnswer, _ := db.QueryQuizAnswersByPlayer(playerData.Name)
+	quizList, _ := db.ListQuizzes()
+	data.Last = len(quizList) - len(playerAnswer)
 	links["self"] = LinkDetail{fmt.Sprintf("/v1/players/%s", playerName)}
 	links["answers"] = LinkDetail{fmt.Sprintf("/v1/answers?player=%s", playerName)}
 

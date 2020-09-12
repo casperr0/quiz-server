@@ -9,6 +9,7 @@ const (
 	testNickname       string = "testplayer"
 	testPlatform       string = "discord"
 	testQuizNumber     int    = 999
+	testAuthor         string = "test author"
 	testTag            string = "TestTag"
 )
 

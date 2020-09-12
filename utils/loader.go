@@ -26,6 +26,7 @@ type TagLoad struct {
 // QuizLoad describe the struct of external quizzes file
 type QuizLoad struct {
 	Number      int      `json:"number"`
+	Author      string   `json:"author"`
 	Description string   `json:"description"`
 	Hint        string   `json:"hint"`
 	Score       int      `json:"score"`
@@ -139,6 +140,7 @@ func loadQuizzes(dataDir string) {
 	url := "http://0.0.0.0:8080/v1/quizzes"
 	payload := `{
 	"number":%d,
+	"author":"%s",
 	"description":"%s",
 	"hint":"%s",
 	"score":%d,
@@ -152,6 +154,7 @@ func loadQuizzes(dataDir string) {
 		jsonStr := fmt.Sprintf(
 			payload,
 			q.Number,
+			q.Author,
 			q.Description,
 			q.Hint,
 			q.Score,

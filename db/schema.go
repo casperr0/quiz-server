@@ -36,6 +36,7 @@ type Player struct {
 type Quiz struct {
 	ID          int    `db:"id" json:"_id"`
 	Number      int    `db:"number" json:"number"`
+	Author      string `db:"author" json:"author"`
 	Description string `db:"description" json:"description"`
 	Hint        string `db:"hint" json:"hint"`
 	Score       int    `db:"score" json:"score"`
@@ -115,6 +116,7 @@ CREATE TABLE IF NOT EXISTS player (
 CREATE TABLE IF NOT EXISTS quiz (
 	id INT GENERATED ALWAYS AS IDENTITY,
 	number INT NOT NULL,
+	author VARCHAR(255) NOT NULL,
 	description VARCHAR(2048) NOT NULL,
 	hint VARCHAR(512) NOT NULL,
 	score INT NOT NULL,
