@@ -59,6 +59,8 @@ func runFVT() {
 	fvt.VerifyPostAnswers()
 	fvt.VerifyGetAnswers()
 
+	fvt.VerifyGetRank()
+
 	fvt.VerifyDeleteQuiz()
 	fvt.VerifyDeletePlayer()
 }
@@ -68,6 +70,8 @@ func runService() {
 	router := gin.Default()
 	v1 := router.Group("/v1")
 	{
+		v1.GET("/rank", handler.GetRankHandler)
+
 		v1.GET("/players", handler.GetPlayersHandler)
 		v1.POST("/players", handler.PostPlayersHandler)
 		v1.GET("/players/:player_name", handler.GetPlayerHandler)

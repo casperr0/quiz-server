@@ -1,6 +1,7 @@
 [
     {
         "number": 1,
+        "author": "quiz 1 author",
         "description": "quiz 1 description.",
         "hint": "quiz 1 hint",
         "score": 1,
@@ -15,6 +16,7 @@
     },
     {
         "number": 2,
+        "author": "quiz 2 author",
         "description": "quiz 2 description.",
         "hint": "quiz 2 hint",
         "score": 1,
@@ -29,6 +31,7 @@
     },
     {
         "number": 3,
+        "author": "quiz 3 author",
         "description": "quiz 3 description.",
         "hint": "quiz 3 hint",
         "score": 1,
@@ -43,6 +46,7 @@
     },
     {
         "number": 4,
+        "author": "quiz 4 author",
         "description": "quiz 4 description.",
         "hint": "quiz 4 hint",
         "score": 2,
@@ -57,6 +61,7 @@
     },
     {
         "number": 5,
+        "author": "quiz 5 author",
         "description": "quiz 5 description.",
         "hint": "quiz 5 hint",
         "score": 3,

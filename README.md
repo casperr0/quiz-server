@@ -59,6 +59,8 @@ docker-compose down
 # Usage
 The service provides an interacting interface via RESTful API, below is the list of all endpoints:
 ```
+GET     /v1/rank
+
 GET     /v1/players
 POST    /v1/players
 GET     /v1/players/:player_name

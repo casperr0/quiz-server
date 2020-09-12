@@ -94,17 +94,29 @@ func RegisterAnswer(playerName string, quizNumber int, correct bool) error {
 	return nil
 }
 
-// ListPlayersOrderByScore will list all current players order by score.
-func ListPlayersOrderByScore() ([]PlayerScore, error) {
+// ListPlayers will list all current players.
+func ListPlayers() ([]Player, error) {
+
+	listSQL := "SELECT * FROM player"
+	var players []Player
+	err := database.Select(&players, listSQL)
+	if err != nil {
+		return nil, err
+	}
+	return players, nil
+}
+
+// ListPlayersRank will list all active players order by score.
+func ListPlayersRank() ([]PlayerScore, error) {
 
 	listSQL := `
-	SELECT p.id, p.name, SUM(q.score) AS score
+	SELECT p.id, p.name, COALESCE(SUM(q.score), 0) AS score
 	FROM player p
-	JOIN player_to_quiz p_q ON p.id = p_q.player_id
-	JOIN quiz q ON q.id = p_q.quiz_id
+	LEFT JOIN player_to_quiz p_q ON p.id = p_q.player_id
+	LEFT JOIN quiz q ON q.id = p_q.quiz_id
 	WHERE p_q.correct = TRUE
 	GROUP BY p.id
-	ORDER BY SUM(q.score) DESC
+	ORDER BY COALESCE(SUM(q.score), 0) DESC NULLS LAST
 	`
 	var playerScores []PlayerScore
 	err := database.Select(&playerScores, listSQL)
