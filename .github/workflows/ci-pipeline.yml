@@ -1,0 +1,63 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python application
+
+on:
+  push:
+    branches: [ master, project/*, feat/*, fix/* ]
+  pull_request:
+    branches: [ master, project/*, feat/*, fix/* ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8]
+        poetry-version: [1.1.4]
+
+    runs-on: ubuntu-latest
+    
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: github_actions
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - name: Check format with Black
+      uses: lgeiger/black-action@master
+      with:
+        args: ". --check"
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Set up Poetry ${{ matrix.poetry-version }}
+      run: |
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+        source $HOME/.poetry/env
+        poetry install
+    - name: Set up PostgreSQL
+      run: |
+        source $HOME/.poetry/env
+        poetry run python manage.py migrate
+      env:
+        DJANGO_DEBUG: True
+    - name: Test with pytest
+      run: |
+        source $HOME/.poetry/env
+        poetry run pytest --disable-warnings
+      env:
+        DJANGO_DEBUG: True

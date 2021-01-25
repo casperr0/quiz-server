@@ -11,15 +11,18 @@ services:
             - POSTGRES_DB=${PG_DBNAME}
             - POSTGRES_USER=${PG_USERNAME}
             - POSTGRES_PASSWORD=${PG_PASSWORD}
-    quiz-server:
-        image: rainrainwu/quiz-server:latest
-        restart: always
+    qa_server:
+        image: "rainrainwu/quiz-server:2.0"
         ports:
-            - "8080:8080"
+            - "8000:8000"
         depends_on:
             - postgres
         environment:
+            - DJANGO_DEBUG=False
             - PG_HOST=postgres
+            - PG_DBNAME=${PG_DBNAME}
+            - PG_USERNAME=${PG_USERNAME}
+            - PG_PASSWORD=${PG_PASSWORD}
 
-volumes: 
+volumes:
     pgdata:

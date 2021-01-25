@@ -1,0 +1,22 @@
+# git
+.git/
+
+# git flow work flow
+.github/
+.pre-commit-config.yaml
+.pre-commit-hooks.yaml
+
+# python cache
+.pytest_cache/
+
+# virtual env
+.venv/
+
+# tests
+tests/
+
+# licenses
+LICENSE
+
+# doc
+*.md

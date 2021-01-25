@@ -1,0 +1,34 @@
+default_stages: [push]
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+
+  - repo: local
+    hooks:
+      - id: style-reformat
+        name: style-reformat
+        stages: [push]
+        language: system
+        pass_filenames: false
+        entry: inv style.reformat
+        types: [python]
+
+      - id: security-check
+        name: security-check
+        stages: [push]
+        language: system
+        pass_filenames: false
+        entry: inv secure
+        types: [python]
+
+      - id: test
+        name: test
+        stages: [push]
+        language: system
+        pass_filenames: false
+        entry: inv test -a
+        types: [python]

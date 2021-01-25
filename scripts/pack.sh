@@ -1,1 +1,0 @@
-docker build -t ccns/quiz-server:latest .

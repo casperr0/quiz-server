@@ -1,0 +1,3 @@
+[bandit]
+targets: qa_server/, quiz_server/
+exclude: tests
