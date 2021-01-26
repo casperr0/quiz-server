@@ -25,6 +25,17 @@ player_response = requests.post(
 )
 player_uuid = player_response.json()["player_uuid"]
 ```
+> Example Response
+```
+{
+    "player_uuid": "0d82943d-22a9-47ec-b795-0ec927468a00",
+    "name": "Rain",
+    "platform": "Line",
+    "correct_count": 0,
+    "incorrect_count": 0,
+    "no_answer_count": 16
+}
+```
 
 - You also can check the profile for your player via the player_uuid anytime.
 ```python
@@ -39,6 +50,23 @@ profile = check_response.json()
 feed_url = "http://{SERVICE_HOST}/{SERVICE_PORT}/feeds/{PLAYER_UUID}/"
 feed_response = requests.get(feed_url)
 quiz_uuid = feed_response.json()["quiz_uuid"]
+```
+> Example Response
+```
+{
+    "quiz_uuid": "f2e9cdc1-b043-4fab-9248-34435e9506cf",
+    "author": "IID",
+    "domain": "CCNS",
+    "description": "本社 (CCNS) 的英文全名為？",
+    "level": "Medium",
+    "options": [
+        "The Cybersecurity & Computational Neuroscience Society",
+        "The Casual Coders & Night Solders",
+        "The CCNS Computer and Network Society",
+        "The Campus Computer & Network Society"
+    ],
+    "comment": "nan"
+}
 ```
 
 - Otherwise, an error message will be found in the response body, which can help you notify the Q&A chat-bot user.
@@ -60,6 +88,14 @@ answer_response = requests.post(
 )
 result = answer_response.json()["correct"]
 ```
+> Example Response
+```
+{
+    "player_uuid": "0d82943d-22a9-47ec-b795-0ec927468a00",
+    "quiz_uuid": "f2e9cdc1-b043-4fab-9248-34435e9506cf",
+    "correct": true
+}
+```
 
 ### Provokes Your Player
 - The provokes message could be query by the correctness, you can fetch and store them locally at the initialize stage.
@@ -68,6 +104,15 @@ provokes_response = request.get(
     "http://{SERVICE_HOST}/{SERVICE_PORT}/provokes/?correct={CORRECTNESS}"
 )
 messages = provokes_response.json()
+```
+> Example Response
+```
+[
+    {
+        "message": "你以為答對了就會有分數？",
+        "correct": true
+    }
+]
 ```
 
 ### Pick Question Randomly
@@ -82,6 +127,29 @@ rand_response = requests.get(rand_url)
 ```python
 leaderboard_url = "http://{SERVICE_HOST}/{SERVICE_PORT}/leaderboard/"
 response = self.client.get(leaderboard_url)
+```
+> Example Response
+```
+[
+    {
+        "player_uuid": "7d4046e7-84b7-4488-94e9-11556c32acf6",
+        "name": "E2E_PLAYER",
+        "platform": "Messenger",
+        "correct_count": 2,
+        "incorrect_count": 13,
+        "no_answer_count": 1,
+        "score": 2
+    },
+    {
+        "player_uuid": "0d82943d-22a9-47ec-b795-0ec927468a00",
+        "name": "Rain",
+        "platform": "Line",
+        "correct_count": 1,
+        "incorrect_count": 0,
+        "no_answer_count": 15,
+        "score": 1
+    }
+]
 ```
 
 ## Bear Running
