@@ -39,7 +39,7 @@ player_uuid = player_response.json()["player_uuid"]
 
 - You also can check the profile for your player via the player_uuid anytime.
 ```python
-check_url = "http://{SERVICE_HOST}/{SERVICE_PORT}/players/{PLAYER_UUID}/",
+check_url = "http://{SERVICE_HOST}:{SERVICE_PORT}/players/{PLAYER_UUID}/",
 check_response = requests.get(check_url)
 profile = check_response.json()
 ```
