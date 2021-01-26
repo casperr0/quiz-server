@@ -20,7 +20,7 @@ player_payload = {
     "platform": "{PLAYER_PLATFORM}",
 }
 player_response = requests.post(
-    "http://{SERVICE_HOST}/{SERVICE_PORT}/players/",
+    "http://{SERVICE_HOST}:{SERVICE_PORT}/players/",
     data=player_payload
 )
 player_uuid = player_response.json()["player_uuid"]
@@ -47,7 +47,7 @@ profile = check_response.json()
 ### Get Question Feed
 - If the player has not finish all quiz, a new quiz will be fed within the response.
 ```python
-feed_url = "http://{SERVICE_HOST}/{SERVICE_PORT}/feeds/{PLAYER_UUID}/"
+feed_url = "http://{SERVICE_HOST}:{SERVICE_PORT}/feeds/{PLAYER_UUID}/"
 feed_response = requests.get(feed_url)
 quiz_uuid = feed_response.json()["quiz_uuid"]
 ```
@@ -83,7 +83,7 @@ answer_paylaod = {
     "answer": "{ANSWER_CONTENT}",
 }
 answer_response = requests.post(
-    "http://{SERVICE_HOST}/{SERVICE_PORT}/answers/",
+    "http://{SERVICE_HOST}:{SERVICE_PORT}/answers/",
     data=answer_paylaod
 )
 result = answer_response.json()["correct"]
@@ -101,7 +101,7 @@ result = answer_response.json()["correct"]
 - The provokes message could be query by the correctness, you can fetch and store them locally at the initialize stage.
 ```python
 provokes_response = request.get(
-    "http://{SERVICE_HOST}/{SERVICE_PORT}/provokes/?correct={CORRECTNESS}"
+    "http://{SERVICE_HOST}:{SERVICE_PORT}/provokes/?correct={CORRECTNESS}"
 )
 messages = provokes_response.json()
 ```
@@ -118,14 +118,14 @@ messages = provokes_response.json()
 ### Pick Question Randomly
 - If your players wanna practice more, you can also pick a quiz randomly for them, but you will get a HTTP 409 conflict status if you trying to post the answer for an answered quiz of the player.
 ```python
-rand_url = "http://{SERVICE_HOST}/{SERVICE_PORT}/rand/"
+rand_url = "http://{SERVICE_HOST}:{SERVICE_PORT}/rand/"
 rand_response = requests.get(rand_url)
 ```
 
 ### Check the Leaderboard
 - The leaderboard will respond a players list which was sorted by the score.
 ```python
-leaderboard_url = "http://{SERVICE_HOST}/{SERVICE_PORT}/leaderboard/"
+leaderboard_url = "http://{SERVICE_HOST}:{SERVICE_PORT}/leaderboard/"
 response = self.client.get(leaderboard_url)
 ```
 > Example Response
