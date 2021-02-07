@@ -6,7 +6,7 @@ WORKDIR /project
 
 COPY . /project/
 
-    # Install pipx
+# Install pipx
 RUN python3 -m pip install --upgrade pip && \
     python3 -m pip install --user pipx --no-warn-script-location && \
     python3 -m pipx ensurepath && \
@@ -19,4 +19,4 @@ RUN python3 -m pip install --upgrade pip && \
     poetry config virtualenvs.create false && \
     poetry install --no-dev --no-interaction --no-ansi
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000", "--insecure"]
+CMD python manage.py migrate && python manage.py runserver 0.0.0.0:8000 --insecure
