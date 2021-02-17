@@ -25,6 +25,13 @@ player_response = requests.post(
 )
 player_uuid = player_response.json()["player_uuid"]
 ```
+- The platform field should be one of the belows:
+    - Messenger
+    - Telegram
+    - Discord
+    - Netcat
+    - Line
+    - Mewe
 > Example Response
 ```
 {
