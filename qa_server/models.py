@@ -3,6 +3,7 @@ import uuid
 
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db.models import Count, Q
 
 
 class Quiz(models.Model):
@@ -92,6 +93,14 @@ class Player(models.Model):
             player__player_uuid=self.player_uuid, correct=False
         ).count()
         no_answer_count = Quiz.objects.all().count() - correct_count - incorrect_count
+        rank = (
+            list(
+                Player.objects.annotate(
+                    score=Count("answer", filter=Q(answer__correct=True))
+                ).order_by("-score")
+            ).index(self)
+            + 1
+        )
         return {
             "player_uuid": str(self.player_uuid),
             "name": self.name,
@@ -99,6 +108,7 @@ class Player(models.Model):
             "correct_count": correct_count,
             "incorrect_count": incorrect_count,
             "no_answer_count": no_answer_count,
+            "rank": rank,
         }
 
 
