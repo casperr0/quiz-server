@@ -80,7 +80,9 @@ class AnswersView(APIView):
                 return Response(
                     {
                         "error_message": f"answer of player {target_player_uuid} to quiz {target_quiz_uuid} already exist.",
-                        "correct": bool(request.data["answer"] == target_quiz.correct_answer),
+                        "correct": bool(
+                            request.data["answer"] == target_quiz.correct_answer
+                        ),
                     },
                     status=status.HTTP_409_CONFLICT,
                 )
