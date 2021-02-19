@@ -144,10 +144,8 @@ class FeedsView(APIView):
             ]
             if not candidates_quizzes_uuids:
                 return Response(
-                    {
-                        "error_message": f"all quiz are done, no more quiz for player {target_player_uuid}."
-                    },
-                    status=status.HTTP_404_NOT_FOUND,
+                    {},
+                    status=status.HTTP_204_NO_CONTENT,
                 )
 
             feed_quiz_uuid = random.choice(candidates_quizzes_uuids)
@@ -164,6 +162,11 @@ class FeedsView(APIView):
 class RandView(APIView):
     def get(self, request, *args, **kwargs):
         quizzes = Quiz.objects.all()
+        if not quizzes:
+            return Response(
+                {},
+                status=status.HTTP_204_NO_CONTENT,
+            )
         return Response(random.choice(quizzes).get_json(), status=status.HTTP_200_OK)
 
 

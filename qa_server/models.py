@@ -55,7 +55,7 @@ class Quiz(models.Model):
 class Player(models.Model):
     class Platform(models.Choices):
         MESSENGER = "Messenger"
-        TELEGRAM = "TELEGRAM"
+        TELEGRAM = "Telegram"
         DISCORD = "Discord"
         NETCAT = "Netcat"
         LINE = "Line"

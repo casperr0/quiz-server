@@ -19,4 +19,7 @@ RUN python3 -m pip install --upgrade pip && \
     poetry config virtualenvs.create false && \
     poetry install --no-dev --no-interaction --no-ansi
 
-CMD python manage.py migrate && python manage.py runserver 0.0.0.0:8000 --insecure
+CMD python manage.py makemigrations && \
+    python manage.py migrate && \
+    python manage.py runscript loader && \
+    python manage.py runserver 0.0.0.0:8000 --insecure

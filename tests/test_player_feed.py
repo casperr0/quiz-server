@@ -45,5 +45,4 @@ class PlayerFeedTestCase(GameFlowTestCaseBase):
             self.assertEqual(answer_response.status_code, status.HTTP_201_CREATED)
 
         feed_response = self.client.get(feed_url)
-        self.assertEqual(feed_response.status_code, status.HTTP_404_NOT_FOUND)
-        self.assertIsNotNone(feed_response.data["error_message"])
+        self.assertEqual(feed_response.status_code, status.HTTP_204_NO_CONTENT)
