@@ -14,10 +14,12 @@ quiz-server is the backend server for the CCNS quiz contest.
 
 ### Register New Player
 - Whenever a player register successfully, the profile will be responded.
+- `platform_userid` is the user id of your platform, this allows you search the mapping with player uuid reversely.
 ```python
 player_payload = {
     "name": "{PLAYER_NAME}",
     "platform": "{PLAYER_PLATFORM}",
+    "platform_userid": "{PLAYER_PLATFORM_USERID}",
 }
 player_response = requests.post(
     "http://{SERVICE_HOST}:{SERVICE_PORT}/players/",
@@ -38,6 +40,7 @@ player_uuid = player_response.json()["player_uuid"]
     "player_uuid": "0d82943d-22a9-47ec-b795-0ec927468a00",
     "name": "Rain",
     "platform": "Line",
+    "platform_userid": "DiscordUser#8657",
     "correct_count": 0,
     "incorrect_count": 0,
     "no_answer_count": 16
@@ -50,6 +53,15 @@ check_url = "http://{SERVICE_HOST}:{SERVICE_PORT}/players/{PLAYER_UUID}/",
 check_response = requests.get(check_url)
 profile = check_response.json()
 ```
+
+- You should maintain the mapping relationships between your platform user id and the player uuid on your service by default.
+- But if you drop them accidently, you can search it by th mapping endpoint reversely.
+```python
+search_url = "http://{SERVICE_HOST}:{SERVICE_PORT}/mappings/{PLATFORM_USERID}/",
+search_response = requests.get(search_url)
+profile = search_response.json()
+```
+
 
 ### Get Question Feed
 - If the player has not finish all quiz, a new quiz will be fed within the response.
@@ -76,10 +88,7 @@ quiz_uuid = feed_response.json()["quiz_uuid"]
 }
 ```
 
-- Otherwise, an error message will be found in the response body, which can help you notify the Q&A chat-bot user.
-```
-{'error_message': 'all quiz are done, no more quiz for player {PLAYER_UUID}.'}
-```
+- Otherwise, you will got HTTP 204 no content, which can help you notify the Q&A chat-bot user.
 
 ### Answer the Quiz
 - You only need to report the content of player's answer, the quiz serve will judge the result for you.

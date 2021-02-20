@@ -66,6 +66,7 @@ class Player(models.Model):
     platform = models.CharField(
         max_length=16, choices=Platform.choices, default=Platform.DISCORD
     )
+    platform_userid = models.CharField(max_length=64, default="")
 
     @classmethod
     def parse_platform(cls, digest):
@@ -105,6 +106,7 @@ class Player(models.Model):
             "player_uuid": str(self.player_uuid),
             "name": self.name,
             "platform": str(self.platform),
+            "platform_userid": str(self.platform_userid),
             "correct_count": correct_count,
             "incorrect_count": incorrect_count,
             "no_answer_count": no_answer_count,

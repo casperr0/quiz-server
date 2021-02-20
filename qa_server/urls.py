@@ -4,6 +4,7 @@ from qa_server.views import (
     AnswersView,
     FeedsView,
     LeaderboardView,
+    MappingView,
     PlayersView,
     PlayerView,
     ProvokesView,
@@ -17,6 +18,9 @@ urlpatterns = [
     re_path(r"^players/$", PlayersView.as_view(), name="players"),
     re_path(
         r"^players/(?P<player_uuid>[0-9a-f-]+)/$", PlayerView.as_view(), name="player"
+    ),
+    re_path(
+        r"^mappings/(?P<platform_userid>.+)/$", MappingView.as_view(), name="mapping"
     ),
     re_path(r"^answers/$", AnswersView.as_view(), name="answers"),
     re_path(r"^feeds/(?P<player_uuid>[0-9a-f-]+)/$", FeedsView.as_view(), name="feeds"),

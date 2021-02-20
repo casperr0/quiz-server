@@ -13,6 +13,7 @@ class GameFlowTestCaseBase(APITestCase):
         self.test_quizzes_amount = 10
         self.test_player_name = "test_player"
         self.test_player_platform = "Discord"
+        self.test_player_platform_userid = "test_platform_userid"
         self.test_provokes_correct_amount = 6
         self.test_provokes_incorrect_amount = 4
         self.__setup_quizzes()
@@ -40,6 +41,7 @@ class GameFlowTestCaseBase(APITestCase):
         payload = {
             "name": self.test_player_name,
             "platform": self.test_player_platform,
+            "platform_userid": self.test_player_platform_userid,
         }
         response = self.client.post(url, payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
