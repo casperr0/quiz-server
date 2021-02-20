@@ -12,7 +12,7 @@ class LeaderboardTestCase(GameFlowTestCaseBase):
     def setUp(self):
         super().setUp()
 
-    def __mock_player(self, name, platform, score):
+    def __mock_player(self, name, platform, platform_userid, score):
 
         if score > Quiz.objects.all().count():
             raise ValueError(f"Score exceeds the total amount of quizzess.")
@@ -21,6 +21,7 @@ class LeaderboardTestCase(GameFlowTestCaseBase):
         payload = {
             "name": name,
             "platform": platform,
+            "platform_userid": platform_userid,
         }
         response = self.client.post(url, payload, format="json")
 
@@ -53,9 +54,9 @@ class LeaderboardTestCase(GameFlowTestCaseBase):
 
     def test_rank_players_by_score(self):
 
-        self.__mock_player("rank_one", "Discord", self.test_quizzes_amount)
-        self.__mock_player("rank_three", "Line", self.test_quizzes_amount-2)
-        self.__mock_player("rank_two", "mewe", self.test_quizzes_amount-1)
+        self.__mock_player("rank_one", "Discord", "rank_one_userid", self.test_quizzes_amount)
+        self.__mock_player("rank_three", "Line", "rank_three_userid", self.test_quizzes_amount-2)
+        self.__mock_player("rank_two", "mewe", "rank_two_userid", self.test_quizzes_amount-1)
 
         leaderboard_url = reverse("leaderboard")
         response = self.client.get(leaderboard_url)

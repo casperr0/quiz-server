@@ -2,6 +2,7 @@ import random
 import uuid
 
 from django.conf import settings
+from django.core import exceptions
 from django.db.models import Count, Q
 from rest_framework import status
 from rest_framework.response import Response
@@ -25,6 +26,7 @@ class PlayersView(APIView):
         new_player = Player.objects.create(
             name=request.data["name"],
             platform=Player.parse_platform(request.data["platform"]),
+            platform_userid=request.data["platform_userid"],
         )
         return Response(new_player.get_json(), status=status.HTTP_201_CREATED)
 
@@ -45,8 +47,52 @@ class PlayersView(APIView):
 
 class PlayerView(APIView):
     def get(self, request, *args, **kwargs):
-        player = Player.objects.get(player_uuid=kwargs["player_uuid"])
-        return Response(player.get_json())
+        try:
+            player = Player.objects.get(player_uuid=kwargs["player_uuid"])
+            return Response(
+                player.get_json(),
+                status=status.HTTP_200_OK,
+            )
+        except exceptions.ValidationError:
+            return Response(
+                {
+                    "error_message": f"payload validation failed! your uuid format may be incorrect"
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except Player.DoesNotExist:
+            player_uuid = kwargs["player_uuid"]
+            return Response(
+                {
+                    "error_message": f"player with player_uuid {player_uuid} does not exist."
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
+class MappingView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            player = Player.objects.get(platform_userid=kwargs["platform_userid"])
+            return Response(
+                player.get_json(),
+                status=status.HTTP_200_OK,
+            )
+        except exceptions.ValidationError:
+            return Response(
+                {
+                    "error_message": f"payload validation failed! your uuid format may be incorrect"
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except Player.DoesNotExist:
+            platform_userid = kwargs["platform_userid"]
+            return Response(
+                {
+                    "error_message": f"player with platform_userid {platform_userid} does not exist."
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
 
 class AnswersView(APIView):
@@ -93,16 +139,23 @@ class AnswersView(APIView):
                 correct=bool(request.data["answer"] == target_quiz.correct_answer),
             )
             return Response(new_answer.get_json(), status=status.HTTP_201_CREATED)
+        except exceptions.ValidationError:
+            return Response(
+                {
+                    "error_message": f"payload validation failed! your uuid format may be incorrect"
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         except Player.DoesNotExist:
             player_uuid = request.data["player_uuid"]
             return Response(
-                {"error_message": f"player with uuid f{player_uuid} does not exist."},
+                {"error_message": f"player with uuid {player_uuid} does not exist."},
                 status=status.HTTP_404_NOT_FOUND,
             )
         except Quiz.DoesNotExist:
             quiz_uuid = request.data["quiz_uuid"]
             return Response(
-                {"error_message": f"quiz with uuid f{quiz_uuid} does not exist."},
+                {"error_message": f"quiz with uuid {quiz_uuid} does not exist."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -151,10 +204,17 @@ class FeedsView(APIView):
             feed_quiz_uuid = random.choice(candidates_quizzes_uuids)
             feed_quiz = Quiz.objects.get(quiz_uuid=feed_quiz_uuid)
             return Response(feed_quiz.get_json(), status=status.HTTP_200_OK)
+        except exceptions.ValidationError:
+            return Response(
+                {
+                    "error_message": f"payload validation failed! your uuid format may be incorrect"
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         except Player.DoesNotExist:
             player_uuid = kwargs["player_uuid"]
             return Response(
-                {"error_message": f"player with uuid f{player_uuid} does not exist."},
+                {"error_message": f"player with uuid {player_uuid} does not exist."},
                 status=status.HTTP_404_NOT_FOUND,
             )
 

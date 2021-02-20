@@ -76,10 +76,7 @@ quiz_uuid = feed_response.json()["quiz_uuid"]
 }
 ```
 
-- Otherwise, an error message will be found in the response body, which can help you notify the Q&A chat-bot user.
-```
-{'error_message': 'all quiz are done, no more quiz for player {PLAYER_UUID}.'}
-```
+- Otherwise, you will got HTTP 204 no content, which can help you notify the Q&A chat-bot user.
 
 ### Answer the Quiz
 - You only need to report the content of player's answer, the quiz serve will judge the result for you.
