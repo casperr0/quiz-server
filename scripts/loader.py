@@ -35,6 +35,8 @@ def parse_domain(digest):
         return Quiz.Domain.COMMON_SENSE
     elif digest == "CCNS":
         return Quiz.Domain.CCNS
+    elif digest == "Vtuber":
+        return Quiz.Domain.VTUBER
     else:
         raise ValueError(f"Unknown domain tag {digest}")
 

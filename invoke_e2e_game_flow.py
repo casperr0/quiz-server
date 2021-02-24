@@ -6,12 +6,14 @@ FEEDS_ENDPOINT = "http://127.0.0.1:8000/feeds/"
 ANSWERS_ENDPOINT = "http://127.0.0.1:8000/answers/"
 PLAYER_NAME = "E2E_PLAYER"
 PLAYER_PLATFORM = "Messenger"
+PLAYER_PLATFORM_USERID = "LineUserz@5726"
 PLAYER_ANSWERS_AMOUNT = 15
 
 def run_game_flow(answer_amount):
     player_payload = {
         "name": PLAYER_NAME,
         "platform": PLAYER_PLATFORM,
+        "platform_userid": PLAYER_ANSWERS_AMOUNT,
     }
     player_response = requests.post(
         PLAYERS_ENDPOINT,

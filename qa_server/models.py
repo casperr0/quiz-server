@@ -21,6 +21,7 @@ class Quiz(models.Model):
         ANIMATION = "Animation"
         COMMON_SENSE = "Common Sense"
         CCNS = "CCNS"
+        VTUBER = "Vtuber"
 
     class Level(models.TextChoices):
         EAZY = "Eazy"
@@ -32,7 +33,7 @@ class Quiz(models.Model):
     domain = models.CharField(
         max_length=64, choices=Domain.choices, default=Domain.COMMON_SENSE
     )
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=1023)
     level = models.CharField(max_length=16, choices=Level.choices, default=Level.MEDIUM)
     correct_answer = models.CharField(max_length=255)
     wrong_answers = ArrayField(models.CharField(max_length=255), size=3)
