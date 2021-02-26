@@ -148,21 +148,13 @@ response = self.client.get(leaderboard_url)
 ```
 [
     {
-        "player_uuid": "7d4046e7-84b7-4488-94e9-11556c32acf6",
         "name": "E2E_PLAYER",
         "platform": "Messenger",
-        "correct_count": 2,
-        "incorrect_count": 13,
-        "no_answer_count": 1,
         "score": 2
     },
     {
-        "player_uuid": "0d82943d-22a9-47ec-b795-0ec927468a00",
         "name": "Rain",
         "platform": "Line",
-        "correct_count": 1,
-        "incorrect_count": 0,
-        "no_answer_count": 15,
         "score": 1
     }
 ]
