@@ -235,7 +235,7 @@ class ProvokesView(APIView):
         provokes = Provoke.objects.all()
         correctness = request.GET.get("correct")
         if correctness is not None:
-            provokes = provokes.filter(correct=correctness)
+            provokes = provokes.filter(correct=correctness.lower() == "true")
         return Response(
             [provoke.get_json() for provoke in provokes], status=status.HTTP_200_OK
         )
@@ -248,7 +248,10 @@ class LeaderboardView(APIView):
         ).order_by("-score")
         leaderboard = []
         for player in players:
-            player_json = player.get_json()
-            player_json["score"] = player.score
+            player_json = {
+                "name": player.name,
+                "platform": str(player.platform),
+                "score": player.score,
+            }
             leaderboard.append(player_json)
         return Response(leaderboard, status=status.HTTP_200_OK)
