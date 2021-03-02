@@ -7,7 +7,7 @@ from qa_server.models import Answer, Player, Quiz
 from tests.common import GameFlowTestCaseBase
 
 
-class MappingTestCase(GameFlowTestCaseBase):
+class PlayerProfileCase(GameFlowTestCaseBase):
     def setUp(self):
         super().setUp()
 

@@ -8,6 +8,7 @@ from qa_server.views import (
     PlayersView,
     PlayerView,
     ProvokesView,
+    QuizView,
     QuizzesView,
     RandView,
 )
@@ -15,6 +16,7 @@ from qa_server.views import (
 urlpatterns = [
     re_path(r"^leaderboard/$", LeaderboardView.as_view(), name="leaderboard"),
     re_path(r"^quizzes/$", QuizzesView.as_view(), name="quizzes"),
+    re_path(r"^quizzes/(?P<quiz_uuid>[0-9a-f-]+)/$", QuizView.as_view(), name="quiz"),
     re_path(r"^players/$", PlayersView.as_view(), name="players"),
     re_path(
         r"^players/(?P<player_uuid>[0-9a-f-]+)/$", PlayerView.as_view(), name="player"

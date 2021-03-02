@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from config import ADMIN_PASSWORD
 from qa_server.models import Answer, Player, Provoke, Quiz
 
 
@@ -17,18 +18,86 @@ class QuizzesView(APIView):
         return Response(quizzes)
 
 
+class QuizView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            quiz = Quiz.objects.get(quiz_uuid=kwargs["quiz_uuid"])
+            return Response(
+                quiz.get_json(),
+                status=status.HTTP_200_OK,
+            )
+        except exceptions.ValidationError:
+            return Response(
+                {
+                    "error_message": f"payload validation failed! your uuid format may be incorrect"
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except Quiz.DoesNotExist:
+            quiz_uuid = kwargs["quiz_uuid"]
+            return Response(
+                {"error_message": f"quiz with quiz_uuid {quiz_uuid} does not exist."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            quiz = Quiz.objects.get(quiz_uuid=kwargs["quiz_uuid"])
+            quiz_uuid = quiz.quiz_uuid
+            if (
+                "password" not in request.data
+                or request.data["password"] != ADMIN_PASSWORD
+            ):
+                return Response(
+                    {"error_message": "admin password is incorrect or not provided"},
+                    status=status.HTTP_403_FORBIDDEN,
+                )
+
+            quiz.delete()
+            return Response(
+                {"quiz_uuid": quiz_uuid},
+                status=status.HTTP_200_OK,
+            )
+        except exceptions.ValidationError:
+            return Response(
+                {
+                    "error_message": f"payload validation failed! your uuid format may be incorrect"
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except Quiz.DoesNotExist:
+            quiz_uuid = kwargs["quiz_uuid"]
+            return Response(
+                {"error_message": f"quiz with quiz_uuid {quiz_uuid} does not exist."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+
 class PlayersView(APIView):
     def get(self, request, *args, **kwargs):
         players = [player.get_json() for player in Player.objects.all()]
         return Response(players, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
-        new_player = Player.objects.create(
-            name=request.data["name"],
-            platform=Player.parse_platform(request.data["platform"]),
-            platform_userid=request.data["platform_userid"],
-        )
-        return Response(new_player.get_json(), status=status.HTTP_201_CREATED)
+        try:
+            new_player = Player.objects.create(
+                name=request.data["name"],
+                platform=Player.parse_platform(request.data["platform"]),
+                platform_userid=request.data["platform_userid"],
+            )
+            return Response(new_player.get_json(), status=status.HTTP_201_CREATED)
+        except KeyError:
+            return Response(
+                {
+                    "error_message": "Invalid payload, some required fields are not provided"
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except ValueError as err:
+            return Response(
+                {"error_message": str(err)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
     def delete(self, request, *args, **kwargs):
         if not settings.DEBUG:
