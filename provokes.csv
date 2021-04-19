@@ -1,0 +1,7 @@
+number,isCorrect,Message
+1,correct, Ah isn't it great?
+2,incorrect, Wrong answer
+3,correct, Have you taken a peek at our database?
+4,incorrect, Maybe you'll be luckier with next question
+5,correct, well done
+6,correct, very good!
