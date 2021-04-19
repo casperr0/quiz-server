@@ -42,7 +42,9 @@ def parse_domain(digest):
 
 
 def parse_level(digest):
-    if type(digest) == float and math.isnan(digest):
+
+    if (type(digest) == float or type(digest) == int):
+
         return Quiz.Level.MEDIUM
     elif digest[:2] == "簡單":
         return Quiz.Level.EAZY
@@ -55,7 +57,9 @@ def parse_level(digest):
 
 
 def parse_correctness(digest):
-    return digest == "在別人答 對 時嘲諷他"
+
+    return digest == "correct"
+
 
 
 def run():
@@ -69,12 +73,12 @@ def run():
         quizzes.append(
             Quiz(
                 author=row[1],
-                domain=parse_domain(row[2]),
-                description=row[3],
-                level=parse_level(row[4]),
-                correct_answer=row[5],
-                wrong_answers=row[6:9],
-                comment=row[9],
+                description=row[2],
+                level=parse_level(row[3]),
+                correct_answer=row[4],
+                wrong_answers=row[5:8],
+                comment=row[8],
+
             )
         )
     Quiz.objects.bulk_create(quizzes)

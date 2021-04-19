@@ -68,6 +68,8 @@ class Player(models.Model):
         max_length=16, choices=Platform.choices, default=Platform.DISCORD
     )
     platform_userid = models.CharField(max_length=64, default="")
+    company = models.CharField(max_length=32, default="")
+
 
     @classmethod
     def parse_platform(cls, digest):
@@ -108,6 +110,7 @@ class Player(models.Model):
             "name": self.name,
             "platform": str(self.platform),
             "platform_userid": str(self.platform_userid),
+            "company": str(self.company),
             "correct_count": correct_count,
             "incorrect_count": incorrect_count,
             "no_answer_count": no_answer_count,

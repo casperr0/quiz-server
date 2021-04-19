@@ -84,6 +84,7 @@ class PlayersView(APIView):
                 name=request.data["name"],
                 platform=Player.parse_platform(request.data["platform"]),
                 platform_userid=request.data["platform_userid"],
+                company=request.data["company"],
             )
             return Response(new_player.get_json(), status=status.HTTP_201_CREATED)
         except KeyError:

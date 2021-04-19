@@ -1,0 +1,138 @@
+[
+    {
+        "number": 1,
+        "author": "quiz 1 author",
+        "description": "colour of the red square.",
+        "hint": "quiz 1 hint",
+        "score": 1,
+        "option_a": "red",
+        "option_b": "green",
+        "option_c": "yellow",
+        "option_d": "blue",
+        "answer": "A",
+        "tags": [
+            "Network", "Language"
+        ]
+    },
+    {
+        "number": 2,
+        "author": "quiz 2 author",
+        "description": "colour of the snow.",
+        "hint": "quiz 2 hint",
+        "score": 1,
+        "option_a": "red",
+        "option_b": "blue",
+        "option_c": "white",
+        "option_d": "yellow",
+        "answer": "C",
+        "tags": [
+            "Security", "Game", "CCNS"
+        ]
+    },
+    {
+        "number": 3,
+        "author": "quiz 3 author",
+        "description": "colour of the tree.",
+        "hint": "quiz 3 hint",
+        "score": 1,
+        "option_a": "red",
+        "option_b": "blue",
+        "option_c": "green",
+        "option_d": "yellow",
+        "answer": "C",
+        "tags": [
+            "Engineering", "Security"
+        ]
+    },
+    {
+        "number": 4,
+        "author": "quiz 4 author",
+        "description": "color of the sea.",
+        "hint": "quiz 4 hint",
+        "score": 1,
+        "option_a": "red",
+        "option_b": "blue",
+        "option_c": "white",
+        "option_d": "yellow",
+        "answer": "B",
+        "tags": [
+            "Hardware", "Math"
+        ]
+    },
+    {
+        "number": 5,
+        "author": "quiz 5 author",
+        "description": "color of the autumn.",
+        "hint": "quiz 5 hint",
+        "score": 1,
+        "option_a": "orange",
+        "option_b": "black",
+        "option_c": "purple",
+        "option_d": "white",
+        "answer": "A",
+        "tags": [
+            "Others"
+        ]
+    },
+    {
+        "number": 6,
+        "author": "quiz 6 author",
+        "description": "color of the white house.",
+        "hint": "quiz 6 hint",
+        "score": 1,
+        "option_a": "white",
+        "option_b": "blue",
+        "option_c": "purple",
+        "option_d": "yellow",
+        "answer": "A",
+        "tags": [
+            "Others"
+        ]
+    },
+    {
+        "number": 7,
+        "author": "quiz 7 author",
+        "description": "color of the carrot.",
+        "hint": "quiz 7 hint",
+        "score": 1,
+        "option_a": "orange",
+        "option_b": "black",
+        "option_c": "purple",
+        "option_d": "white",
+        "answer": "A",
+        "tags": [
+            "Others"
+        ]
+    },
+        {
+        "number": 8,
+        "author": "quiz 8 author",
+        "description": "color of the lemon.",
+        "hint": "quiz 8 hint",
+        "score": 1,
+        "option_a": "white",
+        "option_b": "blue",
+        "option_c": "purple",
+        "option_d": "yellow",
+        "answer": "D",
+        "tags": [
+            "Others"
+        ]
+    },
+    {
+        "number": 9,
+        "author": "quiz 9 author",
+        "description": "color of the black hole.",
+        "hint": "quiz 9 hint",
+        "score": 1,
+        "option_a": "orange",
+        "option_b": "black",
+        "option_c": "purple",
+        "option_d": "white",
+        "answer": "B",
+        "tags": [
+            "Others"
+        ]
+    }
+
+]

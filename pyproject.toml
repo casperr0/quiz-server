@@ -4,6 +4,11 @@ version = "0.1.0"
 description = ""
 authors = ["RainrainWu <s0958334772@gmail.com>"]
 
+
+[tool.poetry.extras]
+django = ["Django (>=1.11)"]
+
+
 [tool.poetry.dependencies]
 python = "^3.8"
 Django = "^3.1.5"

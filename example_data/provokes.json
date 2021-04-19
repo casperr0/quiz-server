@@ -1,0 +1,11 @@
+{
+    "Correct": [
+        "Ah, isn't it great?",
+        "Have you taken a peek at our database?",
+        "well done"
+    ],
+    "Incorrect": [
+        "Wrong answer",
+        "Maybe you'll be luckier with next question"
+    ]
+}
