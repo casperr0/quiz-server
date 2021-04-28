@@ -77,7 +77,7 @@ def run():
                 level=parse_level(row[3]),
                 correct_answer=row[4],
                 wrong_answers=row[5:8],
-                comment=row[8],
+                photo_name=row[8],
 
             )
         )

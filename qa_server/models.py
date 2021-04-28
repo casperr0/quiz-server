@@ -37,7 +37,7 @@ class Quiz(models.Model):
     level = models.CharField(max_length=16, choices=Level.choices, default=Level.MEDIUM)
     correct_answer = models.CharField(max_length=255)
     wrong_answers = ArrayField(models.CharField(max_length=255), size=3)
-    comment = models.TextField()
+    photo_name = models.TextField()
 
     def get_json(self):
         options = [self.correct_answer] + self.wrong_answers
@@ -49,7 +49,7 @@ class Quiz(models.Model):
             "description": self.description,
             "level": str(self.level),
             "options": options,
-            "comment": self.comment,
+            "photo_name": self.photo_name,
         }
 
 
