@@ -42,7 +42,6 @@ def parse_domain(digest):
 
 
 def parse_level(digest):
-
     if (type(digest) == float or type(digest) == int):
 
         return Quiz.Level.MEDIUM
@@ -57,16 +56,13 @@ def parse_level(digest):
 
 
 def parse_correctness(digest):
-
     return digest == "correct"
 
 
-
 def run():
-
     Quiz.objects.all().delete()
 
-    df = pd.read_csv(SAMPLE_QUIZZES_FILE)
+    df = pd.read_csv(SAMPLE_QUIZZES_FILE, na_filter=False)
     quizzes = []
     for _, r in df.iterrows():
         row = r.to_list()

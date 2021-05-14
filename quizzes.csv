@@ -4,3 +4,5 @@ number,author,description,score,correct_answer,option_b,option_c,option_d,photo_
 3,quiz 3 author,colour of the tree.,3,red,blue,green,yellow,doggo3.jpg
 4,quiz 4 author,colour of the sea.,2,red,blue,green,yellow,doggo6.jpg
 5,quiz 5 author,colour of the sun.,4,orange,black,purple,yellow,doggo6.jpg
+6,quiz 6 author,no picture1.,4,orange,black,purple,yellow,
+7,quiz 7 author,no picture2.,4,orange,black,purple,yellow,
