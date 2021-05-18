@@ -1,8 +1,8 @@
 number,isCorrect,Message
-1,correct, Ah isn't it great?
-2,incorrect, Wrong answer
-3,correct, Have you taken a peek at our database?
-4,incorrect, Maybe you'll be luckier with next question
-5,correct, well done
-6,correct, very good!
-7,incorrect, you missed it
+1,correct, правильно!
+2,incorrect, неправильный ответ
+3,correct, верно!
+4,incorrect, неверно. возможно повезет со следующим вопросом.
+5,correct, отлично!
+6,correct, очень хорошо
+7,incorrect, это неверный ответ

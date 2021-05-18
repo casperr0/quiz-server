@@ -1,8 +1,6 @@
-number,author,description,score,correct_answer,option_b,option_c,option_d,photo_name
-1,quiz 1 author,colour of the red square.,1,red,green,yellow,pink,doggo1.jpg
-2,quiz 2 author,colour of the snow.,1,white,blue,red,yellow,doggo3.jpg
-3,quiz 3 author,colour of the tree.,3,red,blue,green,yellow,doggo3.jpg
-4,quiz 4 author,colour of the sea.,2,red,blue,green,yellow,doggo6.jpg
-5,quiz 5 author,colour of the sun.,4,orange,black,purple,yellow,doggo6.jpg
-6,quiz 6 author,no picture1.,4,orange,black,purple,yellow,
-7,quiz 7 author,no picture2.,4,orange,black,purple,yellow,
+number,author,description,score,correct_answer,option_b,option_c,photo_name
+1,quiz 1 author,Сохранится ли блокировка на строку при стандартном уровне изоляции в таблице atable когда выполнение дойдет до raise notice?,1,нет,да,только для PostgreSQL 11 и выше,exception.png
+2,quiz 2 author,Может ли в PostgreSQL select порождать грязные блоки?,1,да,нет,только до PostgreSQL 10 и ниже,
+3,quiz 3 author,Почему Postgres «виснет» при выполнении этого запроса?,1,вычисляется id!,не используется индекс,из-за блокировки,id.png
+4,quiz 4 author,Какое сообщение выведет это блок кода?,1,XR001,ERROR,XR000,error.png
+5,quiz 5 author,Будет ли получена ошибка при выполнении следующего запроса?,1,нет,да,зависит от версии PostgreSQL,cte.png
